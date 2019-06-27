@@ -25,7 +25,7 @@ Item {
 
                 Image {
                     height: parent.height * 0.45
-                    width: parent.width * 0.9
+                    width: parent.width
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:///img/video_icon.png"
                 }
@@ -36,9 +36,18 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     height: parent.height * 0.45
-                    width: parent.width * 0.9
+                    width: parent.width
                     color: "black"
                 }
+            }
+
+            Text {
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 10
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+                text: "accepted extensions: .avi and .mp4"
+                font.pointSize: 8
             }
         }
 
