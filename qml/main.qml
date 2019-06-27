@@ -8,19 +8,21 @@ Window {
     height: 480
     title: qsTr("Hello World")
 
+    NavigationBar {
+        id: navigation_bar
+        height: parent.height * 0.1
+        width: parent.width
+        stack: stack
+    }
+
     StackView {
         id: stack
-        anchors.fill: parent
+        anchors.top: navigation_bar.bottom
+        height: parent.height * 0.9
+        width: parent.width
         initialItem: HomePage {
             stack: stack
             objectName: "Home"
         }
-    }
-
-    NavigationBar {
-        id: navigation_bar
-        width: parent.width
-        height: parent.height / 10
-        stack: stack
     }
 }
