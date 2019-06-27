@@ -5,5 +5,6 @@
         <file>qml/UploadPage.qml</file>
         <file>qml/EditorPage.qml</file>
         <file>qml/NavigationBar.qml</file>
+        <file>qml/MediaController.qml</file>
     </qresource>
 </RCC>
