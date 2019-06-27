@@ -6,5 +6,6 @@
         <file>qml/EditorPage.qml</file>
         <file>qml/NavigationBar.qml</file>
         <file>qml/MediaController.qml</file>
+        <file>qml/MarkerEditor.qml</file>
     </qresource>
 </RCC>
