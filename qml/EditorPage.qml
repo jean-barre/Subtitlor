@@ -9,11 +9,11 @@ Item {
 
     Rectangle {
         id: video_viewer
-        height: parent.height * 0.4
+        height: parent.height * 0.35
         width: parent.width * 0.8
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: parent.height * 0.05
+        anchors.topMargin: parent.height * 0.02
         color: "black"
 
         MediaPlayer {
@@ -36,48 +36,49 @@ Item {
         media_player: player
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: video_viewer.bottom
-        anchors.topMargin: parent.height * 0.01
+        anchors.topMargin: parent.height * 0.02
     }
 
-    Text {
-        id: file_url
-        height: parent.height * 0.15
-        width: parent.width * 0.4
+    MarkerEditor {
+        height: parent.height * 0.47
+        width: parent.width * 0.68
         anchors.left: parent.left
         anchors.leftMargin: parent.width * 0.1
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.height * 0.1
-        text: video_url
-        wrapMode: Text.WordWrap
-        color: "grey"
+        anchors.bottomMargin: parent.height * 0.02
     }
 
     MouseArea {
-        height: parent.height * 0.15
-        width: parent.width * 0.2
+        height: parent.height * 0.4
+        width: parent.width * 0.1
         anchors.right: parent.right
         anchors.rightMargin: parent.width * 0.1
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.height * 0.1
+        anchors.bottomMargin: parent.height * 0.05
 
         Rectangle {
-            color: "black"
             anchors.fill: parent
+            color: "black"
 
             Text {
+                anchors.fill: parent
                 anchors.centerIn: parent
-                text: "Edit page"
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
                 color: "white"
+                text: "Export SRT File"
+                wrapMode: Text.WordWrap
             }
         }
+    }
 
+/*
         onClicked: {
             stack.pop(stack.find(function(item) {
                 return item.name === "Home";
             }))
         }
-    }
-
+*/
 
     Rectangle {
         anchors.fill: parent
