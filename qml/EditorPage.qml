@@ -77,4 +77,18 @@ Item {
             }))
         }
     }
+
+
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
+        opacity: 0.4
+        visible: player.status === "Loading"
+
+        Text {
+            anchors.centerIn: parent
+            text: "Loading Video"
+            font.pointSize: 19
+        }
+    }
 }
