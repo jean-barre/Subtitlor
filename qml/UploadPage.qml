@@ -4,6 +4,7 @@ import QtQuick.Controls 1.0
 Item {
 
     property StackView stack
+    property string video_url
 
     DropArea {
         id: drop_area
@@ -55,6 +56,7 @@ Item {
             if (drop.hasUrls) {
                 if (validateFileExtension(drop.urls[0])) {
                     file_url.text = drop.urls[0]
+                    video_url = drop.urls[0]
                 }
             }
         }
@@ -98,7 +100,7 @@ Item {
         }
 
         onClicked: {
-            stack.push({item: editor_page, properties: {stack: stack, objectName:"Edit"}})
+            stack.push({item: editor_page, properties: {stack: stack, objectName:"Edit", video_url: video_url}})
         }
 
         Component{
