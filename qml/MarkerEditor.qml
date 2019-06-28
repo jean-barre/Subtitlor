@@ -122,6 +122,7 @@ Column {
                 TextEdit {
                     id: duration_value
                     anchors.fill: parent
+                    anchors.leftMargin: 5
                     verticalAlignment: Text.AlignVCenter
                     text: "0"
                 }
@@ -183,11 +184,17 @@ Column {
                     text: "Add"
                 }
             }
-            onPressed: opacity = 0.4
-            onClicked: addMarker(begin_value.text, duration_value.text, text_value.text)
+
+            onClicked: {
+                opacity = 0.4
+                button_animation.target = add_button
+                button_animation.start()
+                addMarker(begin_value.text, duration_value.text, text_value.text)
+            }
         }
 
         MouseArea {
+            id: edit_button
             height: parent.height
             width: parent.width * 0.2
             enabled: on_marker == true
@@ -202,10 +209,16 @@ Column {
                     text: "Edit"
                 }
             }
-            onPressed: opacity = 0.4
+
+            onClicked: {
+                opacity = 0.4
+                button_animation.target = edit_button
+                button_animation.start()
+            }
         }
 
         MouseArea {
+            id: remove_button
             height: parent.height
             width: parent.width * 0.2
             enabled: on_marker == true
@@ -220,7 +233,19 @@ Column {
                     text: "Remove"
                 }
             }
-            onPressed: opacity = 0.4
+
+            onClicked: {
+                opacity = 0.4
+                button_animation.target = remove_button
+                button_animation.start()
+            }
+        }
+
+        NumberAnimation {
+            id: button_animation
+            property: "opacity"
+            to: 1
+            duration: 1000
         }
     }
 }
