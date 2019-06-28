@@ -18,8 +18,13 @@ Item {
 
         MediaPlayer {
             id: player
+            objectName: "media_player"
             source: video_url
             autoPlay: false
+            signal setVideoDuration()
+            onDurationChanged: {
+                setVideoDuration()
+            }
         }
 
         VideoOutput {
@@ -40,6 +45,8 @@ Item {
     }
 
     MarkerEditor {
+        id: marker_editor
+        media_player: player
         height: parent.height * 0.47
         width: parent.width * 0.68
         anchors.left: parent.left
