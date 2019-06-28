@@ -17,6 +17,7 @@ Window {
 
     StackView {
         id: stack
+        objectName: "stack_view"
         anchors.top: navigation_bar.bottom
         height: parent.height * 0.9
         width: parent.width
@@ -24,5 +25,11 @@ Window {
             stack: stack
             objectName: "Home"
         }
+        onCurrentItemChanged: {
+            if (currentItem)
+                itemChanged(currentItem.objectName)
+        }
+
+        signal itemChanged(string itemName)
     }
 }
