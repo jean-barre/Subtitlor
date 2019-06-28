@@ -1,11 +1,31 @@
 import QtQuick 2.0
+import QtMultimedia 5.0
 
 Column {
     height: 400
     width: 400
     spacing: height * 0.03
+    objectName: "marker_editor"
 
     property bool on_marker: false
+    property int marker_time: 0
+    property MediaPlayer media_player
+    signal lookUpIfOnMarker(int timeframe)
+    signal addMarker(int beginTime, int duration, string text)
+    function updateOnMarker(is_on) {
+        on_marker = is_on
+    }
+    function setCurrentMarker(beginTime, duration, text) {
+        marker_time = beginTime
+        duration_value.text = duration
+        text_value.text = text
+    }
+    Connections {
+        target: media_player
+        onPositionChanged: {
+            marker_editor.lookUpIfOnMarker(media_player.position)
+        }
+    }
 
     Row {
         height: parent.height * 0.15
@@ -65,14 +85,20 @@ Column {
                 id: begin_title
                 height: parent.height
                 verticalAlignment: Text.AlignVCenter
-                text: "Begin time:"
+                text: "Begin time (ms):"
             }
             Text {
+                id: begin_value
                 height: parent.height
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: begin_title.right
                 anchors.leftMargin: 10
-                text: "00:10:35"
+                text: {
+                    if (!on_marker && media_player.position)
+                        media_player.position
+                    else
+                        marker_time
+                }
             }
         }
 
@@ -83,16 +109,25 @@ Column {
                 id: duration_title
                 height: parent.height
                 verticalAlignment: Text.AlignVCenter
-                text: "Marker Duration:"
+                text: "Marker Duration (ms):"
             }
-            Text {
+            Rectangle {
+                width: parent.width * 0.5
                 height: parent.height
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: duration_title.right
                 anchors.leftMargin: 10
-                verticalAlignment: Text.AlignVCenter
-                text: "00:08"
+                border.color: "black"
+
+                TextEdit {
+                    id: duration_value
+                    anchors.fill: parent
+                    verticalAlignment: Text.AlignVCenter
+                    text: "0"
+                }
             }
+
+
         }
     }
 
@@ -112,16 +147,15 @@ Column {
                 anchors.margins: 10
                 color: "grey"
                 text: "Type your subtitles here"
+                visible: text_value.text.length == 0
             }
 
             TextEdit {
+                id: text_value
                 anchors.fill: parent
                 anchors.margins: 10
                 color: "black"
                 text: ""
-                onFocusChanged: {
-                    initial_text.visible = false
-                }
             }
         }
 
@@ -134,48 +168,59 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
 
         MouseArea {
+            id: add_button
             height: parent.height
             width: parent.width * 0.2
+            enabled: on_marker == false
 
             Rectangle {
                 anchors.fill: parent
                 color: "green"
+                opacity: on_marker == false ? 1 : 0.4
 
                 Text {
                     anchors.centerIn: parent
                     text: "Add"
                 }
             }
+            onPressed: opacity = 0.4
+            onClicked: addMarker(begin_value.text, duration_value.text, text_value.text)
         }
 
         MouseArea {
             height: parent.height
             width: parent.width * 0.2
+            enabled: on_marker == true
 
             Rectangle {
                 anchors.fill: parent
                 color: "blue"
+                opacity: on_marker == true ? 1 : 0.4
 
                 Text {
                     anchors.centerIn: parent
                     text: "Edit"
                 }
             }
+            onPressed: opacity = 0.4
         }
 
         MouseArea {
             height: parent.height
             width: parent.width * 0.2
+            enabled: on_marker == true
 
             Rectangle {
                 anchors.fill: parent
                 color: "red"
+                opacity: on_marker == true ? 1 : 0.4
 
                 Text {
                     anchors.centerIn: parent
                     text: "Remove"
                 }
             }
+            onPressed: opacity = 0.4
         }
     }
 }
