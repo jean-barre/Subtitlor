@@ -81,7 +81,10 @@ Rectangle {
 
         onPressedChanged: {
             if (!pressed) {
+                playing = false;
                 media_player.seek(slider.value)
+                media_player.pause()
+                play_pause_image.source = "qrc:///img/play.png"
             }
         }
     }
