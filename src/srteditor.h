@@ -2,10 +2,11 @@
 #define SRCEDITOR_H
 
 #include <QObject>
-#include "subtitlemarker.h"
 #include <QDebug>
 #include <QQmlProperty>
 #include <QTime>
+
+#include "subtitlemarker.h"
 
 class SRTEditor : public QObject
 {
@@ -15,6 +16,7 @@ public:
     ~SRTEditor();
 
 private:
+    int subtitleNumber;
     int videoDuration;
     QObject *qmlEditorPage;
     QObject *qmlEditor;
@@ -29,6 +31,8 @@ public slots:
     void setVideoDuration();
     void find(int timeFrame);
     void addSubtitle(int beginTime, int duration, QString text);
+    void editSubtitle(int beginTime, int duration, QString text);
+    void removeSubtitle(int beginTime);
 
 };
 

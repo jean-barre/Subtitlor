@@ -7,11 +7,14 @@ Column {
     spacing: height * 0.03
     objectName: "marker_editor"
 
+    property int subtitle_number: 0
     property bool on_marker: false
     property int marker_time: 0
     property MediaPlayer media_player
     signal lookUpIfOnMarker(int timeframe)
     signal addMarker(int beginTime, int duration, string text)
+    signal editMarker(int beginTime, int duration, string text)
+    signal removeMarker(int beginTime)
     function updateOnMarker(is_on) {
         on_marker = is_on
     }
@@ -40,14 +43,14 @@ Column {
                 id: number_title
                 height: parent.height
                 verticalAlignment: Text.AlignVCenter
-                text: "Marker number:"
+                text: "Subtitle number:"
             }
             Text {
                 height: parent.height
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: number_title.right
                 anchors.leftMargin: 10
-                text: "10"
+                text: subtitle_number
             }
         }
 
@@ -58,7 +61,7 @@ Column {
                 id: on_title
                 height: parent.height
                 verticalAlignment: Text.AlignVCenter
-                text: "On Marker:"
+                text: "On Subtitle:"
             }
             Rectangle {
                 height: parent.height / 2
@@ -190,6 +193,7 @@ Column {
                 button_animation.target = add_button
                 button_animation.start()
                 addMarker(begin_value.text, duration_value.text, text_value.text)
+                marker_editor.lookUpIfOnMarker(media_player.position)
             }
         }
 
@@ -214,6 +218,7 @@ Column {
                 opacity = 0.4
                 button_animation.target = edit_button
                 button_animation.start()
+                editMarker(begin_value.text, duration_value.text, text_value.text)
             }
         }
 
@@ -238,6 +243,8 @@ Column {
                 opacity = 0.4
                 button_animation.target = remove_button
                 button_animation.start()
+                removeMarker(begin_value.text)
+                marker_editor.lookUpIfOnMarker(media_player.position)
             }
         }
 
