@@ -1,8 +1,9 @@
 #include "srteditor.h"
-#include <QQmlProperty>
 
 SRTEditor::SRTEditor(QObject *parent) : QObject(parent)
 {
+    this->qmlEditorPage = parent->findChild<QObject*>("Edit");
+
     QObject *qmlPlayer = parent->findChild<QObject*>("media_player");
     QObject::connect(qmlPlayer, SIGNAL(setVideoDuration()), this, SLOT(setVideoDuration()));
     this->qmlEditor = parent->findChild<QObject*>("marker_editor");
@@ -22,6 +23,13 @@ SRTEditor::~SRTEditor()
     for (auto p : this->subtitles) {
         delete p.second;
     }
+}
+
+void SRTEditor::logMessage(int code, QString error)
+{
+    QString time = QTime::currentTime().toString("HH:mm");
+    QMetaObject::invokeMethod(qmlEditorPage, "displayLogMessage",
+            Q_ARG(QVariant, code), Q_ARG(QVariant, time), Q_ARG(QVariant, error));
 }
 
 void SRTEditor::setVideoDuration()
@@ -63,14 +71,26 @@ void SRTEditor::find(int timeFrame)
 
 void SRTEditor::addSubtitle(int beginTime, int duration, QString text)
 {
-    /*
-    auto lowerIterator = this->subtitles.upper_bound(beginTime);
-    if (lowerIterator != this->subtitles.cend() && beginTime + duration >= lowerIterator->first) {
-        // Log error message
-        qDebug()<<"";
-    } else {
-        SubtitleMarker *marker = new SubtitleMarker(beginTime, duration, text);
-        this->subtitles.insert(std::pair<int,SubtitleMarker*>(beginTime, marker));
+    // make sur there is no overlap with a next marker
+    auto higherIterator = this->subtitles.upper_bound(beginTime);
+    if (higherIterator != this->subtitles.cend())
+    {
+        SubtitleMarker *next = higherIterator->second;
+        if (beginTime + duration > next->getBeginTime())
+        {
+            logMessage(-1, "Addition failure: overlapping an item after");
+            return;
+        }
     }
-    */
+    // or the end of the video
+    else
+    {
+        if (beginTime + duration > this->videoDuration)
+        {
+            logMessage(-1, "Addition failure: overlapping with the end of the video");
+            return;
+        }
+    }
+    SubtitleMarker *marker = new SubtitleMarker(beginTime, duration, text);
+    this->subtitles.insert(std::pair<int,SubtitleMarker*>(beginTime, marker));
 }

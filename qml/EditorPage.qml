@@ -3,6 +3,21 @@ import QtQuick.Controls 1.0
 import QtMultimedia 5.0
 
 Item {
+    function displayLogMessage(code, time, message) {
+        log_message_time.text = time
+        log_message_text.text = message
+        switch(code) {
+        case -1:
+            log_message_text.color = "red"
+            break;
+        case 0:
+            log_message_text.color = "black"
+            break;
+        case 1:
+            log_message_text.color = "green"
+            break;
+        }
+    }
 
     property StackView stack
     property string video_url
@@ -86,6 +101,36 @@ Item {
             }))
         }
 */
+    Rectangle {
+        height: parent.height * 0.03
+        width: parent.width
+        anchors.bottom: parent.bottom
+        border.color: "grey"
+
+        Row {
+            anchors.fill: parent
+            anchors.margins: 2
+            anchors.leftMargin: 10
+            spacing: 10
+
+            Text {
+                text: "Message :"
+                font.pixelSize: 8
+                verticalAlignment: Text.AlignVCenter
+            }
+            Text {
+                id: log_message_time
+                font.pixelSize: 8
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            Text {
+                id: log_message_text
+                font.pixelSize: 8
+                verticalAlignment: Text.AlignVCenter
+            }
+        }
+    }
 
     Rectangle {
         anchors.fill: parent

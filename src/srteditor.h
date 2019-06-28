@@ -4,6 +4,8 @@
 #include <QObject>
 #include "subtitlemarker.h"
 #include <QDebug>
+#include <QQmlProperty>
+#include <QTime>
 
 class SRTEditor : public QObject
 {
@@ -14,9 +16,11 @@ public:
 
 private:
     int videoDuration;
+    QObject *qmlEditorPage;
     QObject *qmlEditor;
     std::map<int, SubtitleMarker*> subtitles;
     int currentItemBeginTime;
+    void logMessage(int code, QString error); // code value: [-1, error], [0, info], [1, valid]
 
 signals:
     void updateUIAfterFind(bool found);
