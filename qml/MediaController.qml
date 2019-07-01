@@ -19,11 +19,19 @@ Rectangle {
             height: parent.height
             width: parent.width * 0.2
 
-            Image {
-                source: "qrc:///img/previous.png"
+            Rectangle {
                 anchors.fill: parent
-                fillMode: Image.PreserveAspectFit
+                border.color: "black"
+                radius: Math.min(width, height) * 0.2
+
+                Image {
+                    source: "qrc:///img/previous.png"
+                    anchors.fill: parent
+                    anchors.margins: 3
+                    fillMode: Image.PreserveAspectFit
+                }
             }
+
 
             onClicked: {
                 media_player.seek(media_player.position - 5000)
@@ -34,12 +42,20 @@ Rectangle {
             height: parent.height
             width: parent.width * 0.2
 
-            Image {
-                id: play_pause_image
-                source: "qrc:///img/play.png"
+            Rectangle {
                 anchors.fill: parent
-                fillMode: Image.PreserveAspectFit
+                border.color: "black"
+                radius: Math.min(width, height) * 0.2
+
+                Image {
+                    id: play_pause_image
+                    source: "qrc:///img/play.png"
+                    anchors.fill: parent
+                    anchors.margins: 3
+                    fillMode: Image.PreserveAspectFit
+                }
             }
+
 
             onClicked: {
                 if (playing) {
@@ -59,11 +75,19 @@ Rectangle {
             height: parent.height
             width: parent.width * 0.2
 
-            Image {
-                source: "qrc:///img/next.png"
+            Rectangle {
                 anchors.fill: parent
-                fillMode: Image.PreserveAspectFit
+                border.color: "black"
+                radius: Math.min(width, height) * 0.2
+
+                Image {
+                    source: "qrc:///img/next.png"
+                    anchors.fill: parent
+                    anchors.margins: 3
+                    fillMode: Image.PreserveAspectFit
+                }
             }
+
 
             onClicked: {
                 media_player.seek(media_player.position + 5000)
