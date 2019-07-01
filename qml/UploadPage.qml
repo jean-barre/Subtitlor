@@ -64,7 +64,7 @@ Item {
 
         function validateFileExtension(filePath) {
             var extension = filePath.split('.').pop()
-            return extension === "avi" || extension === "mp4"
+            return extension === "avi" || extension === "mp4" || extension === "mov"
         }
     }
 
