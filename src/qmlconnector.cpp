@@ -9,5 +9,7 @@ void QMLConnector::makeConnections(QString objectName)
 {
     if (objectName == "Edit") {
         this->srtEditor = new SRTEditor(this->parent());
+    } else if (objectName == "Export") {
+        this->srtExport = new SRTExport(this->parent(), this->srtEditor);
     }
 }
