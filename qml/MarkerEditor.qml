@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import QtMultimedia 5.0
 
 Column {
@@ -125,7 +125,7 @@ Column {
                 TextEdit {
                     id: duration_value
                     anchors.fill: parent
-                    anchors.leftMargin: 5
+                    padding: 10
                     verticalAlignment: Text.AlignVCenter
                     text: "0"
                 }
