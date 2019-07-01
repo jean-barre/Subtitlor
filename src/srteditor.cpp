@@ -22,6 +22,22 @@ SRTEditor::~SRTEditor()
     }
 }
 
+bool SRTEditor::checkSubtitle(int beginTime, int duration, QString text)
+{
+    bool valid = true;
+    if (duration <= 0)
+    {
+        logMessage(-1, "Addition failure: please set a positive duration");
+        valid = false;
+    }
+    if (text.length() > 100)
+    {
+        logMessage(-1, "Addition failure: please check the Subtitle text is less than 100 char");
+        valid = false;
+    }
+    return valid;
+}
+
 void SRTEditor::logMessage(int code, QString error)
 {
     QString time = QTime::currentTime().toString("HH:mm");
@@ -75,6 +91,11 @@ void SRTEditor::find(int timeFrame)
 
 void SRTEditor::addSubtitle(int beginTime, int duration, QString text)
 {
+    // make sure the input data is correct
+    if (!checkSubtitle(beginTime, duration, text))
+    {
+        return;
+    }
     // make sur there is no overlap with a next marker
     auto higherIterator = this->subtitles.upper_bound(beginTime);
     if (higherIterator != this->subtitles.cend())
@@ -104,6 +125,11 @@ void SRTEditor::addSubtitle(int beginTime, int duration, QString text)
 
 void SRTEditor::editSubtitle(int beginTime, int duration, QString text)
 {
+    // make sure the input data is correct
+    if (!checkSubtitle(beginTime, duration, text))
+    {
+        return;
+    }
     SubtitleMarker *markerFound = new SubtitleMarker();
     auto lowerIterator = this->subtitles.lower_bound(beginTime);
     if (lowerIterator->first == beginTime)

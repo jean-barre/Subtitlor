@@ -22,6 +22,7 @@ private:
     QObject *qmlEditor;
     std::map<int, SubtitleMarker*> subtitles;
     int currentItemBeginTime;
+    bool checkSubtitle(int beginTime, int duration, QString text);
     void logMessage(int code, QString error); // code value: [-1, error], [0, info], [1, valid]
 
 signals:
