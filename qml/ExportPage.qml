@@ -140,7 +140,13 @@ Item {
         RoundButton {
             height: parent.height
             width: parent.width * 0.4
-            button_text: "Return Home"
+            button_text: "Go Home"
+
+            onClicked: {
+                stack.pop(stack.find(function(item) {
+                    return item.name === "Home";
+                }));
+            }
         }
     }
 
