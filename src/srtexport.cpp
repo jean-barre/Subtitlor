@@ -3,32 +3,37 @@
 SRTExport::SRTExport(QObject *parent) : QObject(parent)
 {
     this->qmlExportObject = parent->findChild<QObject*>("Export");
-    createTemporaryFile();
 }
 
 SRTExport::SRTExport(QObject *parent, SRTEditor *editor): editor(editor)
 {
     this->qmlExportObject = parent->findChild<QObject*>("Export");
     QObject::connect(this->qmlExportObject, SIGNAL(export_file(QString)), this, SLOT(exportFile(QString)));
-    createTemporaryFile();
 }
 
 SRTExport::~SRTExport()
 {
 }
 
-void SRTExport::createTemporaryFile()
+void SRTExport::logMessage(int code, QString error)
+{
+    QString time = QTime::currentTime().toString("HH:mm");
+    QMetaObject::invokeMethod(qmlExportObject, "displayLogMessage",
+            Q_ARG(QVariant, code), Q_ARG(QVariant, time), Q_ARG(QVariant, error));
+}
+
+void SRTExport::exportFile(QString fileUrl)
 {
     int subtitlesCount = 1;
     const QString timeFormat = QString("hh:mm:ss,zzz");
-    temporaryFile = new QFile(".tmp.srt");
-    if (!temporaryFile->open(QIODevice::ReadWrite | QIODevice::Text))
+    QFile *targetFile = new QFile(fileUrl.split("file://").at(1));
+    if (!targetFile->open(QIODevice::ReadWrite | QIODevice::Text))
     {
-        logMessage(-1, "Building SRT file failure: opening temporary");
+        logMessage(-1, "Building SRT file failure: cannot create a file in the directory selected");
         return;
     }
 
-    QTextStream out(temporaryFile);
+    QTextStream out(targetFile);
     out << "\n";
     for (auto pair : this->editor->getSubtitles())
     {
@@ -41,25 +46,5 @@ void SRTExport::createTemporaryFile()
         out << end.toString(timeFormat) << "\n";
         out << marker->getText() << "\n" << "\n";
     }
-}
-
-void SRTExport::logMessage(int code, QString error)
-{
-    QString time = QTime::currentTime().toString("HH:mm");
-    QMetaObject::invokeMethod(qmlExportObject, "displayLogMessage",
-            Q_ARG(QVariant, code), Q_ARG(QVariant, time), Q_ARG(QVariant, error));
-}
-
-void SRTExport::exportFile(QString fileUrl)
-{
-    fileUrl = fileUrl.split("file://").at(1);
-    bool copySuccess = temporaryFile->copy(fileUrl);
-    if (copySuccess)
-    {
-        logMessage(1, "Exporting file success");
-    }
-    else
-    {
-        logMessage(-1, "Exporting file failure");
-    }
+    logMessage(1, "Exporting file success");
 }

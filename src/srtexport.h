@@ -18,9 +18,7 @@ private:
     SRTEditor *editor;
     QString destinationFile;
     QObject *qmlExportObject;
-    QFile *temporaryFile;
 
-    void createTemporaryFile();
     void logMessage(int code, QString message);
 
 signals:
