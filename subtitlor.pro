@@ -16,7 +16,8 @@ SOURCES += \
         main.cpp \
     src/subtitlemarker.cpp \
     src/srteditor.cpp \
-    src/qmlconnector.cpp
+    src/qmlconnector.cpp \
+    src/srtexport.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -35,4 +36,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     src/subtitlemarker.h \
     src/srteditor.h \
-    src/qmlconnector.h
+    src/qmlconnector.h \
+    src/srtexport.h

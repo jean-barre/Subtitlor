@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "srteditor.h"
+#include "srtexport.h"
 
 class QMLConnector : public QObject
 {
@@ -13,6 +14,7 @@ public:
 private:
     QObject *markerEditorQML;
     SRTEditor *srtEditor;
+    SRTExport *srtExport;
 
 signals:
 

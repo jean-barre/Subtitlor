@@ -8,6 +8,7 @@
         <file>qml/MediaController.qml</file>
         <file>qml/MarkerEditor.qml</file>
         <file>qml/common/RoundButton.qml</file>
+        <file>qml/ExportPage.qml</file>
         <file>qml/common/LogBar.qml</file>
     </qresource>
 </RCC>
