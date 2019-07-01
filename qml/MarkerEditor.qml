@@ -128,6 +128,7 @@ Column {
                     anchors.fill: parent
                     padding: 10
                     verticalAlignment: Text.AlignVCenter
+                    wrapMode: TextEdit.WrapAnywhere
                     text: "0"
                 }
             }
@@ -161,6 +162,7 @@ Column {
                 anchors.margins: 10
                 color: "black"
                 text: ""
+                wrapMode: TextEdit.WrapAnywhere
             }
         }
 

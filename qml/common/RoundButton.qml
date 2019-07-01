@@ -25,7 +25,7 @@ MouseArea {
             color: text_color
             text: button_text
             font.pixelSize: text_size
-            wrapMode: Text.WordWrap
+            wrapMode: TextEdit.WrapAnywhere
         }
     }
 

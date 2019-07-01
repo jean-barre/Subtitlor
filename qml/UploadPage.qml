@@ -77,7 +77,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height * 0.1
         text: "File name ..."
-        wrapMode: Text.WordWrap
+        wrapMode: TextEdit.WrapAnywhere
         color: "grey"
     }
 
