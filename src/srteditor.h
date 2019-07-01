@@ -14,6 +14,7 @@ class SRTEditor : public QObject
 public:
     explicit SRTEditor(QObject *parent = nullptr);
     ~SRTEditor();
+    const std::map<int, SubtitleMarker*>& getSubtitles() const;
 
 private:
     int subtitleNumber;

@@ -22,6 +22,11 @@ SRTEditor::~SRTEditor()
     }
 }
 
+const std::map<int, SubtitleMarker *> &SRTEditor::getSubtitles() const
+{
+    return this->subtitles;
+}
+
 bool SRTEditor::checkSubtitle(int beginTime, int duration, QString text)
 {
     bool valid = true;
