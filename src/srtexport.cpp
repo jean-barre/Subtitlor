@@ -24,7 +24,7 @@ void SRTExport::createTemporaryFile()
     temporaryFile = new QFile(".tmp.srt");
     if (!temporaryFile->open(QIODevice::ReadWrite | QIODevice::Text))
     {
-        qDebug()<<"error opening temporary file";
+        logMessage(-1, "Building SRT file failure: opening temporary");
         return;
     }
 
