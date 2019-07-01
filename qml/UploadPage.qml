@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
+import "common"
 
 Item {
 
@@ -80,33 +81,23 @@ Item {
         color: "grey"
     }
 
-    MouseArea {
-        height: parent.height * 0.15
-        width: parent.width * 0.2
+    RoundButton {
+        height: parent.height * 0.1
+        width: parent.width * 0.3
         anchors.right: parent.right
         anchors.rightMargin: parent.width * 0.1
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height * 0.1
 
-        Rectangle {
-            color: "black"
-            anchors.fill: parent
-
-            Text {
-                anchors.centerIn: parent
-                text: "Upload"
-                color: "white"
-            }
-        }
+        background_color: "black"
+        button_text: "Upload"
 
         onClicked: {
             stack.push({item: editor_page, properties: {stack: stack, objectName:"Edit", video_url: video_url}})
         }
-
         Component{
             id: editor_page
             EditorPage {}
         }
     }
-
 }

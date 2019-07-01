@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtMultimedia 5.0
+import "common"
 
 Item {
     function displayLogMessage(code, time, message) {
@@ -70,7 +71,7 @@ Item {
         anchors.bottomMargin: parent.height * 0.02
     }
 
-    MouseArea {
+    RoundButton {
         height: parent.height * 0.4
         width: parent.width * 0.1
         anchors.right: parent.right
@@ -78,29 +79,18 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height * 0.05
 
-        Rectangle {
-            anchors.fill: parent
-            color: "black"
+        background_color: "black"
+        button_text: "Export"
 
-            Text {
-                anchors.fill: parent
-                anchors.centerIn: parent
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                color: "white"
-                text: "Export SRT File"
-                wrapMode: Text.WordWrap
-            }
+        onClicked: {
+            stack.push({item: export_page, properties: {stack: stack, objectName:"Export"}})
+        }
+        Component{
+            id: export_page
+            ExportPage {}
         }
     }
 
-/*
-        onClicked: {
-            stack.pop(stack.find(function(item) {
-                return item.name === "Home";
-            }))
-        }
-*/
     Rectangle {
         height: parent.height * 0.03
         width: parent.width

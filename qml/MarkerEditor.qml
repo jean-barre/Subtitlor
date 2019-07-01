@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtMultimedia 5.0
+import "common"
 
 Column {
     height: 400
@@ -171,88 +172,51 @@ Column {
         spacing: width * 0.2
         anchors.horizontalCenter: parent.horizontalCenter
 
-        MouseArea {
+        RoundButton {
             id: add_button
             height: parent.height
             width: parent.width * 0.2
             enabled: on_marker == false
+            opacity: on_marker == false ? 1 : 0.4
 
-            Rectangle {
-                anchors.fill: parent
-                color: "green"
-                opacity: on_marker == false ? 1 : 0.4
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "Add"
-                }
-            }
+            background_color: "green"
+            button_text: "Add"
 
             onClicked: {
-                opacity = 0.4
-                button_animation.target = add_button
-                button_animation.start()
                 addMarker(begin_value.text, duration_value.text, text_value.text)
                 marker_editor.lookUpIfOnMarker(media_player.position)
             }
         }
 
-        MouseArea {
+        RoundButton {
             id: edit_button
             height: parent.height
             width: parent.width * 0.2
             enabled: on_marker == true
+            opacity: on_marker == true ? 1 : 0.4
 
-            Rectangle {
-                anchors.fill: parent
-                color: "blue"
-                opacity: on_marker == true ? 1 : 0.4
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "Edit"
-                }
-            }
+            background_color: "blue"
+            button_text: "Edit"
 
             onClicked: {
-                opacity = 0.4
-                button_animation.target = edit_button
-                button_animation.start()
                 editMarker(begin_value.text, duration_value.text, text_value.text)
             }
         }
 
-        MouseArea {
+        RoundButton {
             id: remove_button
             height: parent.height
             width: parent.width * 0.2
             enabled: on_marker == true
+            opacity: on_marker == true ? 1 : 0.4
 
-            Rectangle {
-                anchors.fill: parent
-                color: "red"
-                opacity: on_marker == true ? 1 : 0.4
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "Remove"
-                }
-            }
+            background_color: "red"
+            button_text: "Remove"
 
             onClicked: {
-                opacity = 0.4
-                button_animation.target = remove_button
-                button_animation.start()
                 removeMarker(begin_value.text)
                 marker_editor.lookUpIfOnMarker(media_player.position)
             }
-        }
-
-        NumberAnimation {
-            id: button_animation
-            property: "opacity"
-            to: 1
-            duration: 1000
         }
     }
 }
