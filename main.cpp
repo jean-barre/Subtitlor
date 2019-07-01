@@ -7,6 +7,9 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
+    app.setOrganizationName("Jean BARRÉ");
+    app.setOrganizationDomain("jeanbarre.com");
+    app.setApplicationName("Subtitlor");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
