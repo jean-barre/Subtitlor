@@ -4,8 +4,8 @@ import QtQuick.Controls 1.0
 
 Window {
     visible: true
-    width: 850
-    height: 600
+    width: 1200
+    height: 900
     title: qsTr("Hello World")
 
     NavigationBar {
