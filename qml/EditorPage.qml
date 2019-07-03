@@ -14,10 +14,9 @@ Item {
     Rectangle {
         id: video_viewer
         height: parent.height * 0.35
-        width: parent.width * 0.8
+        width: parent.width
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: parent.height * 0.02
         color: "black"
 
         MediaPlayer {
@@ -41,7 +40,7 @@ Item {
     MediaController {
         id: video_controller
         height: parent.height * 0.1
-        width: parent.width * 0.8
+        width: parent.width * 0.95
         media_player: player
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: video_viewer.bottom
