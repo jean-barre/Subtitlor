@@ -6,6 +6,7 @@ SRTEditor::SRTEditor(QObject *parent) : QObject(parent)
     this->qmlEditorPage = parent->findChild<QObject*>("Edit");
     QObject *qmlPlayer = parent->findChild<QObject*>("media_player");
     QObject::connect(qmlPlayer, SIGNAL(setVideoDuration()), this, SLOT(setVideoDuration()));
+    this->qmlController = parent->findChild<QObject*>("media_controller");
     this->qmlEditor = parent->findChild<QObject*>("marker_editor");
     this->subtitles = std::map<int, SubtitleMarker*>();
     QObject::connect(this->qmlEditor, SIGNAL(lookUpIfOnMarker(int)), this, SLOT(find(int)));
@@ -123,6 +124,7 @@ void SRTEditor::addSubtitle(int beginTime, int duration, QString text)
     }
     SubtitleMarker *marker = new SubtitleMarker(beginTime, duration, text);
     this->subtitles.insert(std::pair<int,SubtitleMarker*>(beginTime, marker));
+    QMetaObject::invokeMethod(this->qmlController, "setVisualMarker", Q_ARG(QVariant, beginTime), Q_ARG(QVariant, duration));
     subtitleNumber++;
     this->qmlEditor->setProperty("subtitle_number", subtitleNumber);
     logMessage(1, "Addition success");
@@ -156,6 +158,7 @@ void SRTEditor::removeSubtitle(int beginTime)
     if (lowerIterator->first == beginTime)
     {
         this->subtitles.erase(lowerIterator);
+        QMetaObject::invokeMethod(this->qmlController, "removeVisualMarker", Q_ARG(QVariant, beginTime));
         subtitleNumber--;
         this->qmlEditor->setProperty("subtitle_number", subtitleNumber);
         logMessage(1, "Removal success");

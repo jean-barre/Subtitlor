@@ -11,9 +11,16 @@ Rectangle {
 
     property MediaPlayer media_player
     property bool playing: false
+    function setVisualMarker(begin, duration) {
+        slider.addMarker(begin, duration)
+    }
+
+    function removeVisualMarker(begin) {
+        slider.removeMarker(begin)
+    }
 
     Row {
-        spacing: parent.width * 0.1
+        spacing: parent.width * 0.05
         height: parent.height * 0.4
         width: parent.width * 0.3
         anchors.horizontalCenter: parent.horizontalCenter
@@ -109,7 +116,7 @@ Rectangle {
             id: slider
             value: media_player.position
             height: parent.height
-            width: parent.width * 0.7
+            width: parent.width * 0.8
             maximumValue: media_player.duration
 
             onPressedChanged: {

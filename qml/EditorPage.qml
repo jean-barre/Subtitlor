@@ -39,6 +39,7 @@ Item {
 
     MediaController {
         id: video_controller
+        objectName: "media_controller"
         height: parent.height * 0.1
         width: parent.width * 0.95
         media_player: player
