@@ -10,5 +10,6 @@
         <file>qml/common/RoundButton.qml</file>
         <file>qml/ExportPage.qml</file>
         <file>qml/common/LogBar.qml</file>
+        <file>qml/common/time_format.js</file>
     </qresource>
 </RCC>

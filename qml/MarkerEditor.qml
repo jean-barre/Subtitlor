@@ -1,6 +1,7 @@
 import QtQuick 2.6
 import QtMultimedia 5.0
 import "common"
+import "common/time_format.js" as TimeFormat
 
 Column {
     height: 400
@@ -11,6 +12,8 @@ Column {
     property int subtitle_number: 0
     property bool on_marker: false
     property int marker_time: 0
+    property int beginTimeValue: on_marker ? marker_time : media_player.position
+    property int durationValue: 0
     property MediaPlayer media_player
     signal lookUpIfOnMarker(int timeframe)
     signal addMarker(int beginTime, int duration, string text)
@@ -21,7 +24,7 @@ Column {
     }
     function setCurrentMarker(beginTime, duration, text) {
         marker_time = beginTime
-        duration_value.text = duration
+        durationValue = duration
         text_value.text = text
     }
     Connections {
@@ -97,12 +100,7 @@ Column {
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: begin_title.right
                 anchors.leftMargin: 10
-                text: {
-                    if (!on_marker && media_player.position)
-                        media_player.position
-                    else
-                        marker_time
-                }
+                text: TimeFormat.format(beginTimeValue)
             }
         }
 
@@ -129,7 +127,7 @@ Column {
                     padding: 10
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: TextEdit.WrapAnywhere
-                    text: "0"
+                    text: TimeFormat.format(durationValue)
                 }
             }
 
@@ -185,7 +183,7 @@ Column {
             button_text: "Add"
 
             onClicked: {
-                addMarker(begin_value.text, duration_value.text, text_value.text)
+                addMarker(beginTimeValue, TimeFormat.unformat(duration_value.text), text_value.text)
                 marker_editor.lookUpIfOnMarker(media_player.position)
             }
         }
@@ -201,7 +199,7 @@ Column {
             button_text: "Edit"
 
             onClicked: {
-                editMarker(begin_value.text, duration_value.text, text_value.text)
+                editMarker(beginTimeValue, TimeFormat.unformat(duration_value.text), text_value.text)
             }
         }
 
@@ -216,7 +214,7 @@ Column {
             button_text: "Remove"
 
             onClicked: {
-                removeMarker(begin_value.text)
+                removeMarker(beginTimeValue)
                 marker_editor.lookUpIfOnMarker(media_player.position)
             }
         }
