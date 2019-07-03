@@ -1,9 +1,18 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.4
+import "visual_markers.js" as VMarkers
 
 Slider {
     id: root
+
+    function addMarker(begin, duration) {
+        VMarkers.addMarker(root, begin, duration)
+    }
+
+    function removeMarker(begin) {
+        VMarkers.removeMarker(root, begin)
+    }
 
     style: SliderStyle {
 
