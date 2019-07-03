@@ -23,14 +23,33 @@ Slider {
             radius: 8
         }
 
-        handle: Rectangle {
+        handle: Item {
             anchors.centerIn: parent
-            color: control.pressed ? "white" : "lightgray"
-            border.color: "gray"
-            border.width: 2
             implicitWidth: root.height * 0.5
             implicitHeight: root.height * 0.5
-            radius: 3
+
+            Rectangle {
+                id: stick
+                anchors.centerIn: parent
+                color: control.pressed ? "white" : "lightgray"
+                border.color: control.pressed ? "gray" : "black"
+                border.width: 2
+                implicitWidth: 1
+                implicitHeight: parent.height
+                radius: 3
+            }
+
+            Rectangle {
+                id: square
+                anchors.centerIn: parent
+                anchors.verticalCenterOffset: - root.height * 0.4
+                color: control.pressed ? "white" : "lightgray"
+                border.color: control.pressed ? "gray" : "black"
+                border.width: 2
+                implicitWidth: parent.width
+                implicitHeight: parent.height
+                radius: 3
+            }
         }
     }
 }
