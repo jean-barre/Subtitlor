@@ -33,18 +33,21 @@ Item {
 
             Text {
                 text: "Message :"
-                font.pixelSize: 8
+                font.pixelSize: 10
+                height: parent.height
                 verticalAlignment: Text.AlignVCenter
             }
             Text {
                 id: log_message_time
-                font.pixelSize: 8
+                font.pixelSize: 10
+                height: parent.height
                 verticalAlignment: Text.AlignVCenter
             }
 
             Text {
                 id: log_message_text
-                font.pixelSize: 8
+                font.pixelSize: 10
+                height: parent.height
                 verticalAlignment: Text.AlignVCenter
             }
         }
