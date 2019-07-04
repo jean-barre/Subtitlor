@@ -26,7 +26,13 @@ void SRTExport::exportFile(QString fileUrl)
 {
     int subtitlesCount = 1;
     const QString timeFormat = QString("hh:mm:ss,zzz");
-    QFile *targetFile = new QFile(fileUrl.split("file://").at(1));
+    QStringList split = fileUrl.split("file://");
+    if (split.length() < 2)
+    {
+        logMessage(-1, "Building SRT file failure: please make sure you gave a correct filename / directory");
+        return;
+    }
+    QFile *targetFile = new QFile(split.at(1));
     if (!targetFile->open(QIODevice::ReadWrite | QIODevice::Text))
     {
         logMessage(-1, "Building SRT file failure: cannot create a file in the directory selected");
