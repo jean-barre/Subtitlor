@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.0
+import QtQuick 2.6
+import QtQuick.Controls 2.1
 import QtMultimedia 5.0
 import "common"
 
@@ -71,11 +71,7 @@ Item {
         button_text: "Export"
 
         onClicked: {
-            stack.push({item: export_page, properties: {stack: stack, objectName:"Export"}})
-        }
-        Component{
-            id: export_page
-            ExportPage {}
+            stack.push("qrc:/qml/ExportPage.qml", {stack: stack, objectName:"Export"})
         }
     }
 

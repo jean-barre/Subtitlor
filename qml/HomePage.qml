@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.0
+import QtQuick 2.6
+import QtQuick.Controls 2.1
 import "common"
 
 Item {
@@ -15,11 +15,7 @@ Item {
         button_text: "Create SRT file"
 
         onClicked: {
-            stack.push({item: upload_page, properties: {stack: stack, objectName:"Upload"}})
-        }
-        Component{
-            id: upload_page
-            UploadPage {}
+            stack.push("qrc:/qml/UploadPage.qml", {stack: stack, objectName:"Upload"})
         }
     }
 }

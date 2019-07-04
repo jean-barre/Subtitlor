@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.0
+import QtQuick 2.6
+import QtQuick.Controls 2.1
 import QtMultimedia 5.0
 import "common"
 import "common/time_format.js" as TimeFormat
@@ -117,7 +117,7 @@ Rectangle {
             value: media_player.position
             height: parent.height
             width: parent.width * 0.8
-            maximumValue: media_player.duration
+            to: media_player.duration
 
             onPressedChanged: {
                 if (!pressed) {

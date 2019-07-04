@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.0
+import QtQuick 2.6
+import QtQuick.Controls 2.1
 import "common"
 
 Item {
@@ -93,11 +93,7 @@ Item {
         button_text: "Upload"
 
         onClicked: {
-            stack.push({item: editor_page, properties: {stack: stack, objectName:"Edit", video_url: video_url}})
-        }
-        Component{
-            id: editor_page
-            EditorPage {}
+            stack.push("qrc:/qml/EditorPage.qml", {stack: stack, objectName:"Edit", video_url: video_url})
         }
     }
 }
