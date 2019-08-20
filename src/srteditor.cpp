@@ -7,6 +7,7 @@ SRTEditor::SRTEditor(QObject *parent) : QObject(parent)
     QObject *qmlPlayer = parent->findChild<QObject*>("media_player");
     QObject::connect(qmlPlayer, SIGNAL(setVideoDuration()), this, SLOT(setVideoDuration()));
     this->qmlController = parent->findChild<QObject*>("media_controller");
+    this->qmlVideoViewer = parent->findChild<QObject*>("video_viewer");
     this->qmlEditor = parent->findChild<QObject*>("marker_editor");
     this->subtitles = std::map<int, SubtitleMarker*>();
     QObject::connect(this->qmlEditor, SIGNAL(lookUpIfOnMarker(int)), this, SLOT(find(int)));
@@ -84,6 +85,7 @@ void SRTEditor::find(int timeFrame)
                     Q_ARG(QVariant, markerFound->getBeginTime()),
                                       Q_ARG(QVariant, markerFound->getDuration()),
                                       Q_ARG(QVariant, markerFound->getText()));
+            QMetaObject::invokeMethod(this->qmlVideoViewer, "setVisualSubtitle", Q_ARG(QVariant, markerFound->getText()));
             currentItemBeginTime = markerFound->getBeginTime();
         }
     }
@@ -92,6 +94,7 @@ void SRTEditor::find(int timeFrame)
         currentItemBeginTime = -1;
         QMetaObject::invokeMethod(this->qmlEditor, "setCurrentMarker",
                 Q_ARG(QVariant, 0), Q_ARG(QVariant, 0), Q_ARG(QVariant, ""));
+        QMetaObject::invokeMethod(this->qmlVideoViewer, "setVisualSubtitle", Q_ARG(QVariant, ""));
     }
 }
 
@@ -144,6 +147,7 @@ void SRTEditor::editSubtitle(int beginTime, int duration, QString text)
         markerFound = static_cast<SubtitleMarker*>(lowerIterator->second);
         markerFound->setDuration(duration);
         markerFound->setText(text);
+        QMetaObject::invokeMethod(this->qmlVideoViewer, "setVisualSubtitle", Q_ARG(QVariant, text));
         logMessage(1, "Edition success");
     }
     else

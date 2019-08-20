@@ -22,6 +22,7 @@ private:
     QObject *qmlEditorPage;
     QObject *qmlEditor;
     QObject *qmlController;
+    QObject *qmlVideoViewer;
     std::map<int, SubtitleMarker*> subtitles;
     int currentItemBeginTime;
     bool checkSubtitle(int beginTime, int duration, QString text);
