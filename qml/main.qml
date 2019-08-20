@@ -27,7 +27,12 @@ Window {
         }
         onCurrentItemChanged: {
             if (currentItem)
+            {
                 itemChanged(currentItem.objectName)
+            }
+        }
+        Component.onCompleted: {
+            currentItemChanged()
         }
 
         signal itemChanged(string itemName)
