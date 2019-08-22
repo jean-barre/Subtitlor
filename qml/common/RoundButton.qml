@@ -15,6 +15,7 @@ MouseArea {
         id: rectangle
         anchors.fill: parent
         color: background_color
+        opacity: root.enabled ? 1 : 0.5
         radius: Math.min(root.height, root.width) * 0.2
 
         Text {

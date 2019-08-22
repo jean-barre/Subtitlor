@@ -15,6 +15,8 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: parent.height * 0.1
 
+        property bool valid_url: false
+
         Rectangle {
             anchors.fill: parent
             border.color: "black"
@@ -83,7 +85,12 @@ Item {
                 if (validateFileExtension(drop.urls[0])) {
                     file_name.text = drop.urls[0]
                     video_url = drop.urls[0]
+                    drop_area.valid_url = true
+                } else {
+                    drop_area.valid_url = false
                 }
+            } else {
+                drop_area.valid_url = false
             }
         }
 
@@ -101,6 +108,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height * 0.1
 
+        enabled: drop_area.valid_url
         background_color: "black"
         button_text: "Start Editing"
 
