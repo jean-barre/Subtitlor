@@ -6,7 +6,7 @@ Window {
     visible: true
     width: 1200
     height: 900
-    title: qsTr("Hello World")
+    title: qsTr("Subtitlor")
 
     NavigationBar {
         id: navigation_bar
