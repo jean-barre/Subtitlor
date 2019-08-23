@@ -73,6 +73,7 @@ Rectangle {
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
             source: "qrc:///img/flip.png"
+            mipmap: true
         }
 
         onClicked: {

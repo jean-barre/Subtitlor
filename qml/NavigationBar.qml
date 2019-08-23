@@ -19,6 +19,7 @@ Rectangle {
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
             source: "qrc:///img/back.png"
+            mipmap: true
         }
 
         onClicked: {

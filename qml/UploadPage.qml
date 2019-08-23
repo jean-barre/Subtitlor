@@ -33,6 +33,7 @@ Item {
                     width: parent.width
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:///img/video_icon.png"
+                    mipmap: true
                 }
 
                 Text {
