@@ -5,116 +5,49 @@ import "common"
 Item {
 
     property StackView stack
-    property string video_url
+    property bool edit_mode: false
 
-    DropArea {
+    Column {
         id: drop_area
-        height: parent.height * 0.6
         width: parent.width * 0.8
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: parent.height * 0.1
+        anchors.fill: parent
+        anchors.margins: parent.height * 0.05
+        spacing: parent.height * 0.05
 
-        property bool valid_url: false
+        FileDropArea {
+            id: video_area
+            file_type: 1
 
-        Rectangle {
-            anchors.fill: parent
-            border.color: "black"
-            radius: 5
-
-            Column {
-                anchors.centerIn: parent
-                height: parent.height * 0.7
-                width: parent.width * 0.7
-                spacing: parent.height * 0.05
-
-                Image {
-                    height: parent.height * 0.45
-                    width: parent.width
-                    fillMode: Image.PreserveAspectFit
-                    source: "qrc:///img/video_icon.png"
-                    mipmap: true
-                }
-
-                Text {
-                    height: parent.height * 0.25
-                    width: parent.width
-                    text: "Drop your Video file here"
-                    font.pointSize: 16
-                    font.bold: true
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    color: "black"
-                }
-
-                Item {
-                    height: parent.height * 0.20
-                    width: parent.width
-
-                    Text {
-                        anchors.fill: parent
-                        color: "grey"
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                        text: "No file"
-                        visible: file_name.text.length === 0
-                    }
-
-                    Text {
-                        id: file_name
-                        anchors.fill: parent
-                        color: "black"
-                        verticalAlignment: Text.AlignTop
-                        horizontalAlignment: Text.AlignHCenter
-                        text: ""
-                    }
-                }
-            }
-
-            Text {
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 10
-                anchors.right: parent.right
-                anchors.rightMargin: 10
-                text: "accepted extensions: .mov, .avi and .mp4"
-                font.pointSize: 10
-            }
+            height: parent.height * 0.4
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
         }
 
-        onDropped: {
-            if (drop.hasUrls) {
-                if (validateFileExtension(drop.urls[0])) {
-                    file_name.text = drop.urls[0]
-                    video_url = drop.urls[0]
-                    drop_area.valid_url = true
-                } else {
-                    drop_area.valid_url = false
-                }
-            } else {
-                drop_area.valid_url = false
-            }
-        }
+        FileDropArea {
+            id: srt_area
+            file_type: 0
+            visible: edit_mode
 
-        function validateFileExtension(filePath) {
-            var extension = filePath.split('.').pop()
-            return extension === "avi" || extension === "mp4" || extension === "mov"
+            height: parent.height * 0.4
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
         }
     }
 
     RoundButton {
         height: parent.height * 0.1
         width: parent.width * 0.3
-        anchors.right: parent.right
-        anchors.rightMargin: parent.width * 0.1
+        anchors.right: drop_area.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.height * 0.1
+        anchors.bottomMargin: parent.height * 0.05
 
-        enabled: drop_area.valid_url
+        enabled: edit_mode ? video_area.valid_url && srt_area.valid_url :
+            video_area.valid_url
         background_color: "black"
         button_text: "Start Editing"
 
         onClicked: {
-            stack.push("qrc:/qml/EditorPage.qml", {stack: stack, objectName:"Edit", video_url: video_url})
+            stack.push("qrc:/qml/EditorPage.qml", {stack: stack, objectName:"Edit", video_url: video_area.file_url})
         }
     }
 }

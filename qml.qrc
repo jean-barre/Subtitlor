@@ -9,6 +9,7 @@
         <file>qml/MarkerEditor.qml</file>
         <file>qml/common/RoundButton.qml</file>
         <file>qml/ExportPage.qml</file>
+        <file>qml/common/FileDropArea.qml</file>
         <file>qml/common/LogBar.qml</file>
         <file>qml/common/SquareSlider.qml</file>
         <file>qml/common/SliderMark.qml</file>

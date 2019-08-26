@@ -34,7 +34,7 @@ Item {
             button_text: "Edit a SRT file"
 
             onClicked: {
-                stack.push("qrc:/qml/UploadPage.qml", {stack: stack, objectName:"Upload"})
+                stack.push("qrc:/qml/UploadPage.qml", {stack: stack, objectName:"Upload", edit_mode: true})
             }
         }
     }
