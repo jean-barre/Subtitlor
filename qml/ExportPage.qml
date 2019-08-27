@@ -39,6 +39,7 @@ Item {
                 height: parent.height
                 width: parent.width * 0.8
                 border.color: "black"
+                radius: 5
 
                 Text {
                     anchors.fill: parent
@@ -94,6 +95,7 @@ Item {
                 height: parent.height
                 width: parent.width * 0.65
                 border.color: "black"
+                radius: 5
 
                 Text {
                     anchors.fill: parent
