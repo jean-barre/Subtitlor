@@ -11,6 +11,11 @@ Rectangle {
 
     property MediaPlayer media_player
     property bool playing: false
+
+    function setVideoDuration(duration) {
+        slider.to = duration
+    }
+
     function setVisualMarker(begin, duration) {
         slider.addMarker(begin, duration)
     }
@@ -120,7 +125,6 @@ Rectangle {
             value: media_player.position
             height: parent.height
             width: parent.width * 0.8
-            to: media_player.duration
 
             onPressedChanged: {
                 if (!pressed) {

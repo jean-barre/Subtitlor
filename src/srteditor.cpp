@@ -10,6 +10,10 @@ SRTEditor::SRTEditor(QObject *parent) : QObject(parent)
     this->qmlVideoViewer = parent->findChild<QObject*>("video_viewer");
     this->qmlEditor = parent->findChild<QObject*>("marker_editor");
     this->subtitles = std::map<int, SubtitleMarker*>();
+
+    QString srtFileUrl = QQmlProperty::read(this->qmlEditorPage, "srt_url").toString();
+    SRTParser(srtFileUrl, &this->subtitles);
+
     QObject::connect(this->qmlEditor, SIGNAL(lookUpIfOnMarker(int)), this, SLOT(find(int)));
     QObject::connect(this->qmlEditor, SIGNAL(addMarker(int, int, QString)), this, SLOT(addSubtitle(int, int, QString)));
     QObject::connect(this->qmlEditor, SIGNAL(editMarker(int, int, QString)), this, SLOT(editSubtitle(int, int, QString)));
@@ -27,6 +31,30 @@ SRTEditor::~SRTEditor()
 const std::map<int, SubtitleMarker *> &SRTEditor::getSubtitles() const
 {
     return this->subtitles;
+}
+
+// This method is called once: when the video duration slot is called
+void SRTEditor::setUploadedSubtitles()
+{
+    int subtitleNumber = 0;
+    for (auto p : this->subtitles)
+    {
+        SubtitleMarker *marker = p.second;
+        int beginTime = marker->getBeginTime();
+        int duration = marker->getDuration();
+        if (beginTime + duration > this->videoDuration)
+        {
+            logMessage(-1,
+                    "Addition failure: overlapping with the end of the video");
+            break;
+        }
+        QMetaObject::invokeMethod(this->qmlController, "setVisualMarker",
+                Q_ARG(QVariant, beginTime), Q_ARG(QVariant, duration));
+        subtitleNumber++;
+    }
+    this->qmlEditor->setProperty("subtitle_number", subtitleNumber);
+    this->subtitleNumber = subtitleNumber;
+    logMessage(1, "Upload success");
 }
 
 bool SRTEditor::checkSubtitle(int beginTime, int duration, QString text)
@@ -56,6 +84,13 @@ void SRTEditor::setVideoDuration()
 {
     QObject *qmlPlayer = this->parent()->findChild<QObject*>("media_player");
     this->videoDuration = qmlPlayer->property("duration").toInt();
+    // Make sure the controller gets the information
+    // before any marker can be set
+    QMetaObject::invokeMethod(this->qmlController, "setVideoDuration",
+            Q_ARG(QVariant, this->videoDuration));
+    if (this->subtitles.size() > 0) {
+        setUploadedSubtitles();
+    }
 }
 
 void SRTEditor::find(int timeFrame)

@@ -18,6 +18,7 @@ SOURCES += \
     src/subtitlemarker.cpp \
     src/srteditor.cpp \
     src/qmlconnector.cpp \
+    src/srtparser.cpp \
     src/srtexport.cpp
 
 RESOURCES += qml.qrc \
@@ -32,4 +33,5 @@ HEADERS += \
     src/subtitlemarker.h \
     src/srteditor.h \
     src/qmlconnector.h \
+    src/srtparser.h \
     src/srtexport.h

@@ -47,7 +47,13 @@ Item {
         button_text: "Start Editing"
 
         onClicked: {
-            stack.push("qrc:/qml/EditorPage.qml", {stack: stack, objectName:"Edit", video_url: video_area.file_url})
+            stack.push("qrc:/qml/EditorPage.qml",
+                {
+                    stack: stack,
+                    objectName:"Edit",
+                    video_url: video_area.file_url,
+                    srt_url: srt_area.file_url
+                })
         }
     }
 }

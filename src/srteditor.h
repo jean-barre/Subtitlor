@@ -7,6 +7,7 @@
 #include <QTime>
 
 #include "subtitlemarker.h"
+#include "srtparser.h"
 
 class SRTEditor : public QObject
 {
@@ -25,6 +26,7 @@ private:
     QObject *qmlVideoViewer;
     std::map<int, SubtitleMarker*> subtitles;
     int currentItemBeginTime;
+    void setUploadedSubtitles();
     bool checkSubtitle(int beginTime, int duration, QString text);
     void logMessage(int code, QString error); // code value: [-1, error], [0, info], [1, valid]
 

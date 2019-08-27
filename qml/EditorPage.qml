@@ -6,6 +6,8 @@ Item {
 
     property StackView stack
     property string video_url
+    property string srt_url
+
     function displayLogMessage(code, time, message) {
         log_bar.displayLogMessage(code, time, message)
     }
