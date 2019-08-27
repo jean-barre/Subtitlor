@@ -24,6 +24,7 @@ private:
 signals:
 
 public slots:
+    void checkExistingFile(QString fileUrl);
     void exportFile(QString fileUrl);
 };
 

@@ -8,7 +8,14 @@ SRTExport::SRTExport(QObject *parent) : QObject(parent)
 SRTExport::SRTExport(QObject *parent, SRTEditor *editor): editor(editor)
 {
     this->qmlExportObject = parent->findChild<QObject*>("Export");
-    QObject::connect(this->qmlExportObject, SIGNAL(export_file(QString)), this, SLOT(exportFile(QString)));
+    QObject::connect(this->qmlExportObject,
+            SIGNAL(check_existing_file(QString)),
+            this, SLOT(checkExistingFile(QString)));
+    QObject::connect(this->qmlExportObject,
+            SIGNAL(export_file(QString)),
+            this,
+            SLOT(exportFile(QString)));
+    checkExistingFile(QQmlProperty::read(this->qmlExportObject, "file_url").toString());
 }
 
 SRTExport::~SRTExport()
@@ -20,6 +27,16 @@ void SRTExport::logMessage(int code, QString error)
     QString time = QTime::currentTime().toString("HH:mm");
     QMetaObject::invokeMethod(qmlExportObject, "displayLogMessage",
             Q_ARG(QVariant, code), Q_ARG(QVariant, time), Q_ARG(QVariant, error));
+}
+
+void SRTExport::checkExistingFile(QString fileUrl)
+{
+    bool exists = false;
+    if (!fileUrl.isEmpty()) {
+        fileUrl = fileUrl.remove("file://");
+        exists = QFile::exists(fileUrl);
+    }
+    qmlExportObject->setProperty("existing_file", exists);
 }
 
 void SRTExport::exportFile(QString fileUrl)

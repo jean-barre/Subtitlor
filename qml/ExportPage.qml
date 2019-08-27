@@ -7,7 +7,10 @@ Item {
 
     property StackView stack
     property string file_url
+    property bool existing_file
+    signal check_existing_file(string file_url)
     signal export_file(string file_url)
+
     function displayLogMessage(code, time, message) {
         log_bar.displayLogMessage(code, time, message)
     }
@@ -55,6 +58,11 @@ Item {
                     horizontalAlignment: Text.AlignRight
                     text: ""
                     wrapMode: TextEdit.WrapAnywhere
+
+                    onTextChanged: {
+                        check_existing_file(directory_url.text +
+                            "/" + text + ".srt")
+                    }
                 }
             }
 
@@ -106,6 +114,11 @@ Item {
                     horizontalAlignment: Text.AlignRight
                     text: ""
                     wrapMode: TextEdit.WrapAnywhere
+
+                    onTextChanged: {
+                        check_existing_file(text + "/" +
+                            file_name.text + ".srt")
+                    }
                 }
             }
 
@@ -117,6 +130,18 @@ Item {
                 onClicked: {
                     file_dialog.visible = true
                 }
+            }
+        }
+
+        Row {
+            width: parent.width
+
+            Text {
+                width: parent.width
+                visible: existing_file
+                text: "A file already exist at this location. By exporting you would overwrite it."
+                horizontalAlignment: Text.AlignHCenter
+                color: "red"
             }
         }
     }
