@@ -55,7 +55,12 @@ Item {
         button_text: "Export"
 
         onClicked: {
-            stack.push("qrc:/qml/ExportPage.qml", {stack: stack, objectName:"Export"})
+            stack.push("qrc:/qml/ExportPage.qml",
+                    {
+                        stack: stack,
+                        objectName: "Export",
+                        file_url: srt_url
+                    })
         }
     }
 

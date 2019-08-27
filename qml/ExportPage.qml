@@ -6,6 +6,7 @@ import "common"
 Item {
 
     property StackView stack
+    property string file_url
     signal export_file(string file_url)
     function displayLogMessage(code, time, message) {
         log_bar.displayLogMessage(code, time, message)
@@ -168,6 +169,14 @@ Item {
         }
         onRejected: {
             console.log("Canceled")
+        }
+    }
+
+    Component.onCompleted: {
+        if (file_url != "") {
+            var n = file_url.lastIndexOf("/");
+            file_name.text = file_url.substring(n+1, file_url.length - 4)
+            directory_url.text = file_url.substring(0, n)
         }
     }
 }
