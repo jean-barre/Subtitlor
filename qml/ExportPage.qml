@@ -165,10 +165,8 @@ Item {
         selectFolder: true
         onAccepted: {
             directory_url.text = file_dialog.fileUrls[0]
-            console.log("You chose: " + file_dialog.fileUrls)
         }
         onRejected: {
-            console.log("Canceled")
         }
     }
 
