@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include "src/qmlconnector.h"
+#include "src/textstyler.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +12,7 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("jeanbarre.com");
     app.setApplicationName("Subtitlor");
 
+    qmlRegisterType<TextStyler>("com.jeanbarre.subtitlor", 1, 0, "TextStyler");
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())

@@ -19,7 +19,8 @@ SOURCES += \
     src/srteditor.cpp \
     src/qmlconnector.cpp \
     src/srtparser.cpp \
-    src/srtexport.cpp
+    src/srtexport.cpp \
+    src/textstyler.cpp
 
 RESOURCES += qml.qrc \
     img.qrc
@@ -34,4 +35,5 @@ HEADERS += \
     src/srteditor.h \
     src/qmlconnector.h \
     src/srtparser.h \
-    src/srtexport.h
+    src/srtexport.h \
+    src/textstyler.h
