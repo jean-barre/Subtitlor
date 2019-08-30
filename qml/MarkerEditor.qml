@@ -22,10 +22,11 @@ Column {
     function updateOnMarker(is_on) {
         on_marker = is_on
     }
+
     function setCurrentMarker(beginTime, duration, text) {
         marker_time = beginTime
         durationValue = duration
-        text_value.text = text
+        text_editor.text_value.text = text
     }
     Connections {
         target: media_player
@@ -140,30 +141,11 @@ Column {
         width: parent.width * 0.95
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Rectangle {
+        TextEditor {
+            id: text_editor
             height: parent.height
             width: parent.width
-            border.color: "black"
-
-            Text {
-                id: initial_text
-                anchors.fill: parent
-                anchors.margins: 10
-                color: "grey"
-                text: "Type your subtitles here"
-                visible: text_value.text.length == 0
-            }
-
-            TextEdit {
-                id: text_value
-                anchors.fill: parent
-                anchors.margins: 10
-                color: "black"
-                text: ""
-                wrapMode: TextEdit.WrapAnywhere
-            }
         }
-
     }
 
     Row {
@@ -183,7 +165,7 @@ Column {
             button_text: "Add"
 
             onClicked: {
-                addMarker(beginTimeValue, TimeFormat.unformat(duration_value.text), text_value.text)
+                addMarker(beginTimeValue, TimeFormat.unformat(duration_value.text), text_editor.text_styler.htmlText)
                 marker_editor.lookUpIfOnMarker(media_player.position)
             }
         }
@@ -199,7 +181,7 @@ Column {
             button_text: "Edit"
 
             onClicked: {
-                editMarker(beginTimeValue, TimeFormat.unformat(duration_value.text), text_value.text)
+                editMarker(beginTimeValue, TimeFormat.unformat(duration_value.text), text_editor.text_styler.htmlText)
             }
         }
 

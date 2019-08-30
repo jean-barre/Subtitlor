@@ -16,5 +16,7 @@
         <file>qml/common/time_format.js</file>
         <file>qml/common/visual_markers.js</file>
         <file>qml/VideoViewer.qml</file>
+        <file>qml/common/TextEditor.qml</file>
+        <file>qml/common/Rainbow.qml</file>
     </qresource>
 </RCC>
