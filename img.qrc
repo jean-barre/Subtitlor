@@ -8,5 +8,8 @@
         <file>img/pause.png</file>
         <file>img/play.png</file>
         <file>img/previous.png</file>
+        <file>img/text_bold.png</file>
+        <file>img/text_italic.png</file>
+        <file>img/text_underline.png</file>
     </qresource>
 </RCC>
