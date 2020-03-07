@@ -19,9 +19,9 @@ Slider {
         property int to: root.to
 
         x: root.leftPadding + handle.width / 2
-        y: root.topPadding + root.availableHeight / 2 - height / 2
+        y: root.topPadding + root.availableHeight / 2 + height / 2
         implicitWidth: 200
-        implicitHeight: 4
+        implicitHeight: 8
         width: root.availableWidth - handle.width
         height: implicitHeight
         radius: 2
@@ -47,10 +47,9 @@ Slider {
             anchors.centerIn: parent
             color: root.pressed ? "white" : "lightgray"
             border.color: root.pressed ? "gray" : "black"
-            border.width: 2
-            implicitWidth: 1
+            border.width: 4
+            implicitWidth: 2
             implicitHeight: parent.height
-            radius: 3
         }
 
         Rectangle {
@@ -59,10 +58,10 @@ Slider {
             anchors.verticalCenterOffset: - root.height * 0.4
             color: root.pressed ? "white" : "lightgray"
             border.color: root.pressed ? "gray" : "black"
-            border.width: 2
+            border.width: 4
             implicitWidth: parent.width
             implicitHeight: parent.height
-            radius: 3
+            radius: 10
         }
     }
 }

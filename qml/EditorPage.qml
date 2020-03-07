@@ -24,8 +24,8 @@ Item {
     MediaController {
         id: video_controller
         objectName: "media_controller"
-        height: parent.height * 0.1
-        width: parent.width * 0.95
+        height: parent.height * 0.17
+        width: parent.width
         media_player: video_viewer.player
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: video_viewer.bottom
@@ -35,7 +35,7 @@ Item {
     MarkerEditor {
         id: marker_editor
         media_player: video_viewer.player
-        height: parent.height * 0.47
+        height: parent.height * 0.4
         width: parent.width * 0.68
         anchors.left: parent.left
         anchors.leftMargin: parent.width * 0.1

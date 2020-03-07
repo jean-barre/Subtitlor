@@ -1,13 +1,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.1
 import QtMultimedia 5.0
+import QtGraphicalEffects 1.0
 import "common"
 import "common/time_format.js" as TimeFormat
 
 Rectangle {
     height: 100
     width: 500
-    anchors.margins: 2
+    anchors.margins: 0
 
     property MediaPlayer media_player
     property bool playing: false
@@ -25,8 +26,8 @@ Rectangle {
     }
 
     Row {
-        spacing: parent.width * 0.05
-        height: parent.height * 0.4
+        spacing: parent.width * 0.1
+        height: parent.height * 0.3
         width: parent.width * 0.3
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -111,30 +112,6 @@ Rectangle {
                 media_player.seek(media_player.position + 5000)
             }
         }
-    }
-
-    Row {
-        spacing: parent.width * 0.03
-        height: parent.height * 0.4
-        width: parent.width
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-
-        SquareSlider {
-            id: slider
-            value: media_player.position
-            height: parent.height
-            width: parent.width * 0.8
-
-            onPressedChanged: {
-                if (!pressed) {
-                    playing = false;
-                    media_player.seek(slider.value)
-                    media_player.pause()
-                    play_pause_image.source = "qrc:///img/play.png"
-                }
-            }
-        }
 
         Row {
             height: parent.height
@@ -164,6 +141,51 @@ Rectangle {
                 font.pixelSize: 12
                 verticalAlignment: Text.AlignVCenter
             }
+        }
+    }
+
+    Rectangle {
+        height: parent.height * 0.3
+        width: parent.width
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+
+        Item {
+            height: parent.height
+            width: parent.width * 0.85
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            SquareSlider {
+                id: slider
+                value: media_player.position
+                height: parent.height
+                width: parent.width * 1.5
+
+                onPressedChanged: {
+                    if (!pressed) {
+                        playing = false;
+                        media_player.seek(slider.value)
+                        media_player.pause()
+                        play_pause_image.source = "qrc:///img/play.png"
+                    }
+                }
+            }
+        }
+
+        SideSliderArea {
+            width: parent.width * 0.1
+            height: parent.height * 6
+            slider: slider
+            isDecrease: true
+            parentWidth: parent.width
+        }
+
+        SideSliderArea {
+            width: parent.width * 0.1
+            height: parent.height * 2
+            anchors.right: parent.right
+            slider: slider
+            parentWidth: parent.width
         }
     }
 }
