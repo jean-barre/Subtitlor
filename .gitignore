@@ -1,3 +1,2 @@
-# builds, runnables and outputs
-build/*
+# IDE files
 *.user
