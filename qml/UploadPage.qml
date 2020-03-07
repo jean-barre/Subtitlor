@@ -12,7 +12,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Row {
-            height: parent.height * 0.15
+            height: parent.height * 0.3
             width: parent.width
 
             Text {
@@ -81,7 +81,7 @@ Item {
         }
 
         Item {
-            height: parent.height * 0.1
+            height: parent.height * 0.05
             width: parent.width
 
             RoundButton {
@@ -91,10 +91,10 @@ Item {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: parent.height * 0.05
 
-                enabled: editionRadioButton.checked ? video_area.valid_url && srt_area.valid_url :
+                visible: editionRadioButton.checked ? video_area.valid_url && srt_area.valid_url :
                     video_area.valid_url
                 background_color: "black"
-                button_text: "Start Editing"
+                button_text: "Start"
 
                 onClicked: {
                     stack.push("qrc:/qml/EditorPage.qml",
