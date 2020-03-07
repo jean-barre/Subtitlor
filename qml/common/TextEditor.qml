@@ -36,41 +36,43 @@ Row {
         rows: 2
         spacing: parent.height * 0.02
 
-        Button {
+        ImageButton {
             height: parent.height * 0.5 - parent.spacing * 0.5
             width: parent.width * 0.5 - parent.spacing * 0.5
             onClicked: styler.bold = !styler.bold
             checkable: true
             checked: styler.bold
-            display: AbstractButton.IconOnly
-            icon.source: "qrc:///img/text_bold.png"
+            imageSource: "qrc:///img/text_bold.png"
         }
-        Button {
+
+        ImageButton {
             height: parent.height * 0.5 - parent.spacing * 0.5
             width: parent.width * 0.5 - parent.spacing * 0.5
             onClicked: styler.italic = !styler.italic
             checkable: true
             checked: styler.italic
-            display: AbstractButton.IconOnly
-            icon.source: "qrc:///img/text_italic.png"
+            imageSource: "qrc:///img/text_italic.png"
         }
-        Button {
+
+        ImageButton {
             height: parent.height * 0.5 - parent.spacing * 0.5
             width: parent.width * 0.5 - parent.spacing * 0.5
             onClicked: styler.underline = !styler.underline
             checkable: true
             checked: styler.underline
-            display: AbstractButton.IconOnly
-            icon.source: "qrc:///img/text_underline.png"
+            imageSource: "qrc:///img/text_underline.png"
         }
+
         Button {
             height: parent.height * 0.5 - parent.spacing * 0.5
             width: parent.width * 0.5 - parent.spacing * 0.5
+
             Rectangle {
                 height: parent.height * 0.9
                 width: parent.width
                 color: styler.textColor
             }
+
             Rainbow {
                 height: parent.height * 0.1
                 width: parent.width
@@ -82,6 +84,7 @@ Row {
                 colorDialog.open()
             }
         }
+
         ColorDialog {
             id: colorDialog
             color: "black"

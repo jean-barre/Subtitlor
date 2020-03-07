@@ -18,5 +18,6 @@
         <file>qml/VideoViewer.qml</file>
         <file>qml/common/TextEditor.qml</file>
         <file>qml/common/Rainbow.qml</file>
+        <file>qml/common/ImageButton.qml</file>
     </qresource>
 </RCC>
