@@ -172,7 +172,7 @@ Item {
 
             onClicked: {
                 stack.pop(stack.find(function(item) {
-                    return item.name === "Home";
+                    return item.name === "Upload";
                 }));
             }
         }

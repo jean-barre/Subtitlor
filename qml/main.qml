@@ -21,9 +21,9 @@ Window {
         anchors.top: navigation_bar.bottom
         height: parent.height * 0.9
         width: parent.width
-        initialItem: HomePage {
+        initialItem: UploadPage {
             stack: stack
-            objectName: "Home"
+            objectName: "Upload"
         }
         onCurrentItemChanged: {
             if (currentItem)
