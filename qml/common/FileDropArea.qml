@@ -1,4 +1,5 @@
 import QtQuick 2.6
+import QtQuick.Dialogs 1.0
 
 DropArea {
 
@@ -40,26 +41,61 @@ DropArea {
                 color: "black"
             }
 
-            Item {
-                height: parent.height * 0.20
+            Row {
                 width: parent.width
+                height: parent.height * 0.20
+                spacing: parent.height * 0.02
 
-                Text {
-                    anchors.fill: parent
-                    color: "grey"
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    text: "No file"
-                    visible: file_name.text.length === 0
+                Item {
+                    width: parent.width * 0.68
+                    height: parent.height
+
+                    Text {
+                        anchors.fill: parent
+                        color: "grey"
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignLeft
+                        text: "No file"
+                        visible: !valid_url
+                    }
+
+                    Text {
+                        id: file_name
+                        anchors.fill: parent
+                        color: "blue"
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignLeft
+                        text: ""
+                        visible: valid_url
+                    }
                 }
 
-                Text {
-                    id: file_name
-                    anchors.fill: parent
-                    color: "blue"
-                    verticalAlignment: Text.AlignTop
-                    horizontalAlignment: Text.AlignHCenter
-                    text: ""
+                RoundButton {
+                    width: parent.width * 0.3
+                    height: parent.height
+                    button_text: "Open file..."
+
+                    onClicked: {
+                        file_dialog.visible = true
+                    }
+                }
+
+                FileDialog {
+                    id: file_dialog
+                    title: type_name + " file selection"
+                    folder: shortcuts.home
+
+                    onAccepted: {
+                        if (validateFileExtension(file_dialog.fileUrls[0])) {
+                            file_name.text = file_dialog.fileUrls[0]
+                            file_url = file_dialog.fileUrls[0]
+                            valid_url = true
+                        } else {
+                            valid_url = false
+                        }
+                    }
+                    onRejected: {
+                    }
                 }
             }
         }
