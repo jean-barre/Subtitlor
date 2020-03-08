@@ -37,7 +37,7 @@ public slots:
     void setVideoDuration();
     void find(int timeFrame);
     void addSubtitle(int beginTime, int duration, QString text);
-    void editSubtitle(int beginTime, int duration, QString text);
+    void editSubtitle(int previousBeginTime, int beginTime, int duration, QString text);
     void removeSubtitle(int beginTime);
 
 };

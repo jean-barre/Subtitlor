@@ -20,5 +20,6 @@
         <file>qml/common/ImageButton.qml</file>
         <file>qml/common/SideSliderArea.qml</file>
         <file>qml/common/SliderTickmarks.qml</file>
+        <file>qml/common/TimeEdit.qml</file>
     </qresource>
 </RCC>

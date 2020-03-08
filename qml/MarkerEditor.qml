@@ -14,20 +14,29 @@ Column {
     property int marker_time: 0
     property int beginTimeValue: on_marker ? marker_time : media_player.position
     property int durationValue: 0
+    property bool editing: false
+    property bool removing: false
     property MediaPlayer media_player
     signal lookUpIfOnMarker(int timeframe)
     signal addMarker(int beginTime, int duration, string text)
-    signal editMarker(int beginTime, int duration, string text)
+    signal editMarker(int previousBeginTime, int beginTime, int duration, string text)
     signal removeMarker(int beginTime)
+
     function updateOnMarker(is_on) {
         on_marker = is_on
+        editing = false
+        removing = false
     }
 
     function setCurrentMarker(beginTime, duration, text) {
         marker_time = beginTime
         durationValue = duration
         text_editor.text_value.text = text
+
+        begin_value.setText(TimeFormat.format(beginTime))
+        duration_value.setText(TimeFormat.format(duration))
     }
+
     Connections {
         target: media_player
         onPositionChanged: {
@@ -95,13 +104,15 @@ Column {
                 verticalAlignment: Text.AlignVCenter
                 text: "Begin time (ms):"
             }
-            Text {
+
+            TimeEdit {
                 id: begin_value
+                width: parent.width * 0.5
                 height: parent.height
-                verticalAlignment: Text.AlignVCenter
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.left: begin_title.right
                 anchors.leftMargin: 10
-                text: TimeFormat.format(beginTimeValue)
+                defaultTextValue: "00.000"
             }
         }
 
@@ -112,27 +123,18 @@ Column {
                 id: duration_title
                 height: parent.height
                 verticalAlignment: Text.AlignVCenter
-                text: "Marker Duration (ms):"
+                text: "Marker Duration (s):"
             }
-            Rectangle {
+
+            TimeEdit {
+                id: duration_value
                 width: parent.width * 0.5
                 height: parent.height
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: duration_title.right
                 anchors.leftMargin: 10
-                border.color: "black"
-
-                TextEdit {
-                    id: duration_value
-                    anchors.fill: parent
-                    padding: 10
-                    verticalAlignment: Text.AlignVCenter
-                    wrapMode: TextEdit.WrapAnywhere
-                    text: TimeFormat.format(durationValue)
-                }
+                defaultTextValue: "01.000"
             }
-
-
         }
     }
 
@@ -165,8 +167,7 @@ Column {
             button_text: "Add"
 
             onClicked: {
-                addMarker(beginTimeValue, TimeFormat.unformat(duration_value.text), text_editor.text_styler.htmlText)
-                marker_editor.lookUpIfOnMarker(media_player.position)
+                addMarker(TimeFormat.unformat(begin_value.timeEditTextEdit.text), TimeFormat.unformat(duration_value.timeEditTextEdit.text), text_editor.text_styler.htmlText)
             }
         }
 
@@ -177,11 +178,17 @@ Column {
             enabled: on_marker == true
             opacity: on_marker == true ? 1 : 0.4
 
-            background_color: "blue"
-            button_text: "Edit"
+            background_color: editing ? "black" : "blue"
+            button_text: editing ? "Save" : "Edit"
 
             onClicked: {
-                editMarker(beginTimeValue, TimeFormat.unformat(duration_value.text), text_editor.text_styler.htmlText)
+                if (editing) {
+                    editMarker(beginTimeValue, TimeFormat.unformat(begin_value.timeEditTextEdit.text), TimeFormat.unformat(duration_value.timeEditTextEdit.text), text_editor.text_styler.htmlText)
+                    editing = false
+                } else {
+                    marker_editor.lookUpIfOnMarker(media_player.position)
+                    editing = true
+                }
             }
         }
 
@@ -192,12 +199,17 @@ Column {
             enabled: on_marker == true
             opacity: on_marker == true ? 1 : 0.4
 
-            background_color: "red"
-            button_text: "Remove"
+            background_color: removing ? "black" : "red"
+            button_text: removing ? "Confirm" : "Remove"
 
             onClicked: {
-                removeMarker(beginTimeValue)
-                marker_editor.lookUpIfOnMarker(media_player.position)
+                if (removing) {
+                    removeMarker(beginTimeValue)
+                    removing = false
+                } else {
+                    marker_editor.lookUpIfOnMarker(media_player.position)
+                    removing = true
+                }
             }
         }
     }

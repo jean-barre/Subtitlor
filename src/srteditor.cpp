@@ -16,7 +16,7 @@ SRTEditor::SRTEditor(QObject *parent) : QObject(parent)
 
     QObject::connect(this->qmlEditor, SIGNAL(lookUpIfOnMarker(int)), this, SLOT(find(int)));
     QObject::connect(this->qmlEditor, SIGNAL(addMarker(int, int, QString)), this, SLOT(addSubtitle(int, int, QString)));
-    QObject::connect(this->qmlEditor, SIGNAL(editMarker(int, int, QString)), this, SLOT(editSubtitle(int, int, QString)));
+    QObject::connect(this->qmlEditor, SIGNAL(editMarker(int, int, int, QString)), this, SLOT(editSubtitle(int, int, int, QString)));
     QObject::connect(this->qmlEditor, SIGNAL(removeMarker(int)), this, SLOT(removeSubtitle(int)));
     this->currentItemBeginTime = -1;
 }
@@ -168,26 +168,19 @@ void SRTEditor::addSubtitle(int beginTime, int duration, QString text)
     logMessage(1, "Addition success");
 }
 
-void SRTEditor::editSubtitle(int beginTime, int duration, QString text)
+void SRTEditor::editSubtitle(int previousBeginTime, int beginTime, int duration, QString text)
 {
     // make sure the input data is correct
-    if (!checkSubtitle(beginTime, duration, text))
+    if (!checkSubtitle(previousBeginTime, duration, text))
     {
-        return;
-    }
-    SubtitleMarker *markerFound = new SubtitleMarker();
-    auto lowerIterator = this->subtitles.lower_bound(beginTime);
-    if (lowerIterator->first == beginTime)
-    {
-        markerFound = static_cast<SubtitleMarker*>(lowerIterator->second);
-        markerFound->setDuration(duration);
-        markerFound->setText(text);
-        QMetaObject::invokeMethod(this->qmlVideoViewer, "setVisualSubtitle", Q_ARG(QVariant, text));
-        logMessage(1, "Edition success");
+        logMessage(-1, "Edition failure");
     }
     else
     {
-        logMessage(-1, "Edition failure");
+        removeSubtitle(previousBeginTime);
+        addSubtitle(beginTime, duration, text);
+        QMetaObject::invokeMethod(this->qmlVideoViewer, "setVisualSubtitle", Q_ARG(QVariant, text));
+        logMessage(1, "Edition success");
     }
 }
 

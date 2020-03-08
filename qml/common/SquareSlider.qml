@@ -18,11 +18,11 @@ Item {
     }
 
     function addMarker(begin, duration) {
-        VMarkers.addMarker(slider_timeline, begin, duration)
+        VMarkers.addMarker(slider_timeline, sliderSecondPixelSize, begin, duration)
     }
 
     function removeMarker(begin) {
-        VMarkers.removeMarker(slider_timeline, begin)
+        VMarkers.removeMarker(slider_timeline, sliderSecondPixelSize, begin)
     }
 
     Slider {
