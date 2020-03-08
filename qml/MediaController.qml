@@ -1,7 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.1
 import QtMultimedia 5.0
-import QtGraphicalEffects 1.0
 import "common"
 import "common/time_format.js" as TimeFormat
 
@@ -9,12 +8,14 @@ Rectangle {
     height: 100
     width: 500
     anchors.margins: 0
+    color: "white"
 
     property MediaPlayer media_player
     property bool playing: false
+    property int secondPixelSize: 120
 
     function setVideoDuration(duration) {
-        slider.to = duration
+        slider.sliderMaxValue = duration
     }
 
     function setVisualMarker(begin, duration) {
@@ -107,7 +108,6 @@ Rectangle {
                 }
             }
 
-
             onClicked: {
                 media_player.seek(media_player.position + 5000)
             }
@@ -155,19 +155,19 @@ Rectangle {
             width: parent.width * 0.85
             anchors.horizontalCenter: parent.horizontalCenter
 
+
             SquareSlider {
                 id: slider
-                value: media_player.position
+                sliderValue: media_player.position
                 height: parent.height
-                width: parent.width * 1.5
+                width: media_player.duration / 1000 * secondPixelSize
+                sliderSecondPixelSize: secondPixelSize
 
-                onPressedChanged: {
-                    if (!pressed) {
-                        playing = false;
-                        media_player.seek(slider.value)
-                        media_player.pause()
-                        play_pause_image.source = "qrc:///img/play.png"
-                    }
+                onSeek: {
+                    playing = false;
+                    media_player.seek(value)
+                    media_player.pause()
+                    play_pause_image.source = "qrc:///img/play.png"
                 }
             }
         }
