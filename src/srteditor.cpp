@@ -128,7 +128,7 @@ void SRTEditor::find(int timeFrame)
     {
         currentItemBeginTime = -1;
         QMetaObject::invokeMethod(this->qmlEditor, "setCurrentMarker",
-                Q_ARG(QVariant, 0), Q_ARG(QVariant, 0), Q_ARG(QVariant, ""));
+                Q_ARG(QVariant, 0), Q_ARG(QVariant, 1000), Q_ARG(QVariant, ""));
         QMetaObject::invokeMethod(this->qmlVideoViewer, "setVisualSubtitle", Q_ARG(QVariant, ""));
     }
 }
