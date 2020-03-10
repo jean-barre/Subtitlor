@@ -7,14 +7,20 @@ import com.jeanbarre.subtitlor 1.0
 Row {
     height: 400
     width: 600
+    spacing: height * 0.02
 
     property TextArea text_value: text_area
     property TextStyler text_styler: styler
 
-    Rectangle {
+    Item {
         height: parent.height
         width: parent.width * 0.75
-        border.color: "black"
+
+        Rectangle {
+            anchors.fill: parent
+            color: "grey"
+            opacity: 0.4
+        }
 
         TextArea {
             id: text_area
@@ -24,8 +30,15 @@ Row {
             textFormat: TextEdit.RichText
             selectByMouse: true
             persistentSelection: true
-            placeholderText: "Type your subtitles here"
             wrapMode: TextEdit.WrapAnywhere
+        }
+
+        Text {
+            anchors.fill: parent
+            text: text_area.contentWidth == 0 ? "Subtitles go here" : ""
+            font.italic: true
+            padding: text_area.padding
+            leftPadding: text_area.leftPadding
         }
     }
 
