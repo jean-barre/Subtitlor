@@ -21,5 +21,6 @@
         <file>qml/common/SideSliderArea.qml</file>
         <file>qml/common/SliderTickmarks.qml</file>
         <file>qml/common/TimeEdit.qml</file>
+        <file>qml/common/TimeRangeSlider.qml</file>
     </qresource>
 </RCC>

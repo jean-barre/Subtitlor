@@ -18,8 +18,8 @@ Rectangle {
         slider.sliderMaxValue = duration
     }
 
-    function setVisualMarker(begin, duration) {
-        slider.addMarker(begin, duration)
+    function setVisualMarker(start, end, begin, duration) {
+        slider.addMarker(start, end,  begin, duration)
     }
 
     function removeVisualMarker(begin) {

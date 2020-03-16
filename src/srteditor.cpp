@@ -161,8 +161,27 @@ void SRTEditor::addSubtitle(int beginTime, int duration, QString text)
         }
     }
     SubtitleMarker *marker = new SubtitleMarker(beginTime, duration, text);
-    this->subtitles.insert(std::pair<int,SubtitleMarker*>(beginTime, marker));
-    QMetaObject::invokeMethod(this->qmlController, "setVisualMarker", Q_ARG(QVariant, beginTime), Q_ARG(QVariant, duration));
+    std::pair<std::map<int, SubtitleMarker*>::iterator, bool> returnValue = this->subtitles.insert(std::pair<int,SubtitleMarker*>(beginTime, marker));
+
+    auto it = returnValue.first;
+    int previousMarkerTime = -1, nextMarkerTime = -1;
+    if (it != this->subtitles.begin())
+    {
+        it--;
+        previousMarkerTime = it->first;
+    }
+    it = returnValue.first;
+    if (it != this->subtitles.end())
+    {
+        it++;
+        if (it != this->subtitles.end())
+        {
+            nextMarkerTime = it->first;
+        }
+    }
+    QMetaObject::invokeMethod(this->qmlController, "setVisualMarker",
+                              Q_ARG(QVariant, previousMarkerTime), Q_ARG(QVariant, nextMarkerTime),
+                              Q_ARG(QVariant, beginTime), Q_ARG(QVariant, duration));
     subtitleNumber++;
     this->qmlEditor->setProperty("subtitle_number", subtitleNumber);
     logMessage(1, "Addition success");
@@ -179,7 +198,7 @@ void SRTEditor::editSubtitle(int previousBeginTime, int beginTime, int duration,
     {
         removeSubtitle(previousBeginTime);
         addSubtitle(beginTime, duration, text);
-        QMetaObject::invokeMethod(this->qmlVideoViewer, "setVisualSubtitle", Q_ARG(QVariant, text));
+        //QMetaObject::invokeMethod(this->qmlVideoViewer, "setVisualSubtitle", Q_ARG(QVariant, text));
         logMessage(1, "Edition success");
     }
 }
