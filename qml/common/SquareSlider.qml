@@ -42,6 +42,14 @@ Item {
         secondPixelSize: sliderSecondPixelSize
     }
 
+    Rectangle {
+        x: slider_timeline.x
+        y: slider_timeline.y + slider_timeline.height * 3
+        width: slider_timeline.width
+        height: 2
+        color: "grey"
+    }
+
     Slider {
         id: square_slider_slider
         width: parent.width

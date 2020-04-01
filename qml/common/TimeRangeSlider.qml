@@ -21,7 +21,7 @@ RangeSlider {
         width: control.availableWidth
         height: implicitHeight
         radius: 2
-        color: "grey"
+        color: "transparent"
         enabled: false
 
         Rectangle {
