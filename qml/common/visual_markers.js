@@ -77,7 +77,6 @@ function createMarker(root, secondPixelSize, minPosition, maxPosition, begin, en
     var sprite = component.createObject(root, {
                                             "x": secondPixelSize * minPosition / 1000,
                                             "y": root.height * 3,
-                                            "z": -1,
                                             "width": secondPixelSize * (maxPosition - minPosition) / 1000,
                                             "height": root.height / 2,
                                             "from": minPosition,

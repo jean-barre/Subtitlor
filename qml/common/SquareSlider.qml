@@ -10,6 +10,7 @@ Item {
     property int sliderValue
     property int sliderMaxValue
     property int sliderSecondPixelSize
+    property int sliderHandleWidth: square_slider_slider.handle.width
 
     signal updateSubtitleBegin(int previousBegin, int newBegin)
     signal updateSubtitleEnd(int begin, int end)
@@ -36,7 +37,7 @@ Item {
 
     SliderTickmarks {
         x: square_slider_slider.background.x
-        width: square_slider_slider.background.width
+        width: slider_timeline.width
         height: parent.height
         secondPixelSize: sliderSecondPixelSize
     }
@@ -63,30 +64,25 @@ Item {
             implicitHeight: 8
             width: square_slider_slider.availableWidth - square_slider_slider.handle.width
             height: implicitHeight
-            radius: 2
             color: "#bdbebf"
-    /*
+
             Rectangle {
                 width: square_slider_slider.visualPosition * parent.width
                 height: parent.height
-                color: "#21be2b"
-                radius: 2
+                color: "black"
             }
-            */
         }
 
         handle: Item {
-            x: square_slider_slider.leftPadding + square_slider_slider.visualPosition * (square_slider_slider.availableWidth - width)
+            x: square_slider_slider.leftPadding + square_slider_slider.visualPosition * (square_slider_slider.availableWidth - width) + stick.width / 2
             y: square_slider_slider.topPadding + square_slider_slider.availableHeight / 2 - height / 2
-            implicitWidth: square_slider_slider.height * 0.5
-            implicitHeight: square_slider_slider.height * 0.5
+            implicitWidth: square_slider_slider.height * 0.6
+            implicitHeight: square_slider_slider.height * 0.6
 
             Rectangle {
                 id: stick
                 anchors.centerIn: parent
-                color: square_slider_slider.pressed ? "white" : "lightgray"
-                border.color: square_slider_slider.pressed ? "gray" : "black"
-                border.width: 4
+                color: "black"
                 implicitWidth: 2
                 implicitHeight: parent.height
             }
@@ -95,12 +91,10 @@ Item {
                 id: square
                 anchors.centerIn: parent
                 anchors.verticalCenterOffset: - square_slider_slider.height * 0.4
-                color: square_slider_slider.pressed ? "white" : "lightgray"
-                border.color: square_slider_slider.pressed ? "gray" : "black"
-                border.width: 4
-                implicitWidth: parent.width
-                implicitHeight: parent.height
-                radius: 10
+                color: "black"
+                implicitWidth: parent.width * 0.7
+                implicitHeight: parent.height * 0.7
+                radius: width / 2
             }
         }
     }

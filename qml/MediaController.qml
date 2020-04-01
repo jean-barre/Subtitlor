@@ -149,18 +149,18 @@ Rectangle {
         width: parent.width
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: parent.height * 0.1
 
         Item {
             height: parent.height
             width: parent.width * 0.85
             anchors.horizontalCenter: parent.horizontalCenter
 
-
             SquareSlider {
                 id: slider
                 sliderValue: media_player.position
                 height: parent.height
-                width: media_player.duration / 1000 * secondPixelSize
+                width: media_player.duration / 1000 * secondPixelSize + sliderHandleWidth
                 sliderSecondPixelSize: secondPixelSize
 
                 onSeek: {
