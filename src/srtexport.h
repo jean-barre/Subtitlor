@@ -12,9 +12,11 @@ class SRTExport : public QObject
 public:
     explicit SRTExport(QObject *parent = nullptr);
     SRTExport(QObject *parent, SRTEditor *editor);
+    void initialize();
     ~SRTExport();
 
 private:
+    QObject *parent;
     SRTEditor *editor;
     QString destinationFile;
     QObject *qmlExportObject;

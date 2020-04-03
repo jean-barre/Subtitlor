@@ -14,10 +14,12 @@ class SRTEditor : public QObject
     Q_OBJECT
 public:
     explicit SRTEditor(QObject *parent = nullptr);
+    void initialize();
     ~SRTEditor();
     const std::map<int, SubtitleMarker*>& getSubtitles() const;
 
 private:
+    QObject *parent;
     int subtitleNumber;
     int videoDuration;
     QObject *qmlEditorPage;

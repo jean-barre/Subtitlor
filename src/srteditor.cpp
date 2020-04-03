@@ -2,6 +2,11 @@
 
 SRTEditor::SRTEditor(QObject *parent) : QObject(parent)
 {
+    this->parent = parent;
+}
+
+void SRTEditor::initialize()
+{
     subtitleNumber = 0;
     this->qmlEditorPage = parent->findChild<QObject*>("Edit");
     QObject *qmlPlayer = parent->findChild<QObject*>("media_player");
@@ -153,7 +158,7 @@ void SRTEditor::logMessage(int code, QString error)
 
 void SRTEditor::setVideoDuration()
 {
-    QObject *qmlPlayer = this->parent()->findChild<QObject*>("media_player");
+    QObject *qmlPlayer = parent->findChild<QObject*>("media_player");
     this->videoDuration = qmlPlayer->property("duration").toInt();
     // Make sure the controller gets the information
     // before any marker can be set

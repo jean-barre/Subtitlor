@@ -5,7 +5,12 @@ SRTExport::SRTExport(QObject *parent) : QObject(parent)
     this->qmlExportObject = parent->findChild<QObject*>("Export");
 }
 
-SRTExport::SRTExport(QObject *parent, SRTEditor *editor): editor(editor)
+SRTExport::SRTExport(QObject *parent, SRTEditor *editor): QObject(parent), editor(editor)
+{
+    this->parent = parent;
+}
+
+void SRTExport::initialize()
 {
     this->qmlExportObject = parent->findChild<QObject*>("Export");
     QObject::connect(this->qmlExportObject,
