@@ -12,7 +12,7 @@ void QMLConnector::makeConnections(QString objectName)
         {
             this->srtEditor = new SRTEditor(this->parent());
         }
-    } else if (objectName == "Export" && !this->srtExport) {
+    } else if (objectName == "Export") {
         this->srtExport = new SRTExport(this->parent(), this->srtEditor);
     }
 }

@@ -50,6 +50,10 @@ void SRTExport::exportFile(QString fileUrl)
         return;
     }
     QFile *targetFile = new QFile(split.at(1));
+    if (targetFile->exists())
+    {
+        targetFile->remove();
+    }
     if (!targetFile->open(QIODevice::ReadWrite | QIODevice::Text))
     {
         logMessage(-1, "Building SRT file failure: cannot create a file in the directory selected");
