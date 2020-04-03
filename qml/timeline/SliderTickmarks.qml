@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import "time_format.js" as TimeFormat
+import "../common/time_format.js" as TimeFormat
 
 Item {
     id: root

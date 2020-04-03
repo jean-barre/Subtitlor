@@ -8,19 +8,19 @@
         <file>qml/MarkerEditor.qml</file>
         <file>qml/common/RoundButton.qml</file>
         <file>qml/ExportPage.qml</file>
-        <file>qml/common/FileDropArea.qml</file>
         <file>qml/common/LogBar.qml</file>
-        <file>qml/common/SquareSlider.qml</file>
-        <file>qml/common/SliderMark.qml</file>
         <file>qml/common/time_format.js</file>
-        <file>qml/common/visual_markers.js</file>
         <file>qml/VideoViewer.qml</file>
-        <file>qml/common/TextEditor.qml</file>
-        <file>qml/common/Rainbow.qml</file>
         <file>qml/common/ImageButton.qml</file>
-        <file>qml/common/SideSliderArea.qml</file>
-        <file>qml/common/SliderTickmarks.qml</file>
-        <file>qml/common/TimeEdit.qml</file>
-        <file>qml/common/TimeRangeSlider.qml</file>
+        <file>qml/editor/Rainbow.qml</file>
+        <file>qml/editor/TextEditor.qml</file>
+        <file>qml/editor/TimeEdit.qml</file>
+        <file>qml/file/FileDropArea.qml</file>
+        <file>qml/timeline/SideSliderArea.qml</file>
+        <file>qml/timeline/SliderMark.qml</file>
+        <file>qml/timeline/SliderTickmarks.qml</file>
+        <file>qml/timeline/SquareSlider.qml</file>
+        <file>qml/timeline/TimeRangeSlider.qml</file>
+        <file>qml/timeline/visual_markers.js</file>
     </qresource>
 </RCC>

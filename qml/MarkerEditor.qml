@@ -2,6 +2,7 @@ import QtQuick 2.6
 import QtMultimedia 5.0
 import "common"
 import "common/time_format.js" as TimeFormat
+import "editor"
 
 Column {
     height: 400

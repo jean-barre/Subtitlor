@@ -3,6 +3,7 @@ import QtQuick.Controls 2.1
 import QtMultimedia 5.0
 import "common"
 import "common/time_format.js" as TimeFormat
+import "timeline"
 
 Rectangle {
     height: 100

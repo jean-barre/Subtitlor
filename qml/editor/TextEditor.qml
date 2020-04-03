@@ -3,6 +3,7 @@ import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
 import com.jeanbarre.subtitlor 1.0
+import "../common"
 
 Row {
     height: 400
