@@ -152,7 +152,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height * 0.2
-        height: parent.height * 0.1
+        height: parent.height * 0.05
         width: parent.width * 0.8
         spacing: width * 0.2
 

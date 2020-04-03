@@ -44,7 +44,7 @@ Item {
     }
 
     RoundButton {
-        height: marker_editor.height
+        height: parent.height * 0.05
         width: parent.width * 0.1
         anchors.right: parent.right
         anchors.rightMargin: parent.width * 0.1
