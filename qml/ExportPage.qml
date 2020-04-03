@@ -16,6 +16,7 @@ Item {
     }
 
     Column {
+        id: export_page_column
         anchors.centerIn: parent
         height: parent.height * 0.6
         width: parent.width * 0.8
@@ -148,33 +149,14 @@ Item {
         }
     }
 
-    Row {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.height * 0.2
+    RoundButton {
         height: parent.height * 0.05
-        width: parent.width * 0.8
-        spacing: width * 0.2
-
-        RoundButton {
-            height: parent.height
-            width: parent.width * 0.4
-            button_text: "Export File"
-            onClicked: {
-                export_file(directory_url.text + "/" + file_name.text + ".srt")
-            }
-        }
-
-        RoundButton {
-            height: parent.height
-            width: parent.width * 0.4
-            button_text: "Go Home"
-
-            onClicked: {
-                stack.pop(stack.find(function(item) {
-                    return item.name === "Upload";
-                }));
-            }
+        width: parent.width * 0.2
+        anchors.top: export_page_column.bottom
+        anchors.right: export_page_column.right
+        button_text: "Export File"
+        onClicked: {
+            export_file(directory_url.text + "/" + file_name.text + ".srt")
         }
     }
 
