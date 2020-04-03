@@ -1,63 +1,18 @@
 var markers = []
-var sliderRoot
+var squareSlider
+var squareSliderTimeline
+var sliderSecondPixelSize
 
-function setSliderRoot(root) {
-    sliderRoot = root
+function setSquareSlider(object) {
+    squareSlider = object
 }
 
-function addMarker(root, secondPixelSize, minPosition, maxPosition, begin, end) {
-    var previousMarker, nextMarker;
-    // find previous and next markers
-    previousMarker = findMarkerByBeginValue(minPosition);
-    nextMarker = findMarkerByBeginValue(maxPosition)
-
-    if (previousMarker) {
-        minPosition += (previousMarker.second.value - previousMarker.first.value)
-    }
-    // create the active marker
-    createMarker(root, secondPixelSize, minPosition, maxPosition, begin, end);
-
-    // copy the previous marker updated regarding to active one's values
-    // and remove the old one
-    if (previousMarker) {
-        // edit to and width values
-        createMarker(root, secondPixelSize, previousMarker.from, begin, previousMarker.first.value, previousMarker.second.value);
-        previousMarker.destroy();
-    }
-    // copy the next marker updated regarding to active one's values
-    // and remove the old one
-    if (nextMarker) {
-        createMarker(root, secondPixelSize, end, nextMarker.to, nextMarker.first.value, nextMarker.second.value);
-        nextMarker.destroy();
-    }
+function setSquareSliderTimeline(object) {
+    squareSliderTimeline = object
 }
 
-function editMarker(root, secondPixelSize, minPosition, maxPosition, begin, end) {
-    var previousMarker, activeMarker, nextMarker;
-    // find previous and next markers
-    previousMarker = findMarkerByBeginValue(minPosition);
-    activeMarker = findMarkerByBeginValue(begin);
-    nextMarker = findMarkerByBeginValue(maxPosition);
-
-    if (previousMarker) {
-        minPosition += (previousMarker.second.value - previousMarker.first.value)
-    }
-    // create the active marker
-    createMarker(root, secondPixelSize, minPosition, maxPosition, begin, end);
-
-    // copy the previous marker updated regarding to active one's values
-    // and remove the old one
-    if (previousMarker) {
-        // edit to and width values
-        createMarker(root, secondPixelSize, previousMarker.from, begin, previousMarker.first.value, previousMarker.second.value);
-        previousMarker.destroy();
-    }
-    // copy the next marker updated regarding to active one's values
-    // and remove the old one
-    if (nextMarker) {
-        createMarker(root, secondPixelSize, end, nextMarker.to, nextMarker.first.value, nextMarker.second.value);
-        nextMarker.destroy();
-    }
+function setSecondPixelSize(secondPixelSize) {
+    sliderSecondPixelSize = secondPixelSize
 }
 
 function findMarkerByBeginValue(beginValue) {
@@ -68,40 +23,75 @@ function findMarkerByBeginValue(beginValue) {
             returnMarker = marker;
         }
     }
+    if (!returnMarker) {
+        console.log("Marker not found")
+    }
     return returnMarker;
 }
 
-function createMarker(root, secondPixelSize, minPosition, maxPosition, begin, end) {
+function addMarker(min, max, begin, end) {
     // add the new marker
     var component = Qt.createComponent("TimeRangeSlider.qml");
-    var sprite = component.createObject(root, {
-                                            "x": secondPixelSize * minPosition / 1000,
-                                            "y": root.height * 3,
-                                            "width": secondPixelSize * (maxPosition - minPosition) / 1000,
-                                            "height": root.height / 2,
-                                            "from": minPosition,
-                                            "to": maxPosition,
+    var sprite = component.createObject(squareSliderTimeline, {
+                                            "x": sliderSecondPixelSize * min / 1000,
+                                            "y": squareSliderTimeline.height * 3,
+                                            "width": sliderSecondPixelSize * (max - min) / 1000,
+                                            "height": squareSliderTimeline.height / 2,
+                                            "from": min,
+                                            "to": max,
                                             "first.value": begin,
                                             "second.value": end,
-                                            "root": sliderRoot
+                                            "root": squareSlider
                                         });
     if (sprite === null) {
         // Error Handling
         console.log("Error creating object");
     }
+    // add the marker to the global list
     markers.push(sprite)
 }
 
-function removeMarker(root, secondPixelSize, begin) {
-    var new_markers = []
-    var marker_x = secondPixelSize * begin / 1000
+function editMarker(min, max, previousBegin, begin, end) {
+    var marker = findMarkerByBeginValue(previousBegin)
+    if (marker) {
+        removeMarker(previousBegin)
+        addMarker(min, max, begin, end)
+    }
+}
+
+function editMarkerMin(begin, min) {
+    var marker = findMarkerByBeginValue(begin)
+    if (marker) {
+        var max = marker.to
+        var end = marker.second.value
+        removeMarker(begin)
+        addMarker(min, max, begin, end)
+    }
+}
+
+function editMarkerMax(begin, max) {
+    var marker = findMarkerByBeginValue(begin)
+    if (marker)
+    {
+        var min = marker.from
+        var end = marker.second.value
+        removeMarker(begin)
+        addMarker(min, max, begin, end)
+    }
+}
+
+function removeMarker(begin) {
+    var newMarkers = []
+    var markerToRemove = findMarkerByBeginValue(begin)
+    if (!markerToRemove) {
+        return
+    }
+    // remove the marker from the global list
     for (var i=0; i<markers.length; i++) {
-        var marker = markers[i]
-        if (marker.x !== marker_x) {
-            new_markers.push(marker)
-        } else {
-            marker.destroy()
+        if (markers[i] !== markerToRemove) {
+            newMarkers.push(markers[i])
         }
     }
-    markers = new_markers
+    markers = newMarkers
+    markerToRemove.destroy()
 }

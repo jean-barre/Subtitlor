@@ -12,27 +12,32 @@ Item {
     property int sliderSecondPixelSize
     property int sliderHandleWidth: square_slider_slider.handle.width
 
-    signal updateSubtitleBegin(int previousBegin, int newBegin)
-    signal updateSubtitleEnd(int begin, int end)
+    signal updateSubtitleTiming(int previousBegin, int newBegin, int end)
 
     Component.onCompleted: {
-        VMarkers.setSliderRoot(root)
+        VMarkers.setSquareSlider(root)
+        VMarkers.setSquareSliderTimeline(slider_timeline)
+        VMarkers.setSecondPixelSize(sliderSecondPixelSize)
     }
 
-    function addMarker(start, end, begin, duration) {
-        if (start === -1)
-        {
-            start = 0
-        }
-        if (end === -1)
-        {
-            end = sliderMaxValue
-        }
-        VMarkers.addMarker(slider_timeline, sliderSecondPixelSize, start, end, begin, begin + duration)
+    function addMarker(min, max, begin, end) {
+        VMarkers.addMarker(min, max, begin, end)
+    }
+
+    function editMarker(min, max, previousBegin, begin, end) {
+        VMarkers.editMarker(min, max, previousBegin, begin, end)
+    }
+
+    function editMarkerMin(begin, min) {
+        VMarkers.editMarkerMin(begin, min)
+    }
+
+    function editMarkerMax(begin, max) {
+        VMarkers.editMarkerMax(begin, max)
     }
 
     function removeMarker(begin) {
-        VMarkers.removeMarker(slider_timeline, sliderSecondPixelSize, begin)
+        VMarkers.removeMarker(begin)
     }
 
     SliderTickmarks {

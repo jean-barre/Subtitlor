@@ -14,15 +14,34 @@ Rectangle {
     property bool playing: false
     property int secondPixelSize: 120
 
+    // signal emitted when the subtitle RangeSlider is manipulated
+    // 	previousBegin is the begin value before the manipulation.
+    // 	newBegin is the begin value after the manipulation.
+    // 	end is the end value after le manipulation.
+    // 	0 if manipulating the first handle of the RangeSlider.
+    signal editSubtitleTiming(int previousBegin, int newBegin, int end)
+
     function setVideoDuration(duration) {
         slider.sliderMaxValue = duration
     }
 
-    function setVisualMarker(start, end, begin, duration) {
-        slider.addMarker(start, end,  begin, duration)
+    function addMarker(min, max, begin, end) {
+        slider.addMarker(min, max, begin, end)
     }
 
-    function removeVisualMarker(begin) {
+    function editMarker(min, max, previousBegin, begin, end) {
+        slider.editMarker(min, max, previousBegin, begin, end)
+    }
+
+    function editMarkerMin(begin, min) {
+        slider.editMarkerMin(begin, min)
+    }
+
+    function editMarkerMax(begin, max) {
+        slider.editMarkerMax(begin, max)
+    }
+
+    function removeMarker(begin) {
         slider.removeMarker(begin)
     }
 
@@ -169,6 +188,8 @@ Rectangle {
                     media_player.pause()
                     play_pause_image.source = "qrc:///img/play.png"
                 }
+
+                onUpdateSubtitleTiming: editSubtitleTiming(previousBegin, newBegin, end)
             }
         }
 

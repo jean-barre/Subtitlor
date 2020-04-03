@@ -28,6 +28,7 @@ private:
     int currentItemBeginTime;
     void setUploadedSubtitles();
     bool checkSubtitle(int beginTime, int duration, QString text);
+    bool checkSubtitleForAddition(int beginTime, int duration);
     void logMessage(int code, QString error); // code value: [-1, error], [0, info], [1, valid]
 
 signals:
@@ -37,7 +38,8 @@ public slots:
     void setVideoDuration();
     void find(int timeFrame);
     void addSubtitle(int beginTime, int duration, QString text);
-    void editSubtitle(int previousBeginTime, int beginTime, int duration, QString text);
+    void editSubtitle(int previousBeginTime, int beginTime, int duration, QString text, bool fromController = false);
+    void editSubtitleTiming(int previousBeginTime, int beginTime, int end);
     void removeSubtitle(int beginTime);
 
 };

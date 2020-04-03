@@ -8,8 +8,11 @@ QMLConnector::QMLConnector(QObject *parent) : QObject(parent)
 void QMLConnector::makeConnections(QString objectName)
 {
     if (objectName == "Edit") {
-        this->srtEditor = new SRTEditor(this->parent());
-    } else if (objectName == "Export") {
+        if (!this->srtEditor)
+        {
+            this->srtEditor = new SRTEditor(this->parent());
+        }
+    } else if (objectName == "Export" && !this->srtExport) {
         this->srtExport = new SRTExport(this->parent(), this->srtEditor);
     }
 }

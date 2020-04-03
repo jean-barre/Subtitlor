@@ -17,10 +17,11 @@ Column {
     property bool editing: false
     property bool removing: false
     property MediaPlayer media_player
+
     signal lookUpIfOnMarker(int timeframe)
-    signal addMarker(int beginTime, int duration, string text)
-    signal editMarker(int previousBeginTime, int beginTime, int duration, string text)
-    signal removeMarker(int beginTime)
+    signal addSubtitle(int beginTime, int duration, string text)
+    signal editSubtitle(int previousBeginTime, int beginTime, int duration, string text)
+    signal removeSubtitle(int beginTime)
 
     function updateOnMarker(is_on) {
         on_marker = is_on
@@ -167,7 +168,7 @@ Column {
             button_text: "Add"
 
             onClicked: {
-                addMarker(TimeFormat.unformat(begin_value.timeEditTextEdit.text), TimeFormat.unformat(duration_value.timeEditTextEdit.text), text_editor.text_styler.htmlText)
+                addSubtitle(TimeFormat.unformat(begin_value.timeEditTextEdit.text), TimeFormat.unformat(duration_value.timeEditTextEdit.text), text_editor.text_styler.htmlText)
             }
         }
 
@@ -183,7 +184,7 @@ Column {
 
             onClicked: {
                 if (editing) {
-                    editMarker(beginTimeValue, TimeFormat.unformat(begin_value.timeEditTextEdit.text), TimeFormat.unformat(duration_value.timeEditTextEdit.text), text_editor.text_styler.htmlText)
+                    editSubtitle(beginTimeValue, TimeFormat.unformat(begin_value.timeEditTextEdit.text), TimeFormat.unformat(duration_value.timeEditTextEdit.text), text_editor.text_styler.htmlText)
                     editing = false
                 } else {
                     marker_editor.lookUpIfOnMarker(media_player.position)
@@ -204,7 +205,7 @@ Column {
 
             onClicked: {
                 if (removing) {
-                    removeMarker(beginTimeValue)
+                    removeSubtitle(beginTimeValue)
                     removing = false
                 } else {
                     marker_editor.lookUpIfOnMarker(media_player.position)
