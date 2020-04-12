@@ -12,6 +12,7 @@ include ($$PWD/src/cpp/cpp.pri)
 
 INCLUDEPATH += \
     $$PWD/src/cpp/controller \
+    $$PWD/src/cpp/common \
 
 SOURCES += \
         main.cpp \

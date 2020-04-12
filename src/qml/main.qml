@@ -1,10 +1,12 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Controls.Material 2.12
+import com.subtitlor.theme 1.0
 
 import "view"
 
-Window {
+ApplicationWindow {
     visible: true
     width: mainController.screenWidth
     height: mainController.screenHeight
@@ -12,7 +14,13 @@ Window {
 
     property var navigationBarHeight: 100
 
-    NavigationBar {
+    Material.theme: Material.Dark
+    Material.primary: Theme.primaryColor
+    Material.background: Theme.backgroundColor
+    Material.foreground: Theme.foregroundColor
+    Material.accent: Theme.accentColor
+
+    header: NavigationBar {
         id: main_navigation_bar
         width: parent.width
         height: navigationBarHeight
@@ -21,9 +29,7 @@ Window {
 
     StackView {
         id: main_stack_view
-        width: parent.width
-        height: parent.height - navigationBarHeight
-        anchors.top: main_navigation_bar.bottom
+        anchors.fill: parent
         initialItem:
 
             UploadView {

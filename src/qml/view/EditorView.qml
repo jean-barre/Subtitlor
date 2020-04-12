@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.12
 
+import "../common"
+
 Item {
 
     property StackView stack
@@ -12,7 +14,7 @@ Item {
             stack: stack
         }
 
-    Text {
+    Label {
         text: "Editor View"
     }
 }

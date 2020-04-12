@@ -5,5 +5,6 @@
         <file>qml/view/EditorView.qml</file>
         <file>qml/view/ExportView.qml</file>
         <file>qml/view/UploadView.qml</file>
+        <file>qml/common/SButton.qml</file>
     </qresource>
 </RCC>

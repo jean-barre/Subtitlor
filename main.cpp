@@ -3,8 +3,10 @@
 #include <QScreen>
 #include <QQmlContext>
 #include <QQuickStyle>
+#include <QFont>
 
 #include "maincontroller.h"
+#include "theme.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,6 +18,14 @@ int main(int argc, char *argv[])
     QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
     mainController.setScreenWidth(screenGeometry.width());
     mainController.setScreenHeight(screenGeometry.height());
+
+    QQuickStyle::setStyle("Material");
+    QFont font(Theme::getInstance().fontFamily());
+    font.setStyleName(Theme::getInstance().fontStyleName());
+    font.setPointSize(Theme::getInstance().fontPointSize());
+    QGuiApplication::setFont(font);
+
+    qmlRegisterSingletonType<Theme>("com.subtitlor.theme", 1, 0, "Theme", Theme::themeSingletonTypeProvider);
 
     engine.rootContext()->setContextProperty("mainController", &mainController);
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
