@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/navigation_next.png</file>
+        <file>img/navigation_previous.png</file>
+    </qresource>
+</RCC>

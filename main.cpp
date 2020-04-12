@@ -1,24 +1,30 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include "src/qmlconnector.h"
-#include "src/textstyler.h"
+#include <QScreen>
+#include <QQmlContext>
+#include <QQuickStyle>
+
+#include "maincontroller.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
     QGuiApplication app(argc, argv);
-    app.setOrganizationName("Jean BARRÉ");
-    app.setOrganizationDomain("jeanbarre.com");
-    app.setApplicationName("Subtitlor");
-
-    qmlRegisterType<TextStyler>("com.jeanbarre.subtitlor", 1, 0, "TextStyler");
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
-    if (engine.rootObjects().isEmpty())
-        return -1;
 
-    QMLConnector qmlConnector(engine.rootObjects().first()->findChild<QObject*>("stack_view"));
+    MainController mainController;
+    QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
+    mainController.setScreenWidth(screenGeometry.width());
+    mainController.setScreenHeight(screenGeometry.height());
 
-    return app.exec();
+    engine.rootContext()->setContextProperty("mainController", &mainController);
+    const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+                     &app, [url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl)
+            QCoreApplication::exit(-1);
+    }, Qt::QueuedConnection);
+    engine.load(url);
+
+    return QGuiApplication::exec();
 }

@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/NavigationBar.qml</file>
+        <file>qml/view/EditorView.qml</file>
+        <file>qml/view/ExportView.qml</file>
+        <file>qml/view/UploadView.qml</file>
+    </qresource>
+</RCC>
