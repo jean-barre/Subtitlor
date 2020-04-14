@@ -11,7 +11,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include ($$PWD/src/cpp/cpp.pri)
 
 INCLUDEPATH += \
-    $$PWD/src/cpp/controller \
+    $$PWD/src/cpp \
     $$PWD/src/cpp/common \
 
 SOURCES += \

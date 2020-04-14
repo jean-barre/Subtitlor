@@ -1,20 +1,20 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.12
 
-import "../common"
+import "../export"
 
 Item {
 
     property StackView stack
-    property string viewName: "Upload"
-    property string nextItemName: "Edit"
+    property string viewName: "Edit"
+    property string nextItemName: "Export"
     property Item nextItem:
 
-        EditorView {
+        ExportView {
             stack: stack
         }
 
     Label {
-        text: "Upload View"
+        text: "Editor View"
     }
 }

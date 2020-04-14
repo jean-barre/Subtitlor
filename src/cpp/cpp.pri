@@ -1,2 +1,5 @@
 include ($$PWD/common/common.pri)
-include ($$PWD/controller/controller.pri)
+
+SOURCES += $$PWD/maincontroller.cpp
+
+HEADERS += $$PWD/maincontroller.h
