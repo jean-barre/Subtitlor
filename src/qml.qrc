@@ -8,5 +8,6 @@
         <file>qml/export/ExportView.qml</file>
         <file>qml/upload/FileDropArea.qml</file>
         <file>qml/upload/UploadView.qml</file>
+        <file>qml/LogBar.qml</file>
     </qresource>
 </RCC>

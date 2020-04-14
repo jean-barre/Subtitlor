@@ -7,6 +7,7 @@
 
 #include "maincontroller.h"
 #include "theme.h"
+#include "log.h"
 
 int main(int argc, char *argv[])
 {
@@ -30,6 +31,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setFont(font);
 
     qmlRegisterSingletonType<Theme>("com.subtitlor.theme", 1, 0, "Theme", Theme::themeSingletonTypeProvider);
+    qmlRegisterUncreatableMetaObject(Log::staticMetaObject, "com.subtitlor.log", 1, 0, "Log", "Log namespace");
 
     engine.rootContext()->setContextProperty("mainController", &mainController);
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));

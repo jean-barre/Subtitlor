@@ -13,6 +13,7 @@ ApplicationWindow {
     title: qsTr("Subtitlor")
 
     property var navigationBarHeight: 100
+    property int logBarHeight: 50
 
     Material.theme: Material.Dark
     Material.primary: Theme.primaryColor
@@ -36,6 +37,11 @@ ApplicationWindow {
                 stack: main_stack_view
                 objectName: "uploadView"
             }
+    }
+
+    footer: LogBar {
+        width: parent.width
+        height: logBarHeight
     }
 
     Connections {

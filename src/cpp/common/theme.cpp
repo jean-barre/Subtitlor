@@ -3,7 +3,8 @@
 Theme::Theme(QObject *parent) : QObject(parent), q_fontFamily("Open Sans"),
     q_fontStyleName("Normal"), q_fontSmallPointSize(9), q_fontPointSize(11),
     q_fontLargePointSize(13), q_primaryColor("#121212"), q_accentColor("#90CAF9"),
-    q_foregroundColor("#FFFFFF"), q_backgroundColor("#121212"), q_margin(20)
+    q_foregroundColor("#FFFFFF"), q_backgroundColor("#121212"),
+    q_successColor("#A5D6A7"), q_errorColor("#EF9A9A"), q_margin(20)
 {
 }
 
@@ -61,6 +62,16 @@ QString Theme::foregroundColor() const
 QString Theme::backgroundColor() const
 {
     return q_backgroundColor;
+}
+
+QString Theme::successColor() const
+{
+    return q_successColor;
+}
+
+QString Theme::errorColor() const
+{
+    return q_errorColor;
 }
 
 int Theme::margin() const

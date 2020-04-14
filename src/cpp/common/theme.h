@@ -16,6 +16,8 @@ class Theme : public QObject
     Q_PROPERTY(QString accentColor READ accentColor NOTIFY accentColorChanged)
     Q_PROPERTY(QString foregroundColor READ foregroundColor NOTIFY foregroundColorChanged)
     Q_PROPERTY(QString backgroundColor READ backgroundColor NOTIFY backgroundColorChanged)
+    Q_PROPERTY(QString successColor READ successColor NOTIFY successColorChanged)
+    Q_PROPERTY(QString errorColor READ errorColor NOTIFY errorColorChanged)
     Q_PROPERTY(int margin READ margin NOTIFY marginChanged)
 
 private:
@@ -28,6 +30,8 @@ private:
     QString q_accentColor;
     QString q_foregroundColor;
     QString q_backgroundColor;
+    QString q_successColor;
+    QString q_errorColor;
     int q_margin;
 
 public:
@@ -47,6 +51,8 @@ public:
     QString accentColor() const;
     QString foregroundColor() const;
     QString backgroundColor() const;
+    QString successColor() const;
+    QString errorColor() const;
     int margin() const;
 
 signals:
@@ -59,6 +65,8 @@ signals:
     void accentColorChanged();
     void foregroundColorChanged();
     void backgroundColorChanged();
+    void successColorChanged();
+    void errorColorChanged();
     void marginChanged();
 };
 
