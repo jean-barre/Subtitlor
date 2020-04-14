@@ -3,8 +3,10 @@
         <file>qml/main.qml</file>
         <file>qml/NavigationBar.qml</file>
         <file>qml/common/SButton.qml</file>
+        <file>qml/common/SRectangleButton.qml</file>
         <file>qml/editor/EditorView.qml</file>
         <file>qml/export/ExportView.qml</file>
+        <file>qml/upload/FileDropArea.qml</file>
         <file>qml/upload/UploadView.qml</file>
     </qresource>
 </RCC>

@@ -14,6 +14,10 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
+    QGuiApplication::setOrganizationName("Jean BARRE");
+    QGuiApplication::setOrganizationDomain("fr.jeanbarre");
+    QGuiApplication::setApplicationName("Subtitlor");
+
     MainController mainController;
     QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
     mainController.setScreenWidth(screenGeometry.width());
