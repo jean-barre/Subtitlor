@@ -3,17 +3,21 @@
 
 #include <QObject>
 
+#include "upload/uploadcontroller.h"
+
 class MainController : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int screenWidth READ screenWidth NOTIFY screenWidthChanged)
     Q_PROPERTY(int screenHeight READ screenHeight NOTIFY screenHeightChanged)
+    Q_PROPERTY(UploadController* upload READ upload NOTIFY uploadChanged)
 
 public:
     explicit MainController(QObject *parent = nullptr);
 
     int screenWidth();
     int screenHeight();
+    UploadController *upload();
 
     void setScreenWidth(const int);
     void setScreenHeight(const int);
@@ -21,10 +25,12 @@ public:
 private:
     int q_screenWidth;
     int q_screenHeight;
+    UploadController* q_uploadController;
 
 signals:
     void screenWidthChanged();
     void screenHeightChanged();
+    void uploadChanged();
 
 };
 

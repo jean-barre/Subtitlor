@@ -3,7 +3,7 @@
 MainController::MainController(QObject *parent) : QObject(parent),
     q_screenWidth(0), q_screenHeight(0)
 {
-
+    q_uploadController = new UploadController(parent);
 }
 
 int MainController::screenWidth()
@@ -14,6 +14,11 @@ int MainController::screenWidth()
 int MainController::screenHeight()
 {
     return q_screenHeight;
+}
+
+UploadController *MainController::upload()
+{
+    return q_uploadController;
 }
 
 void MainController::setScreenWidth(const int width)

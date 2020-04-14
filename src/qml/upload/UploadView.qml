@@ -42,50 +42,65 @@ Item {
                 }
 
                 RadioButton {
-                    id: creationRadioButton
                     height: parent.height * 0.3
                     width: parent.width
                     anchors.left: parent.left
 
+                    checked: true
                     text: "Create a SRT file"
                     font.pointSize: Theme.fontPointSize
+
+                    onCheckedChanged: {
+                        if (checked) {
+                            mainController.upload.editionUseCase = false
+                        }
+                    }
                 }
 
                 RadioButton {
-                    id: editionRadioButton
                     height: parent.height * 0.3
                     width: parent.width
                     anchors.left: parent.left
 
                     text: "Edit a SRT file"
                     font.pointSize: Theme.fontPointSize
+
+                    onCheckedChanged: {
+                        if (checked) {
+                            mainController.upload.editionUseCase = true
+                        }
+                    }
                 }
             }
         }
 
         Row {
-            id: drop_area
             width: parent.width
             height: parent.height * 0.6
             anchors.margins: Theme.margin
             spacing: Theme.margin
 
             FileDropArea {
-                id: video_area
-                file_type: 1
-                visible: creationRadioButton.checked || editionRadioButton.checked
-
-                height: parent.height
                 width: parent.width * 0.5 - Theme.margin / 2
+                height: parent.height
+
+                fileURL: mainController.upload.videoFile.fileURL
+                imageSource: "qrc:/img/video_icon.png"
+                typeName: "Video"
+                extensions: mainController.upload.videoFile.extensions
+                onTryFileURL: mainController.upload.videoFile.tryFileURL(fileURL)
             }
 
             FileDropArea {
-                id: srt_area
-                file_type: 0
-                visible: editionRadioButton.checked
-
-                height: parent.height
                 width: parent.width * 0.5 - Theme.margin / 2
+                height: parent.height
+                visible: mainController.upload.editionUseCase
+
+                fileURL: mainController.upload.srtFile.fileURL
+                imageSource: "qrc:/img/srt_icon.png"
+                typeName: "SRT"
+                extensions: mainController.upload.srtFile.extensions
+                onTryFileURL: mainController.upload.srtFile.tryFileURL(fileURL)
             }
         }
     }
