@@ -34,6 +34,14 @@ ApplicationWindow {
 
             UploadView {
                 stack: main_stack_view
+                objectName: "uploadView"
             }
+    }
+
+    Connections {
+        target: mainController
+        onPerformStackPush: {
+            main_stack_view.push(main_stack_view.currentItem.nextItem)
+        }
     }
 }

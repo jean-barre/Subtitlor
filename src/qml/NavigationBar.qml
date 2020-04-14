@@ -40,7 +40,9 @@ Item {
         enabled: hasNextItem
         visible: hasNextItem
 
-        onClicked: stack.push(stack.currentItem.nextItem)
+        onClicked: {
+            mainController.triggerStackPush(stack.currentItem.objectName)
+        }
         text: hasNextItem ? stack.currentItem.nextItemName : ""
         iconSource: "qrc:/img/navigation_next.png"
         iconSizeRatio: 0.3

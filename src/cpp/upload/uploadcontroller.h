@@ -20,6 +20,7 @@ public:
     File *srtFile();
 
     void setEditionUseCase(bool);
+    bool isValid();
 
 private:
     bool q_editionUseCase;

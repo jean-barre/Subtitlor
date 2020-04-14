@@ -38,3 +38,16 @@ void MainController::setScreenHeight(const int height)
         emit screenHeightChanged();
     }
 }
+
+void MainController::triggerStackPush(const QString& currentItemOjectName)
+{
+    if (currentItemOjectName.compare("uploadView") == 0)
+    {
+        if (!q_uploadController->isValid())
+        {
+            // log error
+            return;
+        }
+    }
+    emit performStackPush();
+}

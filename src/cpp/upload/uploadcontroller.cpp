@@ -30,3 +30,12 @@ void UploadController::setEditionUseCase(bool editionUseCase)
         emit editionUseCaseChanged();
     }
 }
+
+bool UploadController::isValid()
+{
+    if (q_editionUseCase)
+    {
+        return q_videoFile->isValid() && q_srtFile->isValid();
+    }
+    return q_videoFile->isValid();
+}

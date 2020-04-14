@@ -31,7 +31,10 @@ signals:
     void screenWidthChanged();
     void screenHeightChanged();
     void uploadChanged();
+    void performStackPush();
 
+public slots:
+    void triggerStackPush(const QString& currentItemOjectName);
 };
 
 #endif // MAINCONTROLLER_H
