@@ -12,6 +12,12 @@ MainController::MainController(QObject *parent) : QObject(parent),
     q_uploadController = new UploadController(parent);
 }
 
+MainController::~MainController()
+{
+    delete logTimer;
+    delete q_uploadController;
+}
+
 int MainController::screenWidth()
 {
     return q_screenWidth;

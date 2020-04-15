@@ -7,6 +7,12 @@ UploadController::UploadController(QObject *parent) : QObject(parent),
     q_srtFile = new File(parent, File::FileType::SRT);
 }
 
+UploadController::~UploadController()
+{
+    delete q_videoFile;
+    delete q_srtFile;
+}
+
 bool UploadController::editionUseCase()
 {
     return q_editionUseCase;

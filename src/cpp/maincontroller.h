@@ -18,6 +18,7 @@ class MainController : public QObject
 
 public:
     explicit MainController(QObject *parent = nullptr);
+    ~MainController();
 
     int screenWidth();
     int screenHeight();

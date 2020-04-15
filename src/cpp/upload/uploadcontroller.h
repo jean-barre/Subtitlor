@@ -14,6 +14,7 @@ class UploadController : public QObject
 
 public:
     explicit UploadController(QObject *parent = nullptr);
+    ~UploadController();
 
     bool editionUseCase();
     File *videoFile();
