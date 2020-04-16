@@ -4,5 +4,10 @@
         <file>img/navigation_previous.png</file>
         <file>img/srt_icon.png</file>
         <file>img/video_icon.png</file>
+        <file>img/flip.png</file>
+        <file>img/play.png</file>
+        <file>img/backward.png</file>
+        <file>img/forward.png</file>
+        <file>img/pause.png</file>
     </qresource>
 </RCC>

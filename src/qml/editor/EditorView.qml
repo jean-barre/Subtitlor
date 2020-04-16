@@ -2,8 +2,11 @@ import QtQuick 2.0
 import QtQuick.Controls 2.12
 
 import "../export"
+import "video"
+import "timeline"
 
-Item {
+Column {
+    spacing: height * 0.03
 
     property StackView stack
     property string viewName: "Edit"
@@ -14,7 +17,17 @@ Item {
             stack: stack
         }
 
-    Label {
-        text: "Editor View"
+    property string video_url
+    property string srt_url
+    property bool temporaryFileAccess: true
+
+    VideoSection {
+        width: parent.width
+        height: parent.height * 0.4
+    }
+
+    TimelineSection {
+        width: parent.width
+        height: parent.height * 0.1
     }
 }

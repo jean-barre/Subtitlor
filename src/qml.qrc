@@ -9,5 +9,13 @@
         <file>qml/upload/FileDropArea.qml</file>
         <file>qml/upload/UploadView.qml</file>
         <file>qml/LogBar.qml</file>
+        <file>qml/common/time_format.js</file>
+        <file>qml/editor/video/VideoController.qml</file>
+        <file>qml/editor/video/VideoViewer.qml</file>
+        <file>qml/editor/video/VideoSection.qml</file>
+        <file>qml/editor/timeline/TimelineSection.qml</file>
+        <file>qml/editor/timeline/SSlider.qml</file>
+        <file>qml/editor/timeline/SideSliderArea.qml</file>
+        <file>qml/editor/timeline/SliderTickmarks.qml</file>
     </qresource>
 </RCC>
