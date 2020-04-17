@@ -16,6 +16,7 @@ MainController::~MainController()
 {
     delete logTimer;
     delete q_uploadController;
+    delete q_editorController;
 }
 
 int MainController::screenWidth()
@@ -41,6 +42,11 @@ Log::LogCode MainController::logCode()
 UploadController *MainController::upload()
 {
     return q_uploadController;
+}
+
+EditorController *MainController::editor()
+{
+    return q_editorController;
 }
 
 void MainController::setScreenWidth(const int width)
@@ -87,6 +93,10 @@ void MainController::triggerStackPush(const QString& currentItemOjectName)
         {
             log("It looks like you did not set the files", Log::LogCode::ERROR);
             return;
+        }
+        else
+        {
+            q_editorController->video()->mediaObject()->setMedia(QUrl(q_uploadController->videoFile()->fileURL()));
         }
     }
     emit performStackPush();

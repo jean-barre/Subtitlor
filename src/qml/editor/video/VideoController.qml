@@ -10,6 +10,7 @@ Item {
     height: 100
     width: 500
 
+    property var mediaPlayer : mainController.editor.video.mediaObject
 
     Row {
         height: parent.height
@@ -23,7 +24,7 @@ Item {
 
             iconSource: "qrc:/img/backward.png"
             onClicked: {
-                media_player.seek(media_player.position - 5000)
+                mediaPlayer.setPosition(mediaPlayer.position - 5000)
             }
         }
 
@@ -31,16 +32,13 @@ Item {
             height: parent.height
             width: parent.width * 0.2
 
-            iconSource: "qrc:/img/play.png"
+            iconSource: mediaPlayer ? ((mediaPlayer.state === MediaPlayer.PlayingState) ?
+                            "qrc:/img/pause.png" : "qrc:/img/play.png") : ""
             onClicked: {
-                if (playing) {
-                    playing = false
-                    media_player.pause()
-                    iconSource = "qrc:/img/play.png"
+                if (mediaPlayer.state === MediaPlayer.PlayingState) {
+                    mediaPlayer.pause()
                 } else {
-                    playing = true
-                    media_player.play()
-                    iconSource = "qrc:/img/pause.png"
+                    mediaPlayer.play()
                 }
             }
         }
@@ -51,6 +49,7 @@ Item {
 
             iconSource: "qrc:/img/forward.png"
             onClicked: {
+                mediaPlayer.setPosition(mediaPlayer.position + 5000)
             }
         }
     }
@@ -60,12 +59,13 @@ Item {
         width: parent.width * 0.2
         anchors.right: parent.right
         anchors.rightMargin: Theme.margin
-        spacing: parent.width * 0.01
+        spacing: width * 0.05
 
         Label {
             height: parent.height
-            width: media_player.position > 360000 ? 84 : (media_player.position > 60000 ? 64 : 44)
-            text: TimeFormat.format(media_player.position)
+            width: parent.width * 0.4
+            text: mediaPlayer ? TimeFormat.format(mediaPlayer.position) : ""
+            horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
 
@@ -77,8 +77,9 @@ Item {
 
         Label {
             height: parent.height
-            width: media_player.position > 360000 ? 84 : (media_player.position > 60000 ? 64 : 44)
-            text: TimeFormat.format(media_player.duration)
+            width: parent.width * 0.4
+            text: mediaPlayer ? TimeFormat.format(mediaPlayer.duration) : ""
+            horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
     }

@@ -2,6 +2,7 @@
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Styles 1.4
 import com.subtitlor.theme 1.0
+import com.subtitlor.editor 1.0
 
 Item {
 
@@ -30,6 +31,13 @@ Item {
         width: parent.width
         height: parent.height * 0.5
         padding: 0
+        value: mainController.editor.video.mediaObject.position
+        to: mainController.editor.video.mediaObject.duration
+
+        onPressedChanged: {
+            mainController.editor.video.mediaObject.setPosition(value)
+            mainController.editor.video.mediaObject.pause()
+        }
 
         background: Item {
             id: sslider_slider_background

@@ -6,6 +6,7 @@
 #include <QFont>
 
 #include "maincontroller.h"
+#include "editor/smediaplayer.h"
 #include "theme.h"
 #include "log.h"
 

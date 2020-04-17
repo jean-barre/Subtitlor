@@ -5,6 +5,7 @@
 #include <QTimer>
 
 #include "upload/uploadcontroller.h"
+#include "editor/editorcontroller.h"
 #include "common/log.h"
 
 class MainController : public QObject
@@ -15,6 +16,7 @@ class MainController : public QObject
     Q_PROPERTY(QString logMessage READ logMessage NOTIFY logMessageChanged)
     Q_PROPERTY(int logCode READ logCode NOTIFY logCodeChanged)
     Q_PROPERTY(UploadController* upload READ upload NOTIFY uploadChanged)
+    Q_PROPERTY(EditorController* editor READ editor CONSTANT)
 
 public:
     explicit MainController(QObject *parent = nullptr);
@@ -25,6 +27,7 @@ public:
     QString logMessage();
     Log::LogCode logCode();
     UploadController *upload();
+    EditorController *editor();
 
     void setScreenWidth(const int);
     void setScreenHeight(const int);
@@ -38,6 +41,7 @@ private:
     const int LOG_TIMER_DURATION = 5000;
 
     UploadController* q_uploadController;
+    EditorController* q_editorController = new EditorController(this);
 
     void setLogMessage(const QString& message);
     void setLogCode(const Log::LogCode code);
