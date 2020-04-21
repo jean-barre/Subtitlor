@@ -9,5 +9,8 @@
         <file>img/backward.png</file>
         <file>img/forward.png</file>
         <file>img/pause.png</file>
+        <file>img/text_bold.png</file>
+        <file>img/text_italic.png</file>
+        <file>img/text_underline.png</file>
     </qresource>
 </RCC>

@@ -17,5 +17,11 @@
         <file>qml/editor/timeline/SSlider.qml</file>
         <file>qml/editor/timeline/SideSliderArea.qml</file>
         <file>qml/editor/timeline/SliderTickmarks.qml</file>
+        <file>qml/editor/editor/EditorSection.qml</file>
+        <file>qml/editor/editor/Rainbow.qml</file>
+        <file>qml/editor/editor/STextInput.qml</file>
+        <file>qml/editor/editor/TimeInput.qml</file>
+        <file>qml/editor/editor/EditorSectionHeader.qml</file>
+        <file>qml/editor/editor/EditorInput.qml</file>
     </qresource>
 </RCC>
