@@ -44,6 +44,32 @@ ApplicationWindow {
         height: logBarHeight
     }
 
+    Item {
+        anchors.fill: parent
+        visible: mainController.loading
+
+        Rectangle {
+            anchors.fill: parent
+            color: "white"
+            opacity: 0.04
+        }
+
+        Rectangle {
+            width: parent.width * 0.3
+            height: parent.height * 0.3
+            anchors.centerIn: parent
+            color: "white"
+            opacity: 0.18
+            radius: Theme.margin
+        }
+
+        Label {
+            text: "Loading..."
+            anchors.centerIn: parent
+            font.pointSize: Theme.fontLargePointSize
+        }
+    }
+
     Connections {
         target: mainController
         onPerformStackPush: {

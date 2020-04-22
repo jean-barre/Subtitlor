@@ -1,8 +1,6 @@
 #include "maincontroller.h"
 
-MainController::MainController(QObject *parent) : QObject(parent),
-    q_screenWidth(0), q_screenHeight(0), q_logMessage(""),
-    q_logCode(Log::LogCode::NORMAL)
+MainController::MainController(QObject *parent) : QObject(parent)
 {
     logTimer = new QTimer();
     logTimer->setInterval(LOG_TIMER_DURATION);
@@ -49,6 +47,11 @@ EditorController *MainController::editor()
     return q_editorController;
 }
 
+bool MainController::loading() const
+{
+    return q_loading;
+}
+
 void MainController::setScreenWidth(const int width)
 {
     if (width != q_screenWidth)
@@ -82,6 +85,15 @@ void MainController::setLogCode(const Log::LogCode code)
     {
         q_logCode = code;
         emit logCodeChanged();
+    }
+}
+
+void MainController::setLoading(const bool loading)
+{
+    if (loading != q_loading)
+    {
+        q_loading = loading;
+        emit loadingChanged();
     }
 }
 
