@@ -64,6 +64,7 @@ public slots:
     void triggerStackPush(const QString& currentItemOjectName);
     void log(const QString& message, Log::LogCode code);
     void hideLogMessage();
+    void onMediaLoaded();
 };
 
 #endif // MAINCONTROLLER_H

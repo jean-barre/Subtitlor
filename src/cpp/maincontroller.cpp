@@ -8,6 +8,11 @@ MainController::MainController(QObject *parent) : QObject(parent)
     connect(logTimer, SIGNAL(timeout()), this, SLOT(hideLogMessage()));
 
     q_uploadController = new UploadController(parent);
+
+    connect(q_editorController->video()->mediaObject(), SIGNAL(eventOccured(const QString&, Log::LogCode)),
+            this, SLOT(log(const QString&, Log::LogCode)));
+    connect(q_editorController->video()->mediaObject(), SIGNAL(mediaLoaded()),
+            this, SLOT(onMediaLoaded()));
 }
 
 MainController::~MainController()
@@ -109,13 +114,16 @@ void MainController::triggerStackPush(const QString& currentItemOjectName)
         else
         {
             q_editorController->video()->mediaObject()->setMedia(QUrl(q_uploadController->videoFile()->fileURL()));
+            setLoading(true);
         }
+        return;
     }
     emit performStackPush();
 }
 
 void MainController::log(const QString& message, Log::LogCode code)
 {
+    setLoading(false);
     setLogMessage(message);
     setLogCode(code);
     logTimer->start();
@@ -125,4 +133,13 @@ void MainController::hideLogMessage()
 {
     setLogMessage("");
     setLogCode(Log::LogCode::NORMAL);
+}
+
+void MainController::onMediaLoaded()
+{
+    if (q_loading)
+    {
+        setLoading(false);
+        emit performStackPush();
+    }
 }
