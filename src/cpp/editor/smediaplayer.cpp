@@ -1,3 +1,4 @@
+#include <QDateTime>
 #include "smediaplayer.h"
 
 SMediaPlayer::SMediaPlayer(QObject *parent) : QMediaPlayer(parent)
@@ -6,8 +7,43 @@ SMediaPlayer::SMediaPlayer(QObject *parent) : QMediaPlayer(parent)
             this, SLOT(errorOccured(QMediaPlayer::Error)));
     connect(this, SIGNAL(durationChanged(qint64)),
             this, SLOT(onDurationChanged(qint64)));
+    connect(this, SIGNAL(positionChanged(qint64)),
+            this, SLOT(onPositionChanged(qint64)));
     connect(this, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
             this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
+}
+
+QString SMediaPlayer::formattedPosition() const
+{
+    return q_formattedPosition;
+}
+
+QString SMediaPlayer::formattedDuration() const
+{
+    return q_formattedDuration;
+}
+
+QString SMediaPlayer::format(int timeInMilliseconds)
+{
+    return QDateTime::fromMSecsSinceEpoch(timeInMilliseconds).toUTC().toString(timeFormat);
+}
+
+void SMediaPlayer::setFormattedPosition(const QString &position)
+{
+    if (position != q_formattedPosition)
+    {
+        q_formattedPosition = position;
+        emit formattedPositionChanged();
+    }
+}
+
+void SMediaPlayer::setFormattedDuration(const QString &duration)
+{
+    if (duration != q_formattedDuration)
+    {
+        q_formattedDuration = duration;
+        emit formattedDurationChanged();
+    }
 }
 
 void SMediaPlayer::errorOccured(QMediaPlayer::Error error)
@@ -30,11 +66,28 @@ void SMediaPlayer::errorOccured(QMediaPlayer::Error error)
 
 void SMediaPlayer::onDurationChanged(qint64 duration)
 {
-    if (duration >= 3600000)
+    // set the time format
+    if (duration < MINUT_IN_MS)
+    {
+        timeFormat = SECONDS_TIME_FORMAT;
+    }
+    else
+    {
+        timeFormat = MINUTS_TIME_FORMAT;
+    }
+    // update the formatted duration
+    setFormattedDuration(format(duration));
+    // check the video duration
+    if (duration >= HOUR_IN_MS)
     {
         emit eventOccured("The video duration exceed the 1h limit",
                           Log::ERROR);
     }
+}
+
+void SMediaPlayer::onPositionChanged(qint64 position)
+{
+    setFormattedPosition(format(position));
 }
 
 void SMediaPlayer::onMediaStatusChanged(QMediaPlayer::MediaStatus status)

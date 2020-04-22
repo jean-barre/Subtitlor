@@ -64,7 +64,7 @@ Item {
         Label {
             height: parent.height
             width: parent.width * 0.4
-            text: mediaPlayer ? TimeFormat.format(mediaPlayer.position) : ""
+            text: mediaPlayer ? mediaPlayer.formattedPosition : ""
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
@@ -78,7 +78,7 @@ Item {
         Label {
             height: parent.height
             width: parent.width * 0.4
-            text: mediaPlayer ? TimeFormat.format(mediaPlayer.duration) : ""
+            text: mediaPlayer ? mediaPlayer.formattedDuration : ""
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }

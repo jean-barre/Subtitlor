@@ -24,7 +24,7 @@ Item {
                 Label {
                     anchors.horizontalCenter: slider_tickmarks_tick.horizontalCenter
                     anchors.top: parent.top
-                    text: TimeFormat.format(index * 100)
+                    text: mainController.editor.video.mediaObject.format(index * 100)
                     visible: !(index % 10)
                     color: Theme.foregroundColor
                     opacity: 0.12

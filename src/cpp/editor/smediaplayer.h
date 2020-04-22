@@ -7,18 +7,41 @@
 class SMediaPlayer : public QMediaPlayer
 {
     Q_OBJECT
+    Q_PROPERTY(QString formattedPosition READ formattedPosition NOTIFY formattedPositionChanged)
+    Q_PROPERTY(QString formattedDuration READ formattedDuration NOTIFY formattedDurationChanged)
 
 public:
     explicit SMediaPlayer(QObject *parent = nullptr);
 
+    QString formattedPosition() const;
+    QString formattedDuration() const;
+
+    Q_INVOKABLE QString format(int);
+
+private:
+    const int MINUT_IN_MS = 60000;
+    const int HOUR_IN_MS = 3600000;
+    const QString MINUTS_TIME_FORMAT = "mm.ss.zzz";
+    const QString SECONDS_TIME_FORMAT = "ss.zzz";
+
+    QString timeFormat = MINUTS_TIME_FORMAT;
+    QString q_formattedPosition = "";
+    QString q_formattedDuration = "";
+
+    void setFormattedPosition(const QString&);
+    void setFormattedDuration(const QString&);
+
 private slots:
     void errorOccured(QMediaPlayer::Error);
     void onDurationChanged(qint64);
+    void onPositionChanged(qint64);
     void onMediaStatusChanged(QMediaPlayer::MediaStatus);
 
 signals:
     void eventOccured(const QString&, Log::LogCode);
     void mediaLoaded();
+    void formattedPositionChanged();
+    void formattedDurationChanged();
 
 };
 
