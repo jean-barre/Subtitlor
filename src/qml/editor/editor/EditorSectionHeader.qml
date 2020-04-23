@@ -8,7 +8,7 @@ Row {
     spacing: width * 0.2
 
     property int subtitlesNumber: 0
-    property bool onSubtitle: false
+    property bool onSubtitle: mainController.editor.subtitles.onSubtitle
 
     Row {
         width: parent.width * 0.4
