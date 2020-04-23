@@ -40,7 +40,7 @@ Item {
                     width: parent.width * 0.65
                     height: parent.height
                     anchors.verticalCenter: parent.verticalCenter
-                    defaultTextValue:  mainController.editor.video.mediaObject.format(0)
+                    defaultText:  mainController.editor.video.mediaObject.format(0)
                 }
             }
 
@@ -62,7 +62,7 @@ Item {
                     width: parent.width * 0.65
                     height: parent.height
                     anchors.verticalCenter: parent.verticalCenter
-                    defaultTextValue: mainController.editor.video.mediaObject.format(1000)
+                    defaultText: mainController.editor.video.mediaObject.format(1000)
                 }
             }
         }
@@ -77,8 +77,8 @@ Item {
     Connections {
         target: mainController.editor.video.mediaObject
         onTimeFormatChanged: {
-            editor_input_begin_time_input.defaultTextValue = mainController.editor.video.mediaObject.format(0)
-            editor_input_duration_time_input.defaultTextValue = mainController.editor.video.mediaObject.format(1000)
+            editor_input_begin_time_input.defaultText = mainController.editor.video.mediaObject.format(0)
+            editor_input_duration_time_input.defaultText = mainController.editor.video.mediaObject.format(1000)
         }
     }
 }

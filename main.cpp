@@ -8,6 +8,7 @@
 #include "maincontroller.h"
 #include "editor/smediaplayer.h"
 #include "editor/textstyler.h"
+#include "editor/timeinputcontroller.h"
 #include "theme.h"
 #include "log.h"
 
@@ -35,6 +36,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<Theme>("com.subtitlor.theme", 1, 0, "Theme", Theme::themeSingletonTypeProvider);
     qmlRegisterUncreatableMetaObject(Log::staticMetaObject, "com.subtitlor.log", 1, 0, "Log", "Log namespace");
     qmlRegisterType<TextStyler>("com.subtitlor.editor", 1, 0, "TextStyler");
+    qmlRegisterType<TimeInputController>("com.subtitlor.editor", 1, 0, "TimeInputController");
 
     engine.rootContext()->setContextProperty("mainController", &mainController);
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
