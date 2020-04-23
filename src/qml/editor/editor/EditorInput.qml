@@ -41,6 +41,7 @@ Item {
                     height: parent.height
                     anchors.verticalCenter: parent.verticalCenter
                     defaultText:  mainController.editor.video.mediaObject.format(0)
+                    canBeSetToPosition: true
                 }
             }
 

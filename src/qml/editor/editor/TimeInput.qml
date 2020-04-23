@@ -17,6 +17,7 @@ TextField {
     state: time_input_controller.isValid ? "" : "INVALID"
 
     property string defaultText
+    property bool canBeSetToPosition: false
 
     TimeInputController {
         id: time_input_controller
@@ -48,5 +49,56 @@ TextField {
 
     transitions: Transition {
         NumberAnimation { target: time_input_invalid_text; property: "opacity"; duration: 2000 }
+    }
+
+    MouseArea {
+        id: time_input_helper_mouse_area
+        width: parent.width * 0.1
+        height: parent.height * 0.35
+        anchors.verticalCenter: parent.verticalCenter
+        visible: canBeSetToPosition
+        enabled: canBeSetToPosition
+        hoverEnabled: true
+
+        Rectangle {
+            width: parent.width * 0.5
+            height: width
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: time_input_helper_stick.top
+            radius: width * 0.5
+            color: Theme.accentColor
+        }
+
+        Rectangle {
+            id: time_input_helper_stick
+            width: 2
+            height: parent.height
+            anchors.centerIn: parent
+            color: Theme.accentColor
+        }
+
+        Rectangle {
+            id: time_input_helper_message
+            width: 140
+            height: 25
+            anchors.bottom: parent.top
+            anchors.bottomMargin: Theme.margin * 0.5
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: "black"
+            radius: 5
+            visible: time_input_helper_mouse_area.containsMouse
+
+            Label {
+                anchors.fill: parent
+                text: "Set to Player position"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pointSize: Theme.fontSmallPointSize
+            }
+        }
+
+        onClicked: {
+            root.text = mainController.editor.video.mediaObject.formattedPosition
+        }
     }
 }
