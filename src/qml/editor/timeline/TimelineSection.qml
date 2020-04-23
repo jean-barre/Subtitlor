@@ -13,7 +13,7 @@ Item {
         SSlider {
             id: timeline_section_slider
             height: parent.height
-            width: mainController.editor.video.mediaObject.duration / 1000 * secondPixelSize + sliderHandleWidth
+            width: mainController.editor.video.mediaObject.sduration / 1000 * secondPixelSize + sliderHandleWidth
             sliderSecondPixelSize: secondPixelSize
         }
     }

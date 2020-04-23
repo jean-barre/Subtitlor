@@ -13,6 +13,16 @@ SMediaPlayer::SMediaPlayer(QObject *parent) : QMediaPlayer(parent)
             this, SLOT(onMediaStatusChanged(QMediaPlayer::MediaStatus)));
 }
 
+int SMediaPlayer::sduration() const
+{
+    return q_sduration;
+}
+
+QString SMediaPlayer::timeFormat() const
+{
+    return q_timeFormat;
+}
+
 QString SMediaPlayer::formattedPosition() const
 {
     return q_formattedPosition;
@@ -25,7 +35,24 @@ QString SMediaPlayer::formattedDuration() const
 
 QString SMediaPlayer::format(int timeInMilliseconds)
 {
-    return QDateTime::fromMSecsSinceEpoch(timeInMilliseconds).toUTC().toString(timeFormat);
+    return QDateTime::fromMSecsSinceEpoch(timeInMilliseconds).toUTC().toString(q_timeFormat);
+}
+
+void SMediaPlayer::updateSduration()
+{
+    int duration = this->duration();
+    if (duration != q_sduration)
+    {
+        q_sduration = duration;
+        emit sdurationChanged();
+    }
+}
+
+void SMediaPlayer::setTimeFormat(const QString &timeFormat)
+{
+    q_timeFormat = timeFormat;
+    emit timeFormatChanged(q_timeFormat);
+    updateSduration();
 }
 
 void SMediaPlayer::setFormattedPosition(const QString &position)
@@ -69,11 +96,11 @@ void SMediaPlayer::onDurationChanged(qint64 duration)
     // set the time format
     if (duration < MINUT_IN_MS)
     {
-        timeFormat = SECONDS_TIME_FORMAT;
+        setTimeFormat(SECONDS_TIME_FORMAT);
     }
     else
     {
-        timeFormat = MINUTS_TIME_FORMAT;
+        setTimeFormat(MINUTS_TIME_FORMAT);
     }
     // update the formatted duration
     setFormattedDuration(format(duration));

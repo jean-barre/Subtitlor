@@ -36,10 +36,11 @@ Item {
                 }
 
                 TimeInput {
+                    id: editor_input_begin_time_input
                     width: parent.width * 0.65
                     height: parent.height
                     anchors.verticalCenter: parent.verticalCenter
-                    defaultTextValue: "00.00.000"
+                    defaultTextValue:  mainController.editor.video.mediaObject.format(0)
                 }
             }
 
@@ -57,10 +58,11 @@ Item {
                 }
 
                 TimeInput {
+                    id: editor_input_duration_time_input
                     width: parent.width * 0.65
                     height: parent.height
                     anchors.verticalCenter: parent.verticalCenter
-                    defaultTextValue: "00.01.000"
+                    defaultTextValue: mainController.editor.video.mediaObject.format(1000)
                 }
             }
         }
@@ -69,6 +71,14 @@ Item {
             width: parent.width - 2 * Theme.margin
             height: parent.height * 0.65
             anchors.horizontalCenter: parent.horizontalCenter
+        }
+    }
+
+    Connections {
+        target: mainController.editor.video.mediaObject
+        onTimeFormatChanged: {
+            editor_input_begin_time_input.defaultTextValue = mainController.editor.video.mediaObject.format(0)
+            editor_input_duration_time_input.defaultTextValue = mainController.editor.video.mediaObject.format(1000)
         }
     }
 }

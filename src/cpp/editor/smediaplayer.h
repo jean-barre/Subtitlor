@@ -7,12 +7,17 @@
 class SMediaPlayer : public QMediaPlayer
 {
     Q_OBJECT
+    // duplicate the duration property to be updated after the time format
+    Q_PROPERTY(int sduration READ sduration NOTIFY sdurationChanged)
+    Q_PROPERTY(QString timeFormat READ timeFormat NOTIFY timeFormatChanged)
     Q_PROPERTY(QString formattedPosition READ formattedPosition NOTIFY formattedPositionChanged)
     Q_PROPERTY(QString formattedDuration READ formattedDuration NOTIFY formattedDurationChanged)
 
 public:
     explicit SMediaPlayer(QObject *parent = nullptr);
 
+    int sduration() const;
+    QString timeFormat() const;
     QString formattedPosition() const;
     QString formattedDuration() const;
 
@@ -24,10 +29,13 @@ private:
     const QString MINUTS_TIME_FORMAT = "mm.ss.zzz";
     const QString SECONDS_TIME_FORMAT = "ss.zzz";
 
-    QString timeFormat = MINUTS_TIME_FORMAT;
+    int q_sduration = 0;
+    QString q_timeFormat = MINUTS_TIME_FORMAT;
     QString q_formattedPosition = "";
     QString q_formattedDuration = "";
 
+    void updateSduration();
+    void setTimeFormat(const QString&);
     void setFormattedPosition(const QString&);
     void setFormattedDuration(const QString&);
 
@@ -40,6 +48,8 @@ private slots:
 signals:
     void eventOccured(const QString&, Log::LogCode);
     void mediaLoaded();
+    void sdurationChanged();
+    void timeFormatChanged(const QString);
     void formattedPositionChanged();
     void formattedDurationChanged();
 
