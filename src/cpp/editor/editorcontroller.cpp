@@ -2,6 +2,8 @@
 
 EditorController::EditorController(QObject *parent) : QObject(parent)
 {
+    connect(q_video->mediaObject(), SIGNAL(timeFormatChanged(QString)),
+            q_subtitles, SLOT(onTimeFormatChanged(QString)));
     connect(q_video->mediaObject(), SIGNAL(positionChanged(qint64)),
             q_subtitles, SLOT(onPlayerPositionChanged(qint64)));
 }

@@ -20,6 +20,7 @@ public:
 
 private:
     std::map<int, SubtitlePtr> subtitles;
+    QString timeFormat = "";
     bool q_onSubtitle = false;
 
     void setOnSubtitle(const bool);
@@ -28,6 +29,7 @@ signals:
     void onSubtitleChanged();
 
 public slots:
+    void onTimeFormatChanged(const QString);
     void onPlayerPositionChanged(qint64);
 
 };

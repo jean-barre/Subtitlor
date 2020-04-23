@@ -22,6 +22,11 @@ void SubtitlesController::setOnSubtitle(const bool onSubtitle)
     }
 }
 
+void SubtitlesController::onTimeFormatChanged(const QString newTimeFormat)
+{
+    timeFormat = newTimeFormat;
+}
+
 void SubtitlesController::onPlayerPositionChanged(qint64 playerPosition)
 {
     // find if there is a subtitle at the media position
