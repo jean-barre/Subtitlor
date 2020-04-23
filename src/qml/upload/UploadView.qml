@@ -6,14 +6,9 @@ import "../editor"
 
 Item {
 
-    property StackView stack
     property string viewName: "Upload"
     property string nextItemName: "Edit"
-    property Item nextItem:
-
-        EditorView {
-            stack: stack
-        }
+    property Item nextItem: EditorView {}
 
     Column {
         anchors.fill: parent

@@ -34,7 +34,6 @@ ApplicationWindow {
         initialItem:
 
             UploadView {
-                stack: main_stack_view
                 objectName: "uploadView"
             }
     }

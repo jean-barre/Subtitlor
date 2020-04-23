@@ -9,14 +9,9 @@ import "editor"
 Column {
     spacing: height * 0.03
 
-    property StackView stack
     property string viewName: "Edit"
     property string nextItemName: "Export"
-    property Item nextItem:
-
-        ExportView {
-            stack: stack
-        }
+    property var nextItem: ExportView {}
 
     property string video_url
     property string srt_url
