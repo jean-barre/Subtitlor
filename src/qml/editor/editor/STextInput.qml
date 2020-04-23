@@ -12,6 +12,11 @@ Row {
     height: 400
     spacing: width * 0.05
 
+    function setText(text) {
+        stext_input_text_area_placeholder_text.visible = false
+        stext_input_text_area.text = text
+    }
+
     Item {
 
         width: parent.width * 0.7
@@ -25,7 +30,7 @@ Row {
         }
 
         Text {
-            id: stext_input_stext_input_text_area_placeholder_text
+            id: stext_input_text_area_placeholder_text
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -46,7 +51,7 @@ Row {
             color: "black"
 
             onActiveFocusChanged: {
-                stext_input_stext_input_text_area_placeholder_text.visible = false
+                stext_input_text_area_placeholder_text.visible = false
             }
         }
     }

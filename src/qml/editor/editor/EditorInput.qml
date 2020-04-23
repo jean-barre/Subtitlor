@@ -69,6 +69,7 @@ Item {
         }
 
         STextInput {
+            id: editor_input_text_input
             width: parent.width - 2 * Theme.margin
             height: parent.height * 0.65
             anchors.horizontalCenter: parent.horizontalCenter
@@ -80,6 +81,17 @@ Item {
         onTimeFormatChanged: {
             editor_input_begin_time_input.defaultText = mainController.editor.video.mediaObject.format(0)
             editor_input_duration_time_input.defaultText = mainController.editor.video.mediaObject.format(1000)
+        }
+    }
+
+    Connections {
+        target: mainController.editor.subtitles
+        onEditingChanged: {
+            if (mainController.editor.subtitles.editing) {
+                editor_input_begin_time_input.text = mainController.editor.subtitles.getFoundBeginTime()
+                editor_input_duration_time_input.text = mainController.editor.subtitles.getFoundDuration()
+                editor_input_text_input.setText(mainController.editor.subtitles.getFoundText())
+            }
         }
     }
 }

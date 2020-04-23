@@ -8,9 +8,9 @@ Column {
     height: 400
     spacing: height * 0.05
 
-    property bool onSubtitle: false
-    property bool editing: false
-    property bool removing: false
+    property bool onSubtitle: mainController.editor.subtitles.onSubtitle
+    property bool editing: mainController.editor.subtitles.editing
+    property bool removing: mainController.editor.subtitles.removing
 
     EditorSectionHeader {
         width: parent.width * 0.5
@@ -46,6 +46,13 @@ Column {
             opacity: onSubtitle == true ? 1 : 0.4
 
             text: editing ? "Save" : "Edit"
+
+            onClicked: {
+                if (editing) {
+                    // save
+                }
+                mainController.editor.subtitles.editing = !editing
+            }
         }
 
         SRectangleButton {
@@ -55,6 +62,13 @@ Column {
             opacity: onSubtitle == true ? 1 : 0.4
 
             text: removing ? "Confirm" : "Remove"
+
+            onClicked: {
+                if (removing) {
+                    // save
+                }
+                mainController.editor.subtitles.removing = !removing
+            }
         }
     }
 }
