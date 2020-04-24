@@ -108,3 +108,8 @@ void SubtitlesController::onPlayerPositionChanged(qint64 playerPosition)
     setOnSubtitle(false);
 }
 
+void SubtitlesController::onPlayerDurationChanged(qint64 duration)
+{
+    playerDuration = int(duration);
+}
+
