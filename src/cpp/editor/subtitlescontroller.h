@@ -33,6 +33,7 @@ public:
     Q_INVOKABLE QString getFoundText();
 
     Q_INVOKABLE void editFound(const QString, const QString, const QString);
+    Q_INVOKABLE void removeFound();
     Q_INVOKABLE void add(const QString, const QString, const QString);
 
 private:

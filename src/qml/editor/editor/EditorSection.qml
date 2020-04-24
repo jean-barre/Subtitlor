@@ -70,7 +70,7 @@ Column {
 
             onClicked: {
                 if (removing) {
-                    // save
+                    mainController.editor.subtitles.removeFound()
                 }
                 mainController.editor.subtitles.removing = !removing
             }

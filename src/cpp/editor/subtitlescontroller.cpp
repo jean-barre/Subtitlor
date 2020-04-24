@@ -85,6 +85,13 @@ void SubtitlesController::editFound(const QString beginTimeString, const QString
     }
 }
 
+void SubtitlesController::removeFound()
+{
+    subtitles.erase(foundSubtitleIterator);
+    emit log("Operation success", Log::LogCode::SUCCESS);
+    synchronize();
+}
+
 void SubtitlesController::add(const QString beginTimeString, const QString durationString, const QString text)
 {
     int beginTime = unformat(beginTimeString);
