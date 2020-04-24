@@ -69,9 +69,40 @@ QString SubtitlesController::getFoundText()
     return "";
 }
 
+void SubtitlesController::add(const QString beginTimeString, const QString durationString, const QString text)
+{
+    int beginTime = unformat(beginTimeString);
+    int duration = unformat(durationString);
+    addSubtitle(beginTime, duration, text);
+}
+
 QString SubtitlesController::format(int timeInMilliseconds)
 {
     return QDateTime::fromMSecsSinceEpoch(timeInMilliseconds).toUTC().toString(timeFormat);
+}
+
+int SubtitlesController::unformat(const QString text) const
+{
+    QTime time = QTime::fromString(text, timeFormat);
+    return QTime(0, 0).msecsTo(time);
+}
+
+void SubtitlesController::synchronize()
+{
+    auto upperIterator = subtitles.upper_bound(playerPosition);
+    if (upperIterator != subtitles.cbegin())
+    {
+        upperIterator--;
+        SubtitlePtr subtitle = static_cast<SubtitlePtr>(upperIterator->second);
+        if (subtitle->beginTime() <= playerPosition &&
+                        subtitle->beginTime() + subtitle->duration() > playerPosition)
+        {
+            setOnSubtitle(true);
+            foundSubtitleIterator = static_cast<SubtitleIterator>(upperIterator);
+            return;
+        }
+    }
+    setOnSubtitle(false);
 }
 
 void SubtitlesController::setOnSubtitle(const bool onSubtitle)
@@ -83,29 +114,50 @@ void SubtitlesController::setOnSubtitle(const bool onSubtitle)
     }
 }
 
+bool SubtitlesController::addSubtitle(const int beginTime, const int duration, const QString text)
+{
+    if (beginTime + duration > playerDuration)
+    {
+        emit log("Operation failure: the timing set overlap the end of the video", Log::LogCode::ERROR);
+        return false;
+    }
+    auto upperIterator = subtitles.upper_bound(beginTime);
+    if (upperIterator != subtitles.cend())
+    {
+        SubtitlePtr subtitle = static_cast<SubtitlePtr>(upperIterator->second);
+        if (beginTime + duration > subtitle->beginTime())
+        {
+            emit log("Operation failure: the subtitle overlap the following one", Log::LogCode::ERROR);
+            return false;
+        }
+    }
+    if (upperIterator != subtitles.cbegin())
+    {
+        upperIterator--;
+        SubtitlePtr subtitle = static_cast<SubtitlePtr>(upperIterator->second);
+        if (subtitle->beginTime() + subtitle->duration() > beginTime)
+        {
+            emit log("Operation failure: the subtitle overlap the previous one", Log::LogCode::ERROR);
+            return false;
+        }
+    }
+    SubtitlePtr subtitle(new Subtitle(beginTime, duration, text));
+    subtitles.insert(std::pair<int, SubtitlePtr>(beginTime, subtitle));
+    emit log("Operation success", Log::LogCode::SUCCESS);
+    synchronize();
+    return true;
+}
+
 void SubtitlesController::onTimeFormatChanged(const QString newTimeFormat)
 {
     timeFormat = newTimeFormat;
 }
 
-void SubtitlesController::onPlayerPositionChanged(qint64 playerPosition)
+void SubtitlesController::onPlayerPositionChanged(qint64 position)
 {
     // find if there is a subtitle at the media position
-    int position = int(playerPosition);
-    auto upperIterator = subtitles.upper_bound(position);
-    if (upperIterator != subtitles.cbegin())
-    {
-        upperIterator--;
-        SubtitlePtr subtitle = static_cast<SubtitlePtr>(upperIterator->second);
-        if (subtitle->beginTime() <= position &&
-                        subtitle->beginTime() + subtitle->duration() > position)
-        {
-            setOnSubtitle(true);
-            foundSubtitleIterator = static_cast<SubtitleIterator>(upperIterator);
-            return;
-        }
-    }
-    setOnSubtitle(false);
+    playerPosition = int(position);
+    synchronize();
 }
 
 void SubtitlesController::onPlayerDurationChanged(qint64 duration)

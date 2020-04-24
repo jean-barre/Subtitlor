@@ -32,9 +32,12 @@ public:
     Q_INVOKABLE QString getFoundDuration();
     Q_INVOKABLE QString getFoundText();
 
+    Q_INVOKABLE void add(const QString, const QString, const QString);
+
 private:
     std::map<int, SubtitlePtr> subtitles;
     QString timeFormat = "";
+    int playerPosition = 0;
     int playerDuration = 0;
     bool q_onSubtitle = false;
     bool q_editing = false;
@@ -42,7 +45,10 @@ private:
     SubtitleIterator foundSubtitleIterator;
 
     QString format(int);
+    int unformat(const QString) const;
+    void synchronize();
     void setOnSubtitle(const bool);
+    bool addSubtitle(const int, const int, const QString);
 
 signals:
     void onSubtitleChanged();

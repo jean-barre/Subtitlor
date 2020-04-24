@@ -17,6 +17,10 @@ Row {
         stext_input_text_area.text = text
     }
 
+    function text() {
+        return stext_input_text_styler.htmlText
+    }
+
     Item {
 
         width: parent.width * 0.7

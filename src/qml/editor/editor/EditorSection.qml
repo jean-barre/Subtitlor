@@ -19,6 +19,7 @@ Column {
     }
 
     EditorInput {
+        id: editor_section_editor_input
         width: parent.width - 2 * Theme.margin
         height: parent.height * 0.6
         anchors.horizontalCenter: parent.horizontalCenter
@@ -37,6 +38,10 @@ Column {
             opacity: onSubtitle == false ? 1 : 0.4
 
             text: "Add"
+
+            onClicked: {
+                editor_section_editor_input.add()
+            }
         }
 
         SRectangleButton {
