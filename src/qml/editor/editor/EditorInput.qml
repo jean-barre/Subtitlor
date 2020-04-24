@@ -15,6 +15,15 @@ Item {
         }
     }
 
+    function edit() {
+        if ((editor_input_begin_time_input.state != "INVALID") &&
+                (editor_input_duration_time_input.state != "INVALID")) {
+            mainController.editor.subtitles.editFound(editor_input_begin_time_input.text,
+                                  editor_input_duration_time_input.text,
+                                  editor_input_text_input.text())
+        }
+    }
+
     Rectangle {
         anchors.fill: parent
         color: "white"

@@ -54,7 +54,7 @@ Column {
 
             onClicked: {
                 if (editing) {
-                    // save
+                    editor_section_editor_input.edit()
                 }
                 mainController.editor.subtitles.editing = !editing
             }

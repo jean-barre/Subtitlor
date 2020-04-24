@@ -69,6 +69,22 @@ QString SubtitlesController::getFoundText()
     return "";
 }
 
+void SubtitlesController::editFound(const QString beginTimeString, const QString durationString, const QString text)
+{
+    int beginTime = unformat(beginTimeString);
+    int duration = unformat(durationString);
+    // keep a copy of the orginal subtitle
+    SubtitlePtr originalSubtitle = foundSubtitleIterator->second;
+    // remove the original subtitle
+    subtitles.erase(foundSubtitleIterator);
+    // try to add a new subtitle with the new values
+    if (!addSubtitle(beginTime, duration, text))
+    {
+        // insert the original subtitle in case of error
+        subtitles.insert(std::pair<int, SubtitlePtr>(originalSubtitle->beginTime(),originalSubtitle));
+    }
+}
+
 void SubtitlesController::add(const QString beginTimeString, const QString durationString, const QString text)
 {
     int beginTime = unformat(beginTimeString);
