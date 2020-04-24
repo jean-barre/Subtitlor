@@ -4,6 +4,7 @@
 #include <QObject>
 #include <memory>
 #include "subtitle.h"
+#include "common/log.h"
 
 class SubtitlesController : public QObject
 {
@@ -44,6 +45,7 @@ private:
 
 signals:
     void onSubtitleChanged();
+    void log(const QString, Log::LogCode);
     void editingChanged();
     void removingChanged();
 

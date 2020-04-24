@@ -13,6 +13,8 @@ MainController::MainController(QObject *parent) : QObject(parent)
             this, SLOT(log(const QString&, Log::LogCode)));
     connect(q_editorController->video()->mediaObject(), SIGNAL(mediaLoaded()),
             this, SLOT(onMediaLoaded()));
+    connect(q_editorController->subtitles(), SIGNAL(log(const QString&, Log::LogCode)),
+            this, SLOT(log(const QString&, Log::LogCode)));
 }
 
 MainController::~MainController()
