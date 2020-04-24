@@ -12,6 +12,7 @@ class SubtitlesController : public QObject
     Q_PROPERTY(bool onSubtitle READ onSubtitle NOTIFY onSubtitleChanged)
     Q_PROPERTY(bool editing READ editing WRITE setEditing NOTIFY editingChanged)
     Q_PROPERTY(bool removing READ removing WRITE setRemoving NOTIFY removingChanged)
+    Q_PROPERTY(QString currentSubtitleText READ currentSubtitleText NOTIFY currentSubtitleTextChanged)
 
 public:
     explicit SubtitlesController(QObject *parent = nullptr);
@@ -24,6 +25,7 @@ public:
 
     bool editing() const;
     bool removing() const;
+    QString currentSubtitleText() const;
 
     void setEditing(const bool);
     void setRemoving(const bool);
@@ -44,12 +46,14 @@ private:
     bool q_onSubtitle = false;
     bool q_editing = false;
     bool q_removing = false;
+    QString q_currentSubtitleText = "";
     SubtitleIterator foundSubtitleIterator;
 
     QString format(int);
     int unformat(const QString) const;
     void synchronize();
     void setOnSubtitle(const bool);
+    void setCurrentSubtitleText(const QString);
     bool addSubtitle(const int, const int, const QString);
 
 signals:
@@ -57,6 +61,7 @@ signals:
     void log(const QString, Log::LogCode);
     void editingChanged();
     void removingChanged();
+    void currentSubtitleTextChanged();
 
 public slots:
     void onTimeFormatChanged(const QString);

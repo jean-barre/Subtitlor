@@ -24,6 +24,11 @@ bool SubtitlesController::removing() const
     return q_removing;
 }
 
+QString SubtitlesController::currentSubtitleText() const
+{
+    return q_currentSubtitleText;
+}
+
 void SubtitlesController::setEditing(const bool editing)
 {
     if (editing != q_editing)
@@ -121,11 +126,13 @@ void SubtitlesController::synchronize()
                         subtitle->beginTime() + subtitle->duration() > playerPosition)
         {
             setOnSubtitle(true);
+            setCurrentSubtitleText(subtitle->text());
             foundSubtitleIterator = static_cast<SubtitleIterator>(upperIterator);
             return;
         }
     }
     setOnSubtitle(false);
+    setCurrentSubtitleText("");
 }
 
 void SubtitlesController::setOnSubtitle(const bool onSubtitle)
@@ -134,6 +141,15 @@ void SubtitlesController::setOnSubtitle(const bool onSubtitle)
     {
         q_onSubtitle = onSubtitle;
         emit onSubtitleChanged();
+    }
+}
+
+void SubtitlesController::setCurrentSubtitleText(const QString text)
+{
+    if (text != q_currentSubtitleText)
+    {
+        q_currentSubtitleText = text;
+        emit currentSubtitleTextChanged();
     }
 }
 

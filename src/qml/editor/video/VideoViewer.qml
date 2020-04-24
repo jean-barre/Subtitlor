@@ -44,6 +44,7 @@ Rectangle {
             style: Text.Outline
             styleColor: "black"
             wrapMode: Text.Wrap
+            text: mainController.editor.subtitles.currentSubtitleText
         }
     }
 
