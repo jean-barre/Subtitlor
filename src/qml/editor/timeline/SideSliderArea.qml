@@ -9,6 +9,7 @@ MouseArea {
 
     hoverEnabled: true
     propagateComposedEvents: true
+    acceptedButtons: Qt.NoButton
 
     property SSlider slider
     property bool isDecrease: false
@@ -27,10 +28,6 @@ MouseArea {
     onExited: {
         moveMultiplier = 1;
         side_slider_area_timer.stop();
-    }
-
-    onClicked: {
-        mouse.accepted = false
     }
 
     LinearGradient {
