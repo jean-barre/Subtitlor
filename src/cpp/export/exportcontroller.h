@@ -38,6 +38,7 @@ signals:
 
 private slots:
     void updateDestinationURL();
+    void presetFields(const bool editionUseCase, const QString);
 
 };
 

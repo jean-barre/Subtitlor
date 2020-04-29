@@ -15,6 +15,9 @@ MainController::MainController(QObject *parent) : QObject(parent)
             this, SLOT(onMediaLoaded()));
     connect(q_editorController->subtitles(), SIGNAL(log(const QString&, Log::LogCode)),
             this, SLOT(log(const QString&, Log::LogCode)));
+
+    connect(this, SIGNAL(presetExportFields(const bool, const QString)),
+            q_exportController, SLOT(presetFields(const bool, const QString)));
 }
 
 MainController::~MainController()
@@ -149,5 +152,18 @@ void MainController::onMediaLoaded()
     {
         setLoading(false);
         emit performStackPush();
+        // preset fields of the Export view
+        // using the subtitles file url if using an existing one
+        if (q_uploadController->editionUseCase())
+        {
+            emit presetExportFields(q_uploadController->editionUseCase(),
+                                    q_uploadController->srtFile()->fileURL());
+        }
+        // using the video file url otherwise
+        else
+        {
+            emit presetExportFields(q_uploadController->editionUseCase(),
+                                    q_uploadController->videoFile()->fileURL());
+        }
     }
 }

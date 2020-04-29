@@ -63,6 +63,7 @@ signals:
     void uploadChanged();
     void performStackPush();
     void loadingChanged();
+    void presetExportFields(const bool, const QString);
 
 public slots:
     void triggerStackPush(const QString& currentItemOjectName);

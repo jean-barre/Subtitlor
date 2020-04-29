@@ -61,3 +61,15 @@ void ExportController::updateDestinationURL()
     emit destinationURLChanged();
     setOverriding(QFile::exists(q_destinationURL));
 }
+
+void ExportController::presetFields(const bool editionUseCase, const QString fileURL)
+{
+    int filenameIndex = fileURL.lastIndexOf("/");
+    setDirectoryURL(fileURL.left(filenameIndex));
+    if (editionUseCase)
+    {
+        QString filename = fileURL.right(fileURL.size() - filenameIndex - 1);
+        int extensionIndex = filename.lastIndexOf(".");
+        setFilename(filename.left(extensionIndex));
+    }
+}
