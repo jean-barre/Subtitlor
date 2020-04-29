@@ -12,5 +12,6 @@
         <file>img/text_bold.png</file>
         <file>img/text_italic.png</file>
         <file>img/text_underline.png</file>
+        <file>img/safety.png</file>
     </qresource>
 </RCC>

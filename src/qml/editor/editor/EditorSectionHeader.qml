@@ -61,4 +61,40 @@ Row {
             }
         }
     }
+
+    MouseArea {
+        id: time_input_helper_mouse_area
+        width: parent.width * 0.1
+        height: parent.height * 0.5
+        anchors.verticalCenter: parent.verticalCenter
+        enabled: mainController.editor.subtitles.temporarySavingEnabled
+        visible: mainController.editor.subtitles.temporarySavingEnabled
+        hoverEnabled: true
+
+        Image {
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:/img/safety.png"
+            mipmap: true
+        }
+
+        Rectangle {
+            width: 200
+            height: 70
+            anchors.bottom: parent.top
+            anchors.bottomMargin: Theme.margin * 0.5
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: "black"
+            radius: 5
+            visible: parent.containsMouse
+
+            Label {
+                anchors.fill: parent
+                text: "Modification are temporary\nsaved in " + mainController.editor.subtitles.temporaryFileURL
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pointSize: Theme.fontSmallPointSize
+            }
+        }
+    }
 }
