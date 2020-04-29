@@ -22,6 +22,7 @@ MainController::~MainController()
     delete logTimer;
     delete q_uploadController;
     delete q_editorController;
+    delete q_exportController;
 }
 
 int MainController::screenWidth()
@@ -52,6 +53,11 @@ UploadController *MainController::upload()
 EditorController *MainController::editor()
 {
     return q_editorController;
+}
+
+ExportController *MainController::srtExport()
+{
+    return q_exportController;
 }
 
 bool MainController::loading() const

@@ -47,10 +47,12 @@ Column {
                     width: parent.width * 0.8
                     horizontalAlignment: Text.AlignRight
                     verticalAlignment: Text.AlignVCenter
-                    text: "myVideoSubtitles"
+                    text: mainController.srtExport.filename
                     wrapMode: TextEdit.WrapAnywhere
                     selectByMouse: true
 
+                    onTextChanged: {
+                        mainController.srtExport.filename = text
                     }
                 }
 
@@ -104,7 +106,7 @@ Column {
                         anchors.fill: parent
                         horizontalAlignment: Text.AlignRight
                         verticalAlignment: Text.AlignVCenter
-                        text: ""
+                        text: mainController.srtExport.directoryURL
                         wrapMode: TextEdit.WrapAnywhere
                     }
                 }
@@ -131,12 +133,13 @@ Column {
             height: parent.height * 0.5
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            text: "Destination : " + mainController.srtExport.destinationURL
         }
 
         Label {
             width: parent.width
             height: parent.height * 0.5
-            visible: true
+            visible: mainController.srtExport.overriding
             text: "A file already exist at this location. By exporting you would overwrite it."
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -157,7 +160,7 @@ Column {
         folder: shortcuts.home
         selectFolder: true
         onAccepted: {
-            export_view_directory_url.text = export_view_file_dialog.fileUrls[0]
+            mainController.srtExport.directoryURL = export_view_file_dialog.fileUrls[0]
         }
         onRejected: {
         }

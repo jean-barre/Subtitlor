@@ -6,6 +6,7 @@
 
 #include "upload/uploadcontroller.h"
 #include "editor/editorcontroller.h"
+#include "export/exportcontroller.h"
 #include "common/log.h"
 
 class MainController : public QObject
@@ -17,6 +18,7 @@ class MainController : public QObject
     Q_PROPERTY(int logCode READ logCode NOTIFY logCodeChanged)
     Q_PROPERTY(UploadController* upload READ upload NOTIFY uploadChanged)
     Q_PROPERTY(EditorController* editor READ editor CONSTANT)
+    Q_PROPERTY(ExportController* srtExport READ srtExport CONSTANT)
     Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
 
 public:
@@ -29,6 +31,7 @@ public:
     Log::LogCode logCode();
     UploadController *upload();
     EditorController *editor();
+    ExportController *srtExport();
     bool loading() const;
 
     void setScreenWidth(const int);
@@ -44,6 +47,7 @@ private:
 
     UploadController* q_uploadController;
     EditorController* q_editorController = new EditorController(this);
+    ExportController *q_exportController = new ExportController(this);
 
     bool q_loading = false;
 
