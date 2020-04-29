@@ -152,6 +152,10 @@ Column {
         height: parent.height * 0.14
         anchors.horizontalCenter: parent.horizontalCenter
         text: "Export File"
+
+        onClicked: {
+            mainController.srtExport.exportSRT()
+        }
     }
 
     FileDialog {

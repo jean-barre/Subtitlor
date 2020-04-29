@@ -18,6 +18,8 @@ MainController::MainController(QObject *parent) : QObject(parent)
 
     connect(this, SIGNAL(presetExportFields(const bool, const QString)),
             q_exportController, SLOT(presetFields(const bool, const QString)));
+    connect(q_exportController, SIGNAL(processExport(const QString)),
+            q_editorController->subtitles(), SLOT(saveToFile(const QString)));
 }
 
 MainController::~MainController()

@@ -14,6 +14,8 @@ public:
     Q_PROPERTY(bool overriding READ overriding NOTIFY overridingChanged)
     Q_PROPERTY(QString destinationURL READ destinationURL NOTIFY destinationURLChanged)
 
+    Q_INVOKABLE void exportSRT();
+
     QString filename() const;
     QString directoryURL() const;
     bool overriding() const;
@@ -35,6 +37,7 @@ signals:
     void filenameChanged();
     void overridingChanged();
     void destinationURLChanged();
+    void processExport(const QString);
 
 private slots:
     void updateDestinationURL();

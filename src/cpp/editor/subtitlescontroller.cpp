@@ -1,4 +1,6 @@
 #include <QDateTime>
+#include <QFile>
+#include <QTextStream>
 #include "subtitlescontroller.h"
 
 SubtitlesController::SubtitlesController(QObject *parent) : QObject(parent)
@@ -204,3 +206,33 @@ void SubtitlesController::onPlayerDurationChanged(qint64 duration)
     playerDuration = int(duration);
 }
 
+void SubtitlesController::saveToFile(const QString fileURL)
+{
+    int subtitlesCount = 1;
+    QFile *destinationFile = new QFile(fileURL);
+    if (destinationFile->exists())
+    {
+        destinationFile->remove();
+    }
+    if (!destinationFile->open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        emit log("Export failure: No write permission in the selected directory",
+                 Log::LogCode::ERROR);
+        return;
+    }
+
+    QTextStream out(destinationFile);
+    out << "\n";
+    for (auto pair : subtitles)
+    {
+        SubtitlePtr marker = pair.second;
+        QTime begin = QTime(0,0,0).addMSecs(marker->beginTime());
+        QTime end = begin.addMSecs(marker->duration());
+        out << subtitlesCount++ << "\n";
+        out << begin.toString(SRT_TIME_FORMAT);
+        out << " --> ";
+        out << end.toString(SRT_TIME_FORMAT) << "\n";
+        out << marker->text() << "\n" << "\n";
+    }
+    log("Export success", Log::LogCode::SUCCESS);
+}

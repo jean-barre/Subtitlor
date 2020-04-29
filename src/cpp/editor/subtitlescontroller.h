@@ -39,6 +39,7 @@ public:
     Q_INVOKABLE void add(const QString, const QString, const QString);
 
 private:
+    const QString SRT_TIME_FORMAT = "hh:mm:ss,zzz";
     std::map<int, SubtitlePtr> subtitles;
     QString timeFormat = "";
     int playerPosition = 0;
@@ -67,7 +68,7 @@ public slots:
     void onTimeFormatChanged(const QString);
     void onPlayerPositionChanged(qint64);
     void onPlayerDurationChanged(qint64);
-
+    void saveToFile(const QString fileURL);
 };
 
 #endif // SUBTITLESCONTROLLER_H

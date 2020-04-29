@@ -8,6 +8,11 @@ ExportController::ExportController(QObject *parent) : QObject(parent)
     connect(this, SIGNAL(directoryURLChanged()), this, SLOT(updateDestinationURL()));
 }
 
+void ExportController::exportSRT()
+{
+    emit processExport(q_destinationURL);
+}
+
 QString ExportController::filename() const
 {
     return q_filename;
