@@ -13,6 +13,8 @@ class SubtitlesController : public QObject
     Q_PROPERTY(bool editing READ editing WRITE setEditing NOTIFY editingChanged)
     Q_PROPERTY(bool removing READ removing WRITE setRemoving NOTIFY removingChanged)
     Q_PROPERTY(QString currentSubtitleText READ currentSubtitleText NOTIFY currentSubtitleTextChanged)
+    Q_PROPERTY(QString temporaryFileURL READ temporaryFileURL CONSTANT)
+    Q_PROPERTY(bool temporarySavingEnabled READ temporarySavingEnabled CONSTANT)
 
 public:
     explicit SubtitlesController(QObject *parent = nullptr);
@@ -26,6 +28,8 @@ public:
     bool editing() const;
     bool removing() const;
     QString currentSubtitleText() const;
+    QString temporaryFileURL() const;
+    bool temporarySavingEnabled() const;
 
     void setEditing(const bool);
     void setRemoving(const bool);
@@ -40,6 +44,8 @@ public:
 
 private:
     const QString SRT_TIME_FORMAT = "hh:mm:ss,zzz";
+    static const QString TEMP_EXPORT_FILE;
+    bool q_temporarySavingEnabled = false;
     std::map<int, SubtitlePtr> subtitles;
     QString timeFormat = "";
     int playerPosition = 0;
@@ -68,7 +74,7 @@ public slots:
     void onTimeFormatChanged(const QString);
     void onPlayerPositionChanged(qint64);
     void onPlayerDurationChanged(qint64);
-    void saveToFile(const QString fileURL);
+    void saveToFile(const QString fileURL = TEMP_EXPORT_FILE);
 };
 
 #endif // SUBTITLESCONTROLLER_H

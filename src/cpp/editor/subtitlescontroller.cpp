@@ -1,10 +1,18 @@
 #include <QDateTime>
 #include <QFile>
+#include <QDir>
 #include <QTextStream>
 #include "subtitlescontroller.h"
 
+const QString SubtitlesController::TEMP_EXPORT_FILE = QDir::tempPath() + "/subtitlor.srt";
+
 SubtitlesController::SubtitlesController(QObject *parent) : QObject(parent)
 {
+    QFile tempFile(TEMP_EXPORT_FILE);
+    if (tempFile.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        q_temporarySavingEnabled = true;
+    }
 }
 
 SubtitlesController::~SubtitlesController()
@@ -29,6 +37,16 @@ bool SubtitlesController::removing() const
 QString SubtitlesController::currentSubtitleText() const
 {
     return q_currentSubtitleText;
+}
+
+QString SubtitlesController::temporaryFileURL() const
+{
+    return TEMP_EXPORT_FILE;
+}
+
+bool SubtitlesController::temporarySavingEnabled() const
+{
+    return q_temporarySavingEnabled;
 }
 
 void SubtitlesController::setEditing(const bool editing)
@@ -90,6 +108,10 @@ void SubtitlesController::editFound(const QString beginTimeString, const QString
         // insert the original subtitle in case of error
         subtitles.insert(std::pair<int, SubtitlePtr>(originalSubtitle->beginTime(),originalSubtitle));
     }
+    if (q_temporarySavingEnabled)
+    {
+        saveToFile();
+    }
 }
 
 void SubtitlesController::removeFound()
@@ -97,6 +119,10 @@ void SubtitlesController::removeFound()
     subtitles.erase(foundSubtitleIterator);
     emit log("Operation success", Log::LogCode::SUCCESS);
     synchronize();
+    if (q_temporarySavingEnabled)
+    {
+        saveToFile();
+    }
 }
 
 void SubtitlesController::add(const QString beginTimeString, const QString durationString, const QString text)
@@ -104,6 +130,10 @@ void SubtitlesController::add(const QString beginTimeString, const QString durat
     int beginTime = unformat(beginTimeString);
     int duration = unformat(durationString);
     addSubtitle(beginTime, duration, text);
+    if (q_temporarySavingEnabled)
+    {
+        saveToFile();
+    }
 }
 
 QString SubtitlesController::format(int timeInMilliseconds)
@@ -209,6 +239,7 @@ void SubtitlesController::onPlayerDurationChanged(qint64 duration)
 void SubtitlesController::saveToFile(const QString fileURL)
 {
     int subtitlesCount = 1;
+    bool isFinalExport = fileURL.compare(TEMP_EXPORT_FILE);
     QFile *destinationFile = new QFile(fileURL);
     if (destinationFile->exists())
     {
@@ -216,8 +247,11 @@ void SubtitlesController::saveToFile(const QString fileURL)
     }
     if (!destinationFile->open(QIODevice::ReadWrite | QIODevice::Text))
     {
-        emit log("Export failure: No write permission in the selected directory",
-                 Log::LogCode::ERROR);
+        if (isFinalExport)
+        {
+            emit log("Export failure: No write permission in the selected directory",
+                     Log::LogCode::ERROR);
+        }
         return;
     }
 
@@ -234,5 +268,8 @@ void SubtitlesController::saveToFile(const QString fileURL)
         out << end.toString(SRT_TIME_FORMAT) << "\n";
         out << marker->text() << "\n" << "\n";
     }
-    log("Export success", Log::LogCode::SUCCESS);
+    if (isFinalExport)
+    {
+        log("Export success", Log::LogCode::SUCCESS);
+    }
 }
