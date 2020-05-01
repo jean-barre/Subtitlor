@@ -6,7 +6,7 @@
 class File : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString fileURL READ fileURL WRITE setFileURL NOTIFY fileURLChanged)
+    Q_PROPERTY(QString fileURL READ filename WRITE setFileURL NOTIFY fileURLChanged)
     Q_PROPERTY(QList<QString> extensions READ extensions NOTIFY extensionsChanged)
 
 public:
@@ -16,11 +16,12 @@ public:
     };
     explicit File(QObject *parent = nullptr, FileType fileType = FileType::VIDEO);
 
-    QString fileURL();
-    QList<QString> extensions();
+    QString fileURL() const;
+    QString filename() const; // formatted fileURL property
+    QList<QString> extensions() const;
 
     void setFileURL(const QString&);
-    bool isValid();
+    bool isValid() const;
 
 private:
     QString q_fileURL;

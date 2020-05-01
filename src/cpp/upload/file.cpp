@@ -1,3 +1,4 @@
+#include <QUrl>
 #include "file.h"
 
 const QList<QString> File::videoExtensions = {"mp4", "avi", "mov"};
@@ -16,12 +17,17 @@ File::File(QObject *parent, FileType fileType) : QObject(parent),
     }
 }
 
-QString File::fileURL()
+QString File::fileURL() const
 {
     return q_fileURL;
 }
 
-QList<QString> File::extensions()
+QString File::filename() const
+{
+    return QUrl(q_fileURL).toLocalFile();
+}
+
+QList<QString> File::extensions() const
 {
     return q_extensions;
 }
@@ -35,7 +41,7 @@ void File::setFileURL(const QString& fileURL)
     }
 }
 
-bool File::isValid()
+bool File::isValid() const
 {
     return !q_fileURL.isEmpty();
 }
