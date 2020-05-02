@@ -9,6 +9,7 @@
 class SubtitlesController : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int subtitleCount READ subtitleCount NOTIFY subtitleCountChanged)
     Q_PROPERTY(bool onSubtitle READ onSubtitle NOTIFY onSubtitleChanged)
     Q_PROPERTY(bool editing READ editing WRITE setEditing NOTIFY editingChanged)
     Q_PROPERTY(bool removing READ removing WRITE setRemoving NOTIFY removingChanged)
@@ -20,6 +21,7 @@ public:
     explicit SubtitlesController(QObject *parent = nullptr);
     ~SubtitlesController();
 
+    int subtitleCount() const;
     bool onSubtitle() const;
 
     typedef std::shared_ptr<Subtitle> SubtitlePtr;
@@ -31,6 +33,7 @@ public:
     QString temporaryFileURL() const;
     bool temporarySavingEnabled() const;
 
+    void setSubtitleCount(const int);
     void setEditing(const bool);
     void setRemoving(const bool);
 
@@ -50,6 +53,7 @@ private:
     QString timeFormat = "";
     int playerPosition = 0;
     int playerDuration = 0;
+    int q_subtitleCount = 0;
     bool q_onSubtitle = false;
     bool q_editing = false;
     bool q_removing = false;
@@ -64,6 +68,7 @@ private:
     bool addSubtitle(const int, const int, const QString);
 
 signals:
+    void subtitleCountChanged();
     void onSubtitleChanged();
     void log(const QString, Log::LogCode);
     void editingChanged();

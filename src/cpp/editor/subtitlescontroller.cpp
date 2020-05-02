@@ -19,6 +19,11 @@ SubtitlesController::~SubtitlesController()
 {
 }
 
+int SubtitlesController::subtitleCount() const
+{
+    return q_subtitleCount;
+}
+
 bool SubtitlesController::onSubtitle() const
 {
     return q_onSubtitle;
@@ -47,6 +52,15 @@ QString SubtitlesController::temporaryFileURL() const
 bool SubtitlesController::temporarySavingEnabled() const
 {
     return q_temporarySavingEnabled;
+}
+
+void SubtitlesController::setSubtitleCount(const int subtitleCount)
+{
+    if (subtitleCount != q_subtitleCount)
+    {
+        q_subtitleCount = subtitleCount;
+        emit subtitleCountChanged();
+    }
 }
 
 void SubtitlesController::setEditing(const bool editing)
@@ -102,11 +116,13 @@ void SubtitlesController::editFound(const QString beginTimeString, const QString
     SubtitlePtr originalSubtitle = foundSubtitleIterator->second;
     // remove the original subtitle
     subtitles.erase(foundSubtitleIterator);
+    setSubtitleCount(q_subtitleCount - 1);
     // try to add a new subtitle with the new values
     if (!addSubtitle(beginTime, duration, text))
     {
         // insert the original subtitle in case of error
         subtitles.insert(std::pair<int, SubtitlePtr>(originalSubtitle->beginTime(),originalSubtitle));
+        setSubtitleCount(q_subtitleCount + 1);
     }
     if (q_temporarySavingEnabled)
     {
@@ -117,6 +133,7 @@ void SubtitlesController::editFound(const QString beginTimeString, const QString
 void SubtitlesController::removeFound()
 {
     subtitles.erase(foundSubtitleIterator);
+    setSubtitleCount(q_subtitleCount - 1);
     emit log("Operation success", Log::LogCode::SUCCESS);
     synchronize();
     if (q_temporarySavingEnabled)
@@ -214,6 +231,7 @@ bool SubtitlesController::addSubtitle(const int beginTime, const int duration, c
     }
     SubtitlePtr subtitle(new Subtitle(beginTime, duration, text));
     subtitles.insert(std::pair<int, SubtitlePtr>(beginTime, subtitle));
+    setSubtitleCount(q_subtitleCount + 1);
     emit log("Operation success", Log::LogCode::SUCCESS);
     synchronize();
     return true;

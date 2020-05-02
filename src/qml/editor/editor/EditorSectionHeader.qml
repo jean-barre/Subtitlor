@@ -7,7 +7,6 @@ Row {
     height: 200
     spacing: width * 0.2
 
-    property int subtitlesNumber: 0
     property bool onSubtitle: mainController.editor.subtitles.onSubtitle
 
     Row {
@@ -28,7 +27,7 @@ Row {
             height: parent.height
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            text: subtitlesNumber
+            text: mainController.editor.subtitles.subtitleCount
             font.styleName: "Bold"
             font.pixelSize: 18
         }
