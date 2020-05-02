@@ -228,6 +228,8 @@ void SubtitlesController::onPlayerPositionChanged(qint64 position)
 {
     // find if there is a subtitle at the media position
     playerPosition = int(position);
+    setEditing(false);
+    setRemoving(false);
     synchronize();
 }
 
