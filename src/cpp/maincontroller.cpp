@@ -127,6 +127,10 @@ void MainController::triggerStackPush(const QString& currentItemOjectName)
         else
         {
             q_editorController->video()->mediaObject()->setMedia(QUrl(q_uploadController->videoFile()->fileURL()));
+            if (q_uploadController->editionUseCase())
+            {
+                srtParsingSuccess = q_editorController->subtitles()->parseSRTFile(q_uploadController->srtFile()->fileURL());
+            }
             setLoading(true);
         }
         return;
@@ -153,6 +157,10 @@ void MainController::onMediaLoaded()
     if (q_loading)
     {
         setLoading(false);
+        if (q_uploadController->editionUseCase() && !srtParsingSuccess)
+        {
+            return;
+        }
         emit performStackPush();
         // preset fields of the Export view
         // using the subtitles file url if using an existing one

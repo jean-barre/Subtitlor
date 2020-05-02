@@ -49,6 +49,7 @@ private:
     EditorController* q_editorController = new EditorController(this);
     ExportController *q_exportController = new ExportController(this);
 
+    bool srtParsingSuccess = false;
     bool q_loading = false;
 
     void setLogMessage(const QString& message);

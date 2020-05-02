@@ -45,6 +45,8 @@ public:
     Q_INVOKABLE void removeFound();
     Q_INVOKABLE void add(const QString, const QString, const QString);
 
+    int parseSRTFile(const QString fileURL);
+
 private:
     const QString SRT_TIME_FORMAT = "hh:mm:ss,zzz";
     static const QString TEMP_EXPORT_FILE;

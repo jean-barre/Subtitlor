@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QTextStream>
 #include "subtitlescontroller.h"
+#include "srtparser.h"
 
 const QString SubtitlesController::TEMP_EXPORT_FILE = QDir::tempPath() + "/subtitlor.srt";
 
@@ -151,6 +152,18 @@ void SubtitlesController::add(const QString beginTimeString, const QString durat
     {
         saveToFile();
     }
+}
+
+int SubtitlesController::parseSRTFile(const QString fileURL)
+{
+    SRTParser parser(fileURL, &subtitles);
+    connect(&parser, SIGNAL(log(const QString, Log::LogCode)), this, SIGNAL(log(const QString, Log::LogCode)));
+    bool success = parser.parse();
+    if (success)
+    {
+        setSubtitleCount(parser.subtitlesCount);
+    }
+    return success;
 }
 
 QString SubtitlesController::format(int timeInMilliseconds)
