@@ -1,5 +1,6 @@
 HEADERS += \
     $$PWD/editorcontroller.h \
+    $$PWD/rangesliderscontroller.h \
     $$PWD/smediaplayer.h \
     $$PWD/srtparser.h \
     $$PWD/subtitle.h \
@@ -10,6 +11,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/editorcontroller.cpp \
+    $$PWD/rangesliderscontroller.cpp \
     $$PWD/smediaplayer.cpp \
     $$PWD/srtparser.cpp \
     $$PWD/subtitle.cpp \

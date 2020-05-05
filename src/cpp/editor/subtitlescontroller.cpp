@@ -55,6 +55,11 @@ bool SubtitlesController::temporarySavingEnabled() const
     return q_temporarySavingEnabled;
 }
 
+RangeSlidersController *SubtitlesController::rangeSliders()
+{
+    return q_rangeSliders;
+}
+
 void SubtitlesController::setSubtitleCount(const int subtitleCount)
 {
     if (subtitleCount != q_subtitleCount)
@@ -267,6 +272,7 @@ void SubtitlesController::onPlayerPositionChanged(qint64 position)
 void SubtitlesController::onPlayerDurationChanged(qint64 duration)
 {
     playerDuration = int(duration);
+    q_rangeSliders->setVideoDuration(duration);
 }
 
 void SubtitlesController::saveToFile(const QString fileURL)

@@ -5,6 +5,7 @@
 #include <memory>
 #include "subtitle.h"
 #include "common/log.h"
+#include "rangesliderscontroller.h"
 
 class SubtitlesController : public QObject
 {
@@ -16,6 +17,7 @@ class SubtitlesController : public QObject
     Q_PROPERTY(QString currentSubtitleText READ currentSubtitleText NOTIFY currentSubtitleTextChanged)
     Q_PROPERTY(QString temporaryFileURL READ temporaryFileURL CONSTANT)
     Q_PROPERTY(bool temporarySavingEnabled READ temporarySavingEnabled CONSTANT)
+    Q_PROPERTY(RangeSlidersController* rangeSliders READ rangeSliders CONSTANT)
 
 public:
     explicit SubtitlesController(QObject *parent = nullptr);
@@ -32,6 +34,7 @@ public:
     QString currentSubtitleText() const;
     QString temporaryFileURL() const;
     bool temporarySavingEnabled() const;
+    RangeSlidersController *rangeSliders();
 
     void setSubtitleCount(const int);
     void setEditing(const bool);
@@ -61,6 +64,7 @@ private:
     bool q_removing = false;
     QString q_currentSubtitleText = "";
     SubtitleIterator foundSubtitleIterator;
+    RangeSlidersController *q_rangeSliders = new RangeSlidersController(this);
 
     QString format(int);
     int unformat(const QString) const;
