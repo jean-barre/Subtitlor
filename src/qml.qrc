@@ -23,5 +23,6 @@
         <file>qml/editor/editor/TimeInput.qml</file>
         <file>qml/editor/editor/EditorSectionHeader.qml</file>
         <file>qml/editor/editor/EditorInput.qml</file>
+        <file>qml/editor/timeline/RangeSlider.qml</file>
     </qresource>
 </RCC>

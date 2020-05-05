@@ -9,6 +9,10 @@ Item {
     property int sliderSecondPixelSize
     property int sliderHandleWidth: sslider_slider.handle.width
 
+    Component.onCompleted: {
+        mainController.editor.subtitles.rangeSliders.parent = sslider_range_sliders_parent
+    }
+
     SliderTickmarks {
         x: sslider_slider.background.x
         width: sslider_slider_background.width
@@ -17,13 +21,20 @@ Item {
         secondPixelSize: sliderSecondPixelSize
     }
 
-    Rectangle {
+    Item {
+        id: sslider_range_sliders_parent
         x: sslider_slider_background.x
         width: sslider_slider_background.width
-        height: 2
+        height: parent.height * 0.2
         anchors.bottom: parent.bottom
-        color: Theme.foregroundColor
-        opacity: 0.12
+
+        Rectangle {
+            width: parent.width
+            height: 2
+            anchors.verticalCenter: parent.verticalCenter
+            color: Theme.foregroundColor
+            opacity: 0.12
+        }
     }
 
     Slider {
