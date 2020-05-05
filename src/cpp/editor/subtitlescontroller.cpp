@@ -130,6 +130,10 @@ void SubtitlesController::editFound(const QString beginTimeString, const QString
         subtitles.insert(std::pair<int, SubtitlePtr>(originalSubtitle->beginTime(),originalSubtitle));
         setSubtitleCount(q_subtitleCount + 1);
     }
+    else
+    {
+        q_rangeSliders->editRangeSlider(originalSubtitle->beginTime(), beginTime, duration);
+    }
     if (q_temporarySavingEnabled)
     {
         saveToFile();
@@ -138,6 +142,7 @@ void SubtitlesController::editFound(const QString beginTimeString, const QString
 
 void SubtitlesController::removeFound()
 {
+    q_rangeSliders->removeRangeSlider(foundSubtitleIterator->second->beginTime());
     subtitles.erase(foundSubtitleIterator);
     setSubtitleCount(q_subtitleCount - 1);
     emit log("Operation success", Log::LogCode::SUCCESS);
@@ -152,7 +157,10 @@ void SubtitlesController::add(const QString beginTimeString, const QString durat
 {
     int beginTime = unformat(beginTimeString);
     int duration = unformat(durationString);
-    addSubtitle(beginTime, duration, text);
+    if (addSubtitle(beginTime, duration, text))
+    {
+        q_rangeSliders->addRangeSlider(beginTime, duration);
+    }
     if (q_temporarySavingEnabled)
     {
         saveToFile();
