@@ -86,6 +86,7 @@ public slots:
     void onPlayerPositionChanged(qint64);
     void onPlayerDurationChanged(qint64);
     void saveToFile(const QString fileURL = TEMP_EXPORT_FILE);
+    void onTimingChanged(const int previousBegin, const int begin, const int duration);
 };
 
 #endif // SUBTITLESCONTROLLER_H

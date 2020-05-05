@@ -40,6 +40,13 @@ private:
     void setRangeSliderTo(QQuickItemPtr item, const int);
     int getRangeSliderFirstValue(QQuickItemPtr item);
     int getRangeSliderSecondValue(QQuickItemPtr item);
+
+signals:
+    void timingChanged(const int previousBegin, const int newBegin, const int duration);
+
+public slots:
+    void onRangeSliderFirstValueChanged(const int);
+    void onRangeSliderSecondValueChanged(const int);
 };
 
 #endif // RANGESLIDERSCONTROLLER_H

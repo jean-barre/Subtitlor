@@ -105,6 +105,8 @@ QQuickItem* RangeSlidersController::displayRangeSlider(const int min, const int 
 {
     QQmlComponent component(engine, url);
     QObject *object = component.create();
+    connect(object, SIGNAL(firstValueChanged(int)), this, SLOT(onRangeSliderFirstValueChanged(int)), Qt::QueuedConnection);
+    connect(object, SIGNAL(secondValueChanged(int)), this, SLOT(onRangeSliderSecondValueChanged(int)), Qt::QueuedConnection);
     QQuickItem *item = qobject_cast<QQuickItem*>(object);
     item->setParentItem(q_parent);
     item->setParent(this);
@@ -152,4 +154,38 @@ int RangeSlidersController::getRangeSliderSecondValue(RangeSlidersController::QQ
 {
     QObject *second = item->findChild<QObject*>("second");
     return second->property("value").toInt();
+}
+
+void RangeSlidersController::onRangeSliderFirstValueChanged(const int value)
+{
+    QQuickItemMapIterator iterator;
+    QObject *sender = QObject::sender();
+    QQuickItem* s = qobject_cast<QQuickItem*>(sender);
+    for (iterator = items.begin(); iterator != items.cend(); ++iterator)
+    {
+        if (iterator->second.get() == s)
+        {
+            const int previousBegin = iterator->first;
+            const int duration = getRangeSliderSecondValue(iterator->second) - value;
+            emit timingChanged(previousBegin, value, duration);
+            items.erase(iterator);
+            addRangeSlider(value, duration);
+            return;
+        }
+    }
+}
+
+void RangeSlidersController::onRangeSliderSecondValueChanged(const int value)
+{
+    QQuickItemMapIterator iterator;
+    QObject *sender = QObject::sender();
+    QQuickItem* s = qobject_cast<QQuickItem*>(sender);
+    for (iterator = items.begin(); iterator != items.cend(); ++iterator)
+    {
+        if (iterator->second.get() == s)
+        {
+            const int begin = iterator->first;
+            emit timingChanged(begin, begin, value - begin);
+        }
+    }
 }

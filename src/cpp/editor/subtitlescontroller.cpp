@@ -14,6 +14,8 @@ SubtitlesController::SubtitlesController(QObject *parent) : QObject(parent)
     {
         q_temporarySavingEnabled = true;
     }
+    connect(q_rangeSliders, SIGNAL(timingChanged(const int, const int, const int)),
+            this, SLOT(onTimingChanged(const int, const int, const int)));
 }
 
 SubtitlesController::~SubtitlesController()
@@ -318,5 +320,19 @@ void SubtitlesController::saveToFile(const QString fileURL)
     if (isFinalExport)
     {
         log("Export success", Log::LogCode::SUCCESS);
+    }
+}
+
+void SubtitlesController::onTimingChanged(const int previousBegin, const int begin, const int duration)
+{
+    SubtitleIterator it = subtitles.find(previousBegin);
+    SubtitlePtr found = it->second;
+    if (found)
+    {
+        subtitles.erase(it);
+        found->setBeginTime(begin);
+        found->setDuration(duration);
+        subtitles.insert(std::pair<int,SubtitlePtr>(begin, found));
+        synchronize();
     }
 }

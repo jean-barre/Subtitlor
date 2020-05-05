@@ -8,8 +8,8 @@ RangeSlider {
     height: 50
     padding: 0
 
-    signal updateFirstValue(int firstValue)
-    signal updateSecondValue(int secondValue)
+    signal firstValueChanged(int firstValue)
+    signal secondValueChanged(int secondValue)
 
     background: Rectangle {
         x: control.leftPadding
@@ -51,7 +51,7 @@ RangeSlider {
 
     first.onPressedChanged: {
         if (!first.pressed) {
-            // update subtitle
+            firstValueChanged(first.value)
         }
     }
 
@@ -74,7 +74,7 @@ RangeSlider {
 
     second.onPressedChanged: {
         if (!second.pressed) {
-            // update subtitle
+            secondValueChanged(second.value)
         }
     }
 
