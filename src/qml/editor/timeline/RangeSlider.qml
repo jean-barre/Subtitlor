@@ -49,6 +49,25 @@ RangeSlider {
         }
     }
 
+    Rectangle {
+        width: 70
+        height: 25
+        anchors.top: first.handle.bottom
+        anchors.topMargin: Theme.margin * 0.5
+        anchors.horizontalCenter: first.handle.horizontalCenter
+        color: "black"
+        radius: 5
+        visible: first.hovered
+
+        Label {
+            anchors.fill: parent
+            text: "--." + Math.floor(first.value).toString().slice(-3)
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.pointSize: Theme.fontSmallPointSize
+        }
+    }
+
     first.onPressedChanged: {
         if (!first.pressed) {
             firstValueChanged(first.value)
@@ -69,6 +88,25 @@ RangeSlider {
             anchors.centerIn: parent
             color: Theme.backgroundColor
             radius: height / 2
+        }
+    }
+
+    Rectangle {
+        width: 70
+        height: 25
+        anchors.top: second.handle.bottom
+        anchors.topMargin: Theme.margin * 0.5
+        anchors.horizontalCenter: second.handle.horizontalCenter
+        color: "black"
+        radius: 5
+        visible: second.hovered
+
+        Label {
+            anchors.fill: parent
+            text: "--." + Math.floor(second.value).toString().slice(-3)
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.pointSize: Theme.fontSmallPointSize
         }
     }
 
