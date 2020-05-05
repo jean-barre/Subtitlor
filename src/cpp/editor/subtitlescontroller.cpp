@@ -192,6 +192,8 @@ int SubtitlesController::unformat(const QString text) const
 
 void SubtitlesController::synchronize()
 {
+    setEditing(false);
+    setRemoving(false);
     auto upperIterator = subtitles.upper_bound(playerPosition);
     if (upperIterator != subtitles.cbegin())
     {
@@ -272,8 +274,6 @@ void SubtitlesController::onPlayerPositionChanged(qint64 position)
 {
     // find if there is a subtitle at the media position
     playerPosition = int(position);
-    setEditing(false);
-    setRemoving(false);
     synchronize();
 }
 
