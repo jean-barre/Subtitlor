@@ -8,19 +8,7 @@ Item {
     id: root
 
     property StackView stack
-    property bool hasItemBefore: stack.depth > 1
     property bool hasNextItem: typeof stack.currentItem.nextItem !== 'undefined'
-
-    SButton {
-        width: parent.width * 0.1
-        height: parent.height
-        enabled: hasItemBefore
-        visible: hasItemBefore
-
-        onClicked: stack.pop()
-        iconSource: "qrc:/img/navigation_previous.png"
-        iconSizeRatio: 0.3
-    }
 
     Label {
         width: parent.width * 0.6
