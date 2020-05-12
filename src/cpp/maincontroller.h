@@ -37,6 +37,8 @@ public:
     void setScreenWidth(const int);
     void setScreenHeight(const int);
 
+    Q_INVOKABLE void stackViewItemChanged(QString viewName);
+
 private:
     int q_screenWidth = 0;
     int q_screenHeight = 0;

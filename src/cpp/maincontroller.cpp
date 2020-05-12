@@ -1,5 +1,13 @@
 #include "maincontroller.h"
 
+void MainController::stackViewItemChanged(QString viewName)
+{
+    if (viewName.compare("Editor"))
+    {
+        q_editorController->subtitles()->initializeRangeSliders();
+    }
+}
+
 MainController::MainController(QObject *parent) : QObject(parent)
 {
     logTimer = new QTimer();

@@ -17,6 +17,7 @@ public:
     void addRangeSlider(int begin, int duration);
     void editRangeSlider(int previousBegin, int newBegin, int duration);
     void removeRangeSlider(int begin);
+    void clear();
 
     void setParent(QQuickItem *);
     void setVideoDuration(const int);

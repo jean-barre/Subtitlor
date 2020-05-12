@@ -181,6 +181,19 @@ int SubtitlesController::parseSRTFile(const QString fileURL)
     return success;
 }
 
+void SubtitlesController::initializeRangeSliders()
+{
+    q_rangeSliders->clear();
+    for (auto iterator : subtitles)
+    {
+        SubtitlePtr subtitle = iterator.second;
+        if (subtitle)
+        {
+            q_rangeSliders->addRangeSlider(subtitle->beginTime(), subtitle->duration());
+        }
+    }
+}
+
 QString SubtitlesController::format(int timeInMilliseconds)
 {
     return QDateTime::fromMSecsSinceEpoch(timeInMilliseconds).toUTC().toString(timeFormat);

@@ -36,6 +36,8 @@ ApplicationWindow {
             UploadView {
                 objectName: "uploadView"
             }
+
+        onCurrentItemChanged: mainController.stackViewItemChanged(currentItem.viewName)
     }
 
     footer: LogBar {

@@ -49,6 +49,7 @@ public:
     Q_INVOKABLE void add(const QString, const QString, const QString);
 
     int parseSRTFile(const QString fileURL);
+    void initializeRangeSliders();
 
 private:
     const QString SRT_TIME_FORMAT = "hh:mm:ss,zzz";

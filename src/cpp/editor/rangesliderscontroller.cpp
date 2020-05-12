@@ -86,6 +86,11 @@ void RangeSlidersController::removeRangeSlider(int begin)
     }
 }
 
+void RangeSlidersController::clear()
+{
+    items.clear();
+}
+
 void RangeSlidersController::setParent(QQuickItem *parent)
 {
     q_parent = parent;
