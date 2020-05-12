@@ -104,6 +104,8 @@ void SMediaPlayer::onDurationChanged(qint64 duration)
     }
     // update the formatted duration
     setFormattedDuration(format(duration));
+    // update the formatted position
+    setFormattedPosition(format(this->position()));
     // check the video duration
     if (duration >= HOUR_IN_MS)
     {
