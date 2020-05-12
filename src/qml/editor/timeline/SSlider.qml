@@ -1,5 +1,5 @@
-﻿import QtQuick 2.12
-import QtQuick.Controls 2.12
+﻿import QtQuick 2.0
+import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 import com.subtitlor.theme 1.0
 import com.subtitlor.editor 1.0
